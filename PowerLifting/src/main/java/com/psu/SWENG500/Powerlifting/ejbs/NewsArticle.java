@@ -15,7 +15,6 @@ public class NewsArticle {
 	
 	public NewsArticle()
 	{
-		
 	}
 	
 	public NewsArticle(String articleTitle, String siteOrigin, Date articleDate, String articleShortDescription, String articleContents)
