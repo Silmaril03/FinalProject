@@ -1,12 +1,9 @@
 package com.psu.SWENG500.Powerlifting;
 
 import java.util.Date;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import com.psu.SWENG500.Powerlifting.ejbs.NewsArticle;
-
 import junit.framework.TestCase;
 
 public class NewsArticleTest extends TestCase {
@@ -20,28 +17,28 @@ public class NewsArticleTest extends TestCase {
 	}
 
 	@Test
-	public void articleTitleSuccess() {
+	public void testArticleTitleSuccess() {
 		assertEquals("Title", article.getArticleTitle());
 	}
 
 	@Test
-	public void siteOriginSuccess() {
+	public void testSiteOriginSuccess() {
 		assertEquals("muscles.com", article.getSiteOrigin());
 	}
 	
 	@Test
-	public void articleDateSuccess() {
+	public void testArticleDateSuccess() {
 		long actualMilliseconds = articleDate.getTime();
 		assertEquals(actualMilliseconds, article.getArticleDate().getTime());
 	}
 	
 	@Test
-	public void articleShortDescriptionSuccess() {
+	public void testArticleShortDescriptionSuccess() {
 		assertEquals("Short description", article.getArticleShortDescription());
 	}
 	
 	@Test
-	public void articleContentsSuccess() {
+	public void testArticleContentsSuccess() {
 		assertEquals("Article contents.", article.getArticleContents());
 	}
 }

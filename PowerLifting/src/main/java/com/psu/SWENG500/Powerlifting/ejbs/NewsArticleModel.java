@@ -1,11 +1,11 @@
 package com.psu.SWENG500.Powerlifting.ejbs;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.jsoup.Jsoup;
+import org.w3c.dom.Document;
 
 public class NewsArticleModel {
 	private final List<NewsArticle> articleList = null;
@@ -34,25 +34,15 @@ public class NewsArticleModel {
 	
 	private List<NewsArticle> retrieveArticle(String siteName)
 	{
-		URLConnection urlConn = null;
-		InputStream inputStream = null;
 		try {
-			URL url = new URL(siteName);
-			urlConn = url.openConnection();
-			inputStream = urlConn.getInputStream();
-			
-			
+			Document doc = (Document) Jsoup.connect(siteName).timeout(3000).get();
+			String htmlPageContent = doc.toString();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(inputStream != null)
-				{
-					inputStream.close();
-				}
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		
 		return articleList;
