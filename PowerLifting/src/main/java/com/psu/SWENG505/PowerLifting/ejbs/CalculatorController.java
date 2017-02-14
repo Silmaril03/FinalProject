@@ -1,5 +1,7 @@
 package com.psu.SWENG505.PowerLifting.ejbs;
 
+import java.math.BigDecimal;
+
 public class CalculatorController {
 
 	public Double Calculate(){
@@ -12,5 +14,10 @@ public class CalculatorController {
 	
 	public Double CalcBodyMass (){
 		return null;
+	}
+	
+	private double getCoefficient(boolean male, double weight){
+		
+		return 0;
 	}
 }
