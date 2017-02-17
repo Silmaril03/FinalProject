@@ -1,6 +1,8 @@
-package com.psu.SWENG505.PowerLifting.ejbs;
+package com.psu.SWENG500.Powerlifting.ejbs.Controller;
 
 import java.util.Calendar;
+
+import com.psu.SWENG500.Powerlifting.ejbs.Workout;
 
 public class TrainingLogController {
 	

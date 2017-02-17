@@ -1,9 +1,9 @@
-package com.psu.SWENG505.PowerLifting;
+package com.psu.SWENG500.Powerlifting;
 
 import java.util.Calendar;
 
-import com.psu.SWENG505.PowerLifting.ejbs.TrainingLogController;
-import com.psu.SWENG505.PowerLifting.ejbs.Workout;
+import com.psu.SWENG500.Powerlifting.ejbs.Workout;
+import com.psu.SWENG500.Powerlifting.ejbs.Controller.TrainingLogController;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
