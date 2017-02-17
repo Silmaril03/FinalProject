@@ -1,4 +1,4 @@
-package com.psu.SWENG505.PowerLifting.models;
+package com.psu.SWENG500.Powerlifting.models;
 
 public enum Weight {
 	POUNDS, KILOGRAMS

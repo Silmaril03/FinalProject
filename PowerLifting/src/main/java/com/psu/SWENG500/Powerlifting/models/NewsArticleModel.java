@@ -1,11 +1,15 @@
-package com.psu.SWENG500.Powerlifting.ejbs;
+package com.psu.SWENG500.Powerlifting.models;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
+
+import com.psu.SWENG500.Powerlifting.ejbs.ConfigReader;
+import com.psu.SWENG500.Powerlifting.ejbs.NewsArticle;
 
 public class NewsArticleModel {
 	private final List<NewsArticle> articleList = null;

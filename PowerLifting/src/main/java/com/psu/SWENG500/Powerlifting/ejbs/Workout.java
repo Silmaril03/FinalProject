@@ -1,4 +1,4 @@
-package com.psu.SWENG505.PowerLifting.ejbs;
+package com.psu.SWENG500.Powerlifting.ejbs;
 
 import java.util.Calendar;
 

@@ -1,6 +1,6 @@
-package com.psu.SWENG505.PowerLifting;
+package com.psu.SWENG500.Powerlifting;
 
-import com.psu.SWENG505.PowerLifting.ejbs.CalculatorController;
+import com.psu.SWENG500.Powerlifting.ejbs.Controller.CalculatorController;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
