@@ -1,16 +1,17 @@
 package com.psu.SWENG500.Powerlifting.models;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Coefficient {
-	List<Double> variables = new ArrayList();
-	private Double KILOGRAM = new Double (0.45359237);
+import com.psu.SWENG500.Powerlifting.models.converters.MeasurementConverter;
 
-	public Double getCoefficient(double weight, Weight weightType) {
-		if(weightType == Weight.POUNDS){
-			weight = KILOGRAM * weight;
+public abstract class Coefficient {
+	List<Double> variables = new ArrayList();
+
+	public Double getCoefficient(Measurements measurements) {
+		double weight = measurements.getWeight();
+		if(measurements.getMeasurementType() == MeasurementType.IMPERIAL){
+			weight = MeasurementConverter.getKilogramsFromPounds(weight);
 		}
 		
 		Double total = new Double(0);
@@ -23,11 +24,9 @@ public class Coefficient {
 			} else {
 				total += variable * Math.pow(weight, temp);
 			}
-			System.out.println(total);
 			temp++;
 		}
 		total = 500 / total;
-		System.out.println(total);
 		return total;
 	}
 }
