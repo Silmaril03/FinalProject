@@ -34,11 +34,11 @@ public class NewsArticleModel {
 		List<NewsArticle> articleList = new ArrayList<NewsArticle>();
 		try {
 			Document doc = (Document) Jsoup.connect(siteName).timeout(3000).get();
-			Elements content = doc.getElementsByTag("article");
+			Elements content = doc.getElementsByTag(ElementTags.ARTICLE.value());
 			
 			for(Element aticleLink: content) {
-				Elements elementA = aticleLink.getElementsByTag("a");
-				articleUrls.add(elementA.attr("href"));
+				Elements elementA = aticleLink.getElementsByTag(ElementTags.A.value());
+				articleUrls.add(elementA.attr(ElementTags.HREF.value()));
 			}
 			
 			articleList = extractContentFromArticleUrl(articleUrls);
@@ -59,19 +59,16 @@ public class NewsArticleModel {
 		for(String articleUrl: articleUrlList) {
 			try {
 				Document doc = (Document) Jsoup.connect(articleUrl).timeout(3000).get();
-				Element content = doc.getElementsByTag("article").first();
+				Element content = doc.getElementsByTag(ElementTags.ARTICLE.value()).first();
 				
-				Element header = content.getElementsByTag("h1").first();
+				Element header = content.getElementsByTag(ElementTags.H1.value()).first();
 				String title = header.text();
 				
-				Element time = content.getElementsByTag("time").first();
-				String date = time.attr("datetime");
-				
-				System.out.println(title + " - " + date);
+				Element time = content.getElementsByTag(ElementTags.TIME.value()).first();
+				String date = time.attr(ElementTags.DATETIME.value());
 				
 				articleList.add(generateNewsArticleObject(articleUrl, title, "", "", new Date(1487449942430L)));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
