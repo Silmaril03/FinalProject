@@ -1,10 +1,15 @@
 package com.psu.SWENG500.Powerlifting.models;
 
-import java.math.BigDecimal;
+/**
+ * @author Jason
+ * 
+ *         Coefficient numbers for female, taken from
+ *         http://www.usapowerlifting.com/lifters-corner
+ *
+ */
+public class FemaleCoefficient extends Coefficient {
 
-public class FemaleCoefficient extends Coefficient{
-
-	public FemaleCoefficient (){
+	public FemaleCoefficient() {
 		variables.add(new Double(594.31747775582));
 		variables.add(new Double(-27.23842536447));
 		variables.add(new Double(0.82112226871));

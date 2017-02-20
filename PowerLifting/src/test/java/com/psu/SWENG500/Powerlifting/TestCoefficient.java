@@ -3,25 +3,33 @@ package com.psu.SWENG500.Powerlifting;
 import junit.framework.TestCase;
 
 import com.psu.SWENG500.Powerlifting.models.FemaleCoefficient;
+import com.psu.SWENG500.Powerlifting.models.ImperialMeasurement;
 import com.psu.SWENG500.Powerlifting.models.MaleCoefficient;
-import com.psu.SWENG500.Powerlifting.models.Weight;
 
+/**
+ * @author Jason JUnit to test the use of the Wilks coefficient equation, data
+ *         outputs taken from http://www.usapowerlifting.com/lifters-corner
+ */
 public class TestCoefficient extends TestCase {
 	MaleCoefficient mCo = new MaleCoefficient();
 	FemaleCoefficient fCo = new FemaleCoefficient();
-	int precision = 10000;
+	int PRECISION = 10000;
 
 	public void testMaleCoefficient() {
-		Double coefficient = mCo.getCoefficient(150, Weight.POUNDS);
-		coefficient = Math.floor(coefficient * precision +.5)/precision;
-		System.out.println("Male Coefficient " + coefficient);
+		ImperialMeasurement person = new ImperialMeasurement();
+		person.setWeight(new Double(150));
+
+		Double coefficient = mCo.getCoefficient(person);
+		coefficient = Math.floor(coefficient * PRECISION + .5) / PRECISION;
 		assertEquals(.7661, coefficient);
 	}
 
 	public void testFemaleCoefficient() {
-		Double coefficient = fCo.getCoefficient(150, Weight.POUNDS);
-		coefficient = Math.floor(coefficient * precision +.5)/precision;
-		System.out.println("Female Coefficient " + coefficient);
+		ImperialMeasurement person = new ImperialMeasurement();
+		person.setWeight(new Double(150));
+
+		Double coefficient = fCo.getCoefficient(person);
+		coefficient = Math.floor(coefficient * PRECISION + .5) / PRECISION;
 		assertEquals(1.0148, coefficient);
 	}
 }
