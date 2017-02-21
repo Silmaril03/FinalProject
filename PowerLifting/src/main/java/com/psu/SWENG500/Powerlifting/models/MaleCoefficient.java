@@ -1,10 +1,15 @@
 package com.psu.SWENG500.Powerlifting.models;
 
-import java.math.BigDecimal;
+/**
+ * @author Jason
+ * 
+ *         Coefficient numbers for Males, taken from
+ *         http://www.usapowerlifting.com/lifters-corner
+ *
+ */
+public class MaleCoefficient extends Coefficient {
 
-public class MaleCoefficient extends Coefficient{
-
-	public MaleCoefficient (){
+	public MaleCoefficient() {
 		variables.add(new Double(-216.0475144));
 		variables.add(new Double(16.2606339));
 		variables.add(new Double(-0.002388645));
