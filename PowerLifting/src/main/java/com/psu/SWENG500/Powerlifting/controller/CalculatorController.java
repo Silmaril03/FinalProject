@@ -1,4 +1,4 @@
-package com.psu.SWENG500.Powerlifting.ejbs.Controller;
+package com.psu.SWENG500.Powerlifting.controller;
 
 import com.psu.SWENG500.Powerlifting.models.FemaleCoefficient;
 import com.psu.SWENG500.Powerlifting.models.MaleCoefficient;

@@ -2,7 +2,7 @@ package com.psu.SWENG500.Powerlifting;
 
 import junit.framework.TestCase;
 
-import com.psu.SWENG500.Powerlifting.ejbs.Controller.CalculatorController;
+import com.psu.SWENG500.Powerlifting.controller.CalculatorController;
 import com.psu.SWENG500.Powerlifting.models.ImperialMeasurement;
 
 /**

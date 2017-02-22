@@ -1,6 +1,5 @@
 package com.psu.SWENG500.Powerlifting.models;
 
-import com.psu.SWENG500.Powerlifting.ejbs.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

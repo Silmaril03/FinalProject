@@ -1,9 +1,12 @@
 package com.psu.SWENG500.Powerlifting;
 
 import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
-import com.psu.SWENG500.Powerlifting.ejbs.ConfigReader;
+
+import com.psu.SWENG500.Powerlifting.models.ConfigReader;
+
 import junit.framework.TestCase;
 
 public class ConfigReaderTest extends TestCase {

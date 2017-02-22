@@ -1,4 +1,4 @@
-package com.psu.SWENG500.Powerlifting.ejbs;
+package com.psu.SWENG500.Powerlifting.models;
 
 public class WorkoutSet
 {
