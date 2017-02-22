@@ -5,10 +5,9 @@
 	<groupId>com.psu.SWENG500</groupId>
 	<artifactId>PowerLifting</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<!-- <packaging>war</packaging> -->
 
 	<name>Power Lifting Journal</name>
-	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,7 +30,6 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.193</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.hazelcast/hazelcast -->
 		<dependency>
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast</artifactId>
@@ -43,12 +41,43 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+				<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-war-plugin</artifactId> 
+					<version>3.0.0</version> <configuration> <webappDirectory>/sample/servlet/container/deploy/directory</webappDirectory> 
+					</configuration> </plugin> -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>3.0.0</version>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>copy-dependencies</id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${project.build.directory}/lib</outputDirectory>
+								<overWriteReleases>false</overWriteReleases>
+								<overWriteSnapshots>false</overWriteSnapshots>
+								<overWriteIfNewer>true</overWriteIfNewer>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.4</version>
 					<configuration>
-						<webappDirectory>/sample/servlet/container/deploy/directory</webappDirectory>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix>lib</classpathPrefix>
+								<mainClass>com.psu.SWENG500.Powerlifting.application.Main</mainClass>
+							</manifest>
+						</archive>
+						<descriptorRefs>
+							<descriptorRef>jar-with-dependencies</descriptorRef>
+						</descriptorRefs>
 					</configuration>
 				</plugin>
 				<plugin>

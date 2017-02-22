@@ -1,9 +1,12 @@
 package com.psu.SWENG500.Powerlifting;
 
 import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
-import com.psu.SWENG500.Powerlifting.ejbs.NewsArticle;
+
+import com.psu.SWENG500.Powerlifting.models.NewsArticle;
+
 import junit.framework.TestCase;
 
 public class NewsArticleTest extends TestCase {

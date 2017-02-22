@@ -6,8 +6,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.psu.SWENG500.Powerlifting.ejbs.ConfigReader;
-import com.psu.SWENG500.Powerlifting.ejbs.NewsArticle;
+import com.psu.SWENG500.Powerlifting.models.ConfigReader;
+import com.psu.SWENG500.Powerlifting.models.NewsArticle;
 import com.psu.SWENG500.Powerlifting.models.NewsArticleModel;
 
 import junit.framework.TestCase;

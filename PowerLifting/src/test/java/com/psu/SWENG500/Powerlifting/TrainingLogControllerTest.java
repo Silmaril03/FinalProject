@@ -2,8 +2,8 @@ package com.psu.SWENG500.Powerlifting;
 
 import java.util.Calendar;
 
-import com.psu.SWENG500.Powerlifting.ejbs.Workout;
-import com.psu.SWENG500.Powerlifting.ejbs.Controller.TrainingLogController;
+import com.psu.SWENG500.Powerlifting.controller.TrainingLogController;
+import com.psu.SWENG500.Powerlifting.models.Workout;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

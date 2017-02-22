@@ -11,8 +11,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.psu.SWENG500.Powerlifting.ejbs.NewsArticle;
-
 public class NewsArticleModel {
 	
 	public List<NewsArticle> retrieveArticlesFromSiteUrls(List<String> siteNames) {
