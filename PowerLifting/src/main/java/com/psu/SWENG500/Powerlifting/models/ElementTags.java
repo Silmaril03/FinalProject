@@ -7,7 +7,8 @@ public enum ElementTags {
 	HREF("href"),
 	H1("h1"),
 	TIME("time"),
-	DATETIME("datetime");
+	DATETIME("datetime"),
+	P("p");
 	
 	private String element;
 	
