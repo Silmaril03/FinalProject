@@ -12,14 +12,14 @@ import org.jsoup.select.Elements;
 
 public class NewsArticleModel {
 	
-	public List<NewsArticle> retrieveArticlesFromSiteUrls(List<String> siteNames) {
-		if(siteNames == null) {
+	public List<NewsArticle> retrieveArticlesFromSiteUrls(List<String> siteUrls) {
+		if(siteUrls == null || siteUrls.isEmpty()) {
 			System.out.println("No site URLs!");
 			return null;
 		}
 		
 		List<NewsArticle> articleList = new ArrayList<NewsArticle>();
-		for(String siteName: siteNames) {
+		for(String siteName: siteUrls) {
 			articleList.addAll(retrieveArticlesFromSite(siteName));
 		}
 		return articleList;
@@ -74,10 +74,10 @@ public class NewsArticleModel {
 				Element time = content.getElementsByTag(ElementTags.TIME.value()).first();
 				String date = time.attr(ElementTags.DATETIME.value());
 				///////////////
-				NewsArticle theArticle = generateNewsArticleObject(articleUrl, title, "", bodyBuilder.toString(), date);
+				NewsArticle theArticle = generateNewsArticleObject(articleUrl, title, bodyBuilder.toString().substring(0,60), bodyBuilder.toString(), date);
 				System.out.println(theArticle.toString());
 				/////////////////
-				articleList.add(generateNewsArticleObject(articleUrl, title, "", bodyBuilder.toString(), date));
+				articleList.add(generateNewsArticleObject(articleUrl, title, bodyBuilder.toString().substring(0,60), bodyBuilder.toString(), date));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

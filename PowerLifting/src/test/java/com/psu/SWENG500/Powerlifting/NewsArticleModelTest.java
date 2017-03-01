@@ -1,5 +1,6 @@
 package com.psu.SWENG500.Powerlifting;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -21,5 +22,17 @@ public class NewsArticleModelTest extends TestCase {
 		List<String> siteUrls = reader.getSiteList();
 		List<NewsArticle> articleList = articleModel.retrieveArticlesFromSiteUrls(siteUrls);
 		assertNotNull(articleList);
+	}
+	
+	@Test
+	public void testNullSiteUrls() {
+		List<NewsArticle> articleList = articleModel.retrieveArticlesFromSiteUrls(null);
+		assertNull(articleList);
+	}
+	
+	@Test
+	public void testNoSiteUrls() {
+		List<NewsArticle> articleList = articleModel.retrieveArticlesFromSiteUrls(new ArrayList<String>());
+		assertNull(articleList);
 	}
 }
