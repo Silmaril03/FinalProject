@@ -1,29 +1,23 @@
 package com.psu.SWENG500.Powerlifting.models;
 
-import java.util.Date;
-
 public class NewsArticle {
 	private String articleTitle;
 	
 	private String siteOrigin;
 	
-	private Date articleDate;
+	private String articleDate;
 	
 	private String articleShortDescription;
 	
-	private String articleContents;
+	private String bodyContents;
 	
-	public NewsArticle()
-	{
-	}
-	
-	public NewsArticle(String articleTitle, String siteOrigin, Date articleDate, String articleShortDescription, String articleContents)
+	public NewsArticle(String articleTitle, String siteOrigin, String articleDate, String articleShortDescription, String bodyContents)
 	{
 		this.articleTitle = articleTitle;
 		this.siteOrigin = siteOrigin;
 		this.articleDate = articleDate;
 		this.articleShortDescription = articleShortDescription;
-		this.articleContents = articleContents;
+		this.bodyContents = bodyContents;
 	}
 
 	public String getArticleTitle() {
@@ -42,11 +36,11 @@ public class NewsArticle {
 		this.siteOrigin = siteOrigin;
 	}
 
-	public Date getArticleDate() {
+	public String getArticleDate() {
 		return articleDate;
 	}
 
-	public void setArticleDate(Date articleDate) {
+	public void setArticleDate(String articleDate) {
 		this.articleDate = articleDate;
 	}
 
@@ -58,11 +52,17 @@ public class NewsArticle {
 		this.articleShortDescription = articleShortDescription;
 	}
 
-	public String getArticleContents() {
-		return articleContents;
+	public String getBodyContents() {
+		return bodyContents;
 	}
 
-	public void setArticleContents(String articleContents) {
-		this.articleContents = articleContents;
+	public void setBodyContents(String bodyContents) {
+		this.bodyContents = bodyContents;
+	}
+	
+	public String toString() {
+		return "SiteUrl: " + siteOrigin + "\nTitle: " + articleTitle + 
+				"\nShort Description: " + articleShortDescription + 
+				"\nBody: " + bodyContents + "\nDate: " + articleDate;
 	}
 }

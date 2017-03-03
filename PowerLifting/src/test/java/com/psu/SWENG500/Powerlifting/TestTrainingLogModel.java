@@ -1,8 +1,5 @@
 package com.psu.SWENG500.Powerlifting;
 
-import static org.junit.Assert.*;
-
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -12,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.psu.SWENG500.Powerlifting.models.*;
-import com.psu.SWENG500.Powerlifting.ejbs.*;
 
 public class TestTrainingLogModel
 {

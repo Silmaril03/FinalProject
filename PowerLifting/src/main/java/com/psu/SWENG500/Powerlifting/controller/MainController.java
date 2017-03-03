@@ -41,7 +41,8 @@ public class MainController implements Initializable {
 	
 	public ObservableList<String> exerciseList = FXCollections.observableArrayList("Squat", "Bench Press", "Deadlift","Press", "Barbell Row");
 	
-	@Override
+//	@Override
+	@FXML
 	public void initialize(URL location, ResourceBundle resources) {
 		exerciseComboBox.setItems(exerciseList);
 		exerciseComboBox.setValue("Squat");

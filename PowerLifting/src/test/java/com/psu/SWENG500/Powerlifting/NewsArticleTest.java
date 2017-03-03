@@ -1,7 +1,5 @@
 package com.psu.SWENG500.Powerlifting;
 
-import java.util.Date;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,11 +10,11 @@ import junit.framework.TestCase;
 public class NewsArticleTest extends TestCase {
 
 	private NewsArticle article;
-	private Date articleDate = new Date(1486174210416L);
+	private String date = "Feb 28 2017";
 	
 	@Before
 	public void setUp() throws Exception {
-		article = new NewsArticle("Title", "muscles.com", articleDate, "Short description", "Article contents.");
+		article = new NewsArticle("Title", "muscles.com", date, "Short description", "Article contents.");
 	}
 
 	@Test
@@ -31,8 +29,7 @@ public class NewsArticleTest extends TestCase {
 	
 	@Test
 	public void testArticleDateSuccess() {
-		long actualMilliseconds = articleDate.getTime();
-		assertEquals(actualMilliseconds, article.getArticleDate().getTime());
+		assertEquals(date, article.getArticleDate());
 	}
 	
 	@Test
@@ -42,6 +39,6 @@ public class NewsArticleTest extends TestCase {
 	
 	@Test
 	public void testArticleContentsSuccess() {
-		assertEquals("Article contents.", article.getArticleContents());
+		assertEquals("Article contents.", article.getBodyContents());
 	}
 }

@@ -2,7 +2,6 @@ package com.psu.SWENG500.Powerlifting.models;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,17 +12,16 @@ import org.jsoup.select.Elements;
 
 public class NewsArticleModel {
 	
-	public List<NewsArticle> retrieveArticlesFromSiteUrls(List<String> siteNames) {
-		if(siteNames == null) {
+	public List<NewsArticle> retrieveArticlesFromSiteUrls(List<String> siteUrls) {
+		if(siteUrls == null || siteUrls.isEmpty()) {
 			System.out.println("No site URLs!");
 			return null;
 		}
 		
 		List<NewsArticle> articleList = new ArrayList<NewsArticle>();
-		for(String siteName: siteNames) {
+		for(String siteName: siteUrls) {
 			articleList.addAll(retrieveArticlesFromSite(siteName));
 		}
-		sortMostRecentArticles(articleList);
 		return articleList;
 	}
 	
@@ -34,8 +32,8 @@ public class NewsArticleModel {
 			Document doc = (Document) Jsoup.connect(siteName).timeout(3000).get();
 			Elements content = doc.getElementsByTag(ElementTags.ARTICLE.value());
 			
-			for(Element aticleLink: content) {
-				Elements elementA = aticleLink.getElementsByTag(ElementTags.A.value());
+			for(int i =0; i < 5; i++) {
+				Elements elementA = content.get(i).getElementsByTag(ElementTags.A.value());
 				articleUrls.add(elementA.attr(ElementTags.HREF.value()));
 			}
 			
@@ -62,10 +60,24 @@ public class NewsArticleModel {
 				Element header = content.getElementsByTag(ElementTags.H1.value()).first();
 				String title = header.text();
 				
+				Elements body = content.getElementsByTag(ElementTags.P.value());
+				StringBuilder bodyBuilder = new StringBuilder();
+				for(Element element: body){
+					String elementText = element.text();
+					bodyBuilder.append(elementText);
+					
+					if(!elementText.endsWith(" ")) {
+						bodyBuilder.append(" ");
+					}
+				}
+				
 				Element time = content.getElementsByTag(ElementTags.TIME.value()).first();
 				String date = time.attr(ElementTags.DATETIME.value());
-				
-				articleList.add(generateNewsArticleObject(articleUrl, title, "", "", new Date(1487449942430L)));
+				///////////////
+				NewsArticle theArticle = generateNewsArticleObject(articleUrl, title, bodyBuilder.toString().substring(0,60), bodyBuilder.toString(), date);
+				System.out.println(theArticle.toString());
+				/////////////////
+				articleList.add(generateNewsArticleObject(articleUrl, title, bodyBuilder.toString().substring(0,60), bodyBuilder.toString(), date));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -73,12 +85,7 @@ public class NewsArticleModel {
 		return articleList;
 	}
 	
-	private void sortMostRecentArticles(List<NewsArticle> articleList)
-	{
-		//TODO
-	}
-	
-	private NewsArticle generateNewsArticleObject(String siteUrl, String title, String shortDescription, String articleBody, Date articleDate) {
+	private NewsArticle generateNewsArticleObject(String siteUrl, String title, String shortDescription, String articleBody, String articleDate) {
 		return new NewsArticle(title, siteUrl, articleDate, shortDescription, articleBody);
 	}
 }
