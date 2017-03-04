@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 
 import com.psu.SWENG500.Powerlifting.controller.CalculatorController;
 import com.psu.SWENG500.Powerlifting.models.ImperialMeasurement;
+import com.psu.SWENG500.Powerlifting.models.converters.DecimalUtils;
 
 /**
  * @author Jason
@@ -13,7 +14,6 @@ import com.psu.SWENG500.Powerlifting.models.ImperialMeasurement;
  */
 public class CalculatorControllerTest extends TestCase {
 	private CalculatorController calc = new CalculatorController();
-	private int PRECISION = 10;
 
 	public CalculatorControllerTest(String testName) {
 		super(testName);
@@ -25,7 +25,7 @@ public class CalculatorControllerTest extends TestCase {
 
 		ImperialMeasurement lifting = new ImperialMeasurement();
 		lifting.setWeight(new Double(400));
-		double total = calc.CalcWilksScore(person, lifting, true);
+		double total = calc.calculateWilks(person, lifting, true);
 
 		total = Math.round(total);
 
@@ -34,18 +34,34 @@ public class CalculatorControllerTest extends TestCase {
 		assertEquals(139.0, total);
 	}
 
-	public void testBodyMass() {
+	public void testBodyMassIndex() {
 		ImperialMeasurement person = new ImperialMeasurement();
 		person.setHeight(new Double(72));
 		person.setWeight(new Double(180));
-		Double bmi = calc.CalcBodyMass(person);
-		bmi = Math.floor(bmi * PRECISION + .5) / PRECISION;
+		Double bmi = calc.calculateBodyMassIndex(person);
+		bmi = DecimalUtils.round(bmi, 1);
 		assertNotNull(bmi);
 		assertEquals(24.4, bmi);
 
 		person = new ImperialMeasurement();
 		person.setHeight(new Double(72));
-		bmi = calc.CalcBodyMass(person);
+		bmi = calc.calculateBodyMassIndex(person);
 		assertNull(bmi);
+	}
+	
+	public void testBodyFatPercentage(){
+		//MALE
+		ImperialMeasurement person = new ImperialMeasurement(72,190, 30.5);
+		Double leanBodyMass = calc.calculateBodyFatPercentage(person, true);
+		leanBodyMass = DecimalUtils.round(leanBodyMass, 2);
+		assertNotNull(leanBodyMass);
+		assertEquals(8.72, leanBodyMass);
+		
+		//FEMALE
+		person = new ImperialMeasurement(72,125,24,6,38,9.5);
+		leanBodyMass = calc.calculateBodyFatPercentage(person, false);
+		leanBodyMass = DecimalUtils.round(leanBodyMass, 2);
+		assertNotNull(leanBodyMass);
+		assertEquals(25.37, leanBodyMass);
 	}
 }

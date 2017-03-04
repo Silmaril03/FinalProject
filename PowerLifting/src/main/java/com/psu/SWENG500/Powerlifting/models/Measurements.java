@@ -11,6 +11,10 @@ package com.psu.SWENG500.Powerlifting.models;
  */
 public abstract class Measurements {
 	private Double height;
+	private Double waist;
+	private Double hip;
+	private Double wrist;
+	private Double forearm;
 	private Double weight;
 	protected MeasurementType measurementType;
 
@@ -21,9 +25,45 @@ public abstract class Measurements {
 	public void setHeight(Double height) {
 		this.height = height;
 	}
+	
+	public Double getWaist() {
+		return waist;
+	}
+
+	public void setWaist(Double waist) {
+		this.waist = waist;
+	}
 
 	public Double getWeight() {
 		return weight;
+	}
+
+	public Double getHip() {
+		return hip;
+	}
+
+	public void setHip(Double hip) {
+		this.hip = hip;
+	}
+
+	public Double getWrist() {
+		return wrist;
+	}
+
+	public void setWrist(Double wrist) {
+		this.wrist = wrist;
+	}
+
+	public Double getForearm() {
+		return forearm;
+	}
+
+	public void setForearm(Double forearm) {
+		this.forearm = forearm;
+	}
+
+	public void setMeasurementType(MeasurementType measurementType) {
+		this.measurementType = measurementType;
 	}
 
 	public void setWeight(Double weight) {
