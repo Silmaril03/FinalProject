@@ -82,6 +82,9 @@ public class CalculatorController extends CalculatorView {
 		return false;
 	}
 	
+	/*
+	 * Taken from http://www.davedraper.com/bodyfat-calculation.html
+	*/
 	@Override
 	public Double calculateLeanBodyMass(Measurements person, boolean male) {
 		Double waist = person.getWaist();
@@ -150,6 +153,9 @@ public class CalculatorController extends CalculatorView {
 		return fatPercentage;
 	}
 
+	/*
+	 * Taken from http://www.davedraper.com/bodyfat-calculation.html
+	*/
 	@Override
 	public Double calculateBodyFatPercentage(Measurements person, boolean male) {
 		Double fatPercentage = calculateLeanBodyMass(person, male);
