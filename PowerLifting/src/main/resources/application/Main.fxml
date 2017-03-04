@@ -1,28 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
 
-<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.psu.SWENG500.Powerlifting.controller.MainController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.psu.SWENG500.Powerlifting.controller.MainController">
    <children>
-      <Button fx:id="addExerciseButton" layoutX="394.0" layoutY="49.0" mnemonicParsing="false" onAction="#addExerciseButtonPressed" text="Add Exercise" />
-      <Button fx:id="logWorkoutButton" layoutX="400.0" layoutY="420.0" mnemonicParsing="false" text="Log Workout" />
-      <ListView fx:id="listView" layoutX="41.0" layoutY="100.0" onMouseClicked="#listViewClicked" onMouseDragged="#listViewClicked" prefHeight="351.0" prefWidth="318.0" />
-      <ComboBox fx:id="exerciseComboBox" layoutX="50.0" layoutY="49.0" prefWidth="150.0" />
-      <Button fx:id="deleteExerciseButton" layoutX="388.0" layoutY="94.0" mnemonicParsing="false" onAction="#deleteExerciseButtonPressed" text="Delete Exercise" />
-      <ButtonBar layoutX="278.0" layoutY="135.0" prefHeight="40.0" prefWidth="200.0">
-        <buttons>
-          <Button fx:id="addSetButton" mnemonicParsing="false" onAction="#addSetButtonPressed" text="Add Set" />
-        </buttons>
-      </ButtonBar>
-      <TextField fx:id="repsTextField" layoutX="413.0" layoutY="238.0" prefHeight="25.0" prefWidth="60.0" />
-      <TextField fx:id="weightTextField" layoutX="413.0" layoutY="327.0" prefHeight="25.0" prefWidth="60.0" />
-      <Label layoutX="429.0" layoutY="221.0" text="Reps" />
-      <Label layoutX="423.0" layoutY="310.0" text="Weight" />
+      <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Main">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Interactive Powerlifting Journal" wrappingWidth="384.13671875">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Workout Log">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <DatePicker fx:id="workoutDate" layoutX="33.0" layoutY="41.0" promptText="Select Date" />
+                        <TableView fx:id="workoutTable" editable="true" layoutX="33.0" layoutY="87.0" prefHeight="461.0" prefWidth="505.0">
+                          <columns>
+                            <TableColumn prefWidth="267.0" sortable="false" text="Exercise" />
+                            <TableColumn prefWidth="62.0" text="Set" />
+                              <TableColumn prefWidth="101.0" text="Weight" />
+                              <TableColumn prefWidth="74.0" text="Reps" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="removeExercise" layoutX="597.0" layoutY="141.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="Remove Exercise" />
+                        <Button fx:id="addSet" layoutX="597.0" layoutY="193.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="157.0" text="Add Set" />
+                        <Button fx:id="removeSet" layoutX="601.0" layoutY="317.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Delete Set" />
+                        <Button fx:id="logWorkout" layoutX="601.0" layoutY="475.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="153.0" text="Save Workout" />
+                        <ComboBox fx:id="addExercise" layoutX="597.0" layoutY="86.0" prefHeight="25.0" prefWidth="158.0" promptText="Choose Exercise" />
+                        <ScrollBar fx:id="workoutScrollBar" layoutX="538.0" layoutY="86.0" orientation="VERTICAL" prefHeight="462.0" prefWidth="14.0" />
+                        <TextField fx:id="weightTextBox" layoutX="689.0" layoutY="239.0" prefHeight="25.0" prefWidth="61.0" />
+                        <Label layoutX="626.0" layoutY="243.0" text="Weight" />
+                        <TextField fx:id="repsTextBox" layoutX="689.0" layoutY="273.0" prefHeight="25.0" prefWidth="61.0" />
+                        <Label layoutX="632.0" layoutY="277.0" text="Reps" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Statistics">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <LineChart fx:id="exerciseLineChart" layoutX="14.0" layoutY="125.0" prefHeight="322.0" prefWidth="347.0">
+                          <xAxis>
+                            <CategoryAxis label="Date" side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis label="Max Weight Lifted" side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                        <LineChart fx:id="bodyCompositionLineChart" layoutX="393.0" layoutY="126.0" prefHeight="320.0" prefWidth="365.0">
+                          <xAxis>
+                            <CategoryAxis label="Date" side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                        <ComboBox fx:id="exerciseComboBox" layoutX="77.0" layoutY="50.0" prefWidth="150.0" promptText="Select Exercise" />
+                        <ComboBox fx:id="bodyCompositionComboBox" layoutX="437.0" layoutY="50.0" prefWidth="150.0" promptText="Select" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Articles">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <WebView fx:id="webView" layoutY="58.0" prefHeight="510.0" prefWidth="525.0" />
+                        <Label fx:id="article1" layoutX="574.0" layoutY="55.0" prefHeight="139.0" prefWidth="199.0" text="Article 1" />
+                        <Label fx:id="article2" layoutX="574.0" layoutY="194.0" prefHeight="140.0" prefWidth="199.0" text="Article 2" />
+                        <Label fx:id="article3" layoutX="574.0" layoutY="334.0" prefHeight="139.0" prefWidth="200.0" text="Article 3" />
+                        <ScrollBar fx:id="articleScrollBar" layoutX="531.0" layoutY="55.0" orientation="VERTICAL" prefHeight="516.0" prefWidth="14.0" />
+                        <TextField fx:id="searchTextBox" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="397.0" promptText="Search" />
+                        <Button fx:id="searchButton" layoutX="435.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Search" />
+                        <ComboBox fx:id="searchHistory" layoutX="574.0" layoutY="14.0" prefWidth="150.0" promptText="Search History" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
