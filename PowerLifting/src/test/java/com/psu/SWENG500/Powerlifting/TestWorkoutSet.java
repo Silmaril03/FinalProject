@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.psu.SWENG500.Powerlifting.ejbs.*;
 import com.psu.SWENG500.Powerlifting.models.Exercise;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
 

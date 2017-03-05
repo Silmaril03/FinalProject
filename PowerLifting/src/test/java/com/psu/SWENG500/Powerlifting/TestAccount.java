@@ -14,8 +14,8 @@ public class TestAccount
 	public void testName()
 	{
 		tempAccount = new Account();
-		tempAccount.setName("John Smith");
-		Assert.assertEquals("John Smith", tempAccount.getName());
+		tempAccount.setFirstName("John");
+		Assert.assertEquals("John", tempAccount.getFirstName());
 	}
 	
 	@Test
@@ -66,21 +66,21 @@ public class TestAccount
 		Assert.assertEquals("1234567890", tempAccount.getMfpPwd());
 	}
 	
-	@Test
-	public void testUsername()
-	{
-		tempAccount = new Account();
-		tempAccount.setUsername("JoSmith");
-		Assert.assertEquals("JoSmith", tempAccount.getUsername());
-	}
+//	@Test
+//	public void testUsername()
+//	{
+//		tempAccount = new Account();
+//		tempAccount.setUsername("JoSmith");
+//		Assert.assertEquals("JoSmith", tempAccount.getUsername());
+//	}
 	
-	@Test
-	public void testPassword()
-	{
-		tempAccount = new Account();
-		tempAccount.setPassword("1234567890");
-		Assert.assertEquals("1234567890", tempAccount.getPassword());
-	}
+//	@Test
+//	public void testPassword()
+//	{
+//		tempAccount = new Account();
+//		tempAccount.setPassword("1234567890");
+//		Assert.assertEquals("1234567890", tempAccount.getPassword());
+//	}
 	
 	@Test
 	public void testHeight()
@@ -90,13 +90,13 @@ public class TestAccount
 		Assert.assertEquals(65, tempAccount.getHeight(), 0);
 	}
 	
-	@Test
-	public void testCreateAccount()
-	{
-		tempAccount = new Account();
-		tempAccount.CreateAccount("JSmith", "12345");
-		Assert.assertEquals("JSmith", tempAccount.getUsername());
-	}
+//	@Test
+//	public void testCreateAccount()
+//	{
+//		tempAccount = new Account();
+//		tempAccount.CreateAccount("JSmith", "12345");
+//		Assert.assertEquals("JSmith", tempAccount.getUsername());
+//	}
 	
 	@Test
 	public void testModifyAccount()

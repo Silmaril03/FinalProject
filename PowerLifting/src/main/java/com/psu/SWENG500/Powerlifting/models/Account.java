@@ -2,16 +2,18 @@ package com.psu.SWENG500.Powerlifting.models;
 
 public class Account
 {
-	String name;
-	String nickname;
-	String emailAddress;
-	String phoneNumber;
-	String gender;
-	String mfpUsername;
-	String mfpPwd;
-	String username;
-	String password;
-	double height;
+	private int userId;
+	private String firstName;
+	private String lastName;
+	private String nickname;
+	private String emailAddress;
+	private String phoneNumber;
+	private String gender;
+	private String mfpUsername;
+	private String mfpPwd;
+	//private String username;
+	//private String password;
+	private double height;
 	
 	public Account()
 	{
@@ -22,17 +24,18 @@ public class Account
 		return new Account();
 	}
 	
-	public void ModifyAccount(String name, String nickname, String emailAddress, String phoneNumber, String gender, String mfpUsername, String mfpPwd, String username, String password, double height)
+	//public void ModifyAccount(String firstName, String nickname, String emailAddress, String phoneNumber, String gender, String mfpUsername, String mfpPwd, String username, String password, double height)
+	public void ModifyAccount(String firstName, String nickname, String emailAddress, String phoneNumber, String gender, String mfpUsername, String mfpPwd, double height)
 	{
-		this.name = name;
+		this.firstName = firstName;
 		this.nickname = nickname;
 		this.emailAddress = emailAddress;
 		this.phoneNumber = phoneNumber;
 		this.gender = gender;
 		this.mfpUsername = mfpUsername;
 		this.mfpPwd = mfpPwd;
-		this.username = username;
-		this.password = password;
+		//this.username = username;
+		//this.password = password;
 		this.height = height;
 	}
 	
@@ -46,16 +49,36 @@ public class Account
 		return false;
 	}
 	
-	public String getName()
+	public int getUserId()
 	{
-		return name;
+		return this.userId;
 	}
 
-	public void setName(String name)
+	public void setUserId(int userId)
 	{
-		this.name = name;
+		this.userId = userId;
 	}
 
+	public String getFirstName()
+	{
+		return this.firstName;
+	}
+
+	public void setFirstName(String firstName)
+	{
+		this.firstName = firstName;
+	}
+	
+	public String getLastName()
+	{
+		return this.lastName;
+	}
+
+	public void setLastName(String lastName)
+	{
+		this.lastName = lastName;
+	}
+	
 	public String getNickname()
 	{
 		return nickname;
@@ -116,25 +139,25 @@ public class Account
 		this.mfpPwd = mfpPwd;
 	}
 	
-	public String getUsername()
-	{
-		return username;
-	}
+	//public String getUsername()
+	//{
+	//	return username;
+	//}
 
-	public void setUsername(String username)
-	{
-		this.username = username;
-	}
+	//public void setUsername(String username)
+	//{
+	//	this.username = username;
+	//}
 
-	public String getPassword()
-	{
-		return password;
-	}
+	//public String getPassword()
+	//{
+	//	return password;
+	//}
 
-	public void setPassword(String password)
-	{
-		this.password = password;
-	}
+	//public void setPassword(String password)
+	//{
+	//	this.password = password;
+	//}
 
 	public double getHeight()
 	{

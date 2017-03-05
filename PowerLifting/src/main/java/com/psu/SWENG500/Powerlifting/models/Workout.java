@@ -1,38 +1,90 @@
 package com.psu.SWENG500.Powerlifting.models;
 
-import java.util.Calendar;
+import java.util.*;
 
-public class Workout {
+public class Workout
+{
+	private int workoutId;
+	//private int totalExercises;
+	//private int totalVolume;
+	private String description;
+	private Calendar calendar;
+	private List<WorkoutSet> workoutSets;
 	
-	int totalExercises;
-	int totalVolume;
-	Calendar calendar;
-	
-	public Workout() {
+	public Workout()
+	{
+		this.workoutSets = new ArrayList<WorkoutSet>();
 	}
 	
-	public Calendar getDate() {
-		// get date
-		return calendar;
+	public int getWorkoutId()
+	{
+		return this.workoutId;
 	}
 	
-	public void addExercise(Exercise exercise) {
-		// add exercise
+	public void setWorkoutId(int workoutId)
+	{
+		this.workoutId = workoutId;
 	}
 	
-	public void deleteExercise(Exercise exercise) {
-		// delete exercise
+	public String getDescription()
+	{
+		return this.description;
 	}
 	
-	public void addCustomExercise(String exerciseName) {
-		// add custom exercise
+	public void setDescription(String description)
+	{
+		this.description = description;
 	}
 	
-	public void getTotalExercises() {
-		// get total exercises
+	public Calendar getDate()
+	{
+		return this.calendar;
 	}
 	
-	public void setTotalExercises() {
-		// set total exercises
+	public void setDate(Calendar calendar)
+	{
+		this.calendar = calendar;
 	}
+	
+	public void addSet(WorkoutSet set)
+	{
+		this.workoutSets.add(set);
+	}
+	
+	public void deleteSet(WorkoutSet set)
+	{
+		this.workoutSets.remove(set);
+	}
+	
+//	public void addExercise(Exercise exercise)
+//	{
+//		this.sets.add()
+//		//this.exercises.add(exercise);
+//	}
+//	
+//	public void deleteExercise(Exercise exercise)
+//	{
+//		//this.exercises.remove(exercise);
+//	}
+//	
+//	public void addCustomExercise(String exerciseName)
+//	{
+//		// add custom exercise
+//	}
+	
+	public int getTotalExercises()
+	{
+		//return this.exercises.size();
+		return 0;
+	}
+	
+	public double getTotalVolume()
+	{
+		// Calculate total volume from exercises
+		return 0;
+	}
+	//public void setTotalExercises()
+	//{
+	//	// set total exercises
+	//}
 }

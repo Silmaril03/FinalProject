@@ -2,20 +2,19 @@ package com.psu.SWENG500.Powerlifting.models;
 
 public class WorkoutSet
 {
-	int setNumber;
-	double weightLifted;
-	int repCount;
-	boolean isNewPR;
-	Exercise exercise;
+	private int setNumber;
+	private double weightLifted;
+	private int repCount;
+	private boolean isNewPR;
+	private Exercise exercise;
 	
 	public WorkoutSet()
 	{
-		
 	}
 
 	public int getSetNumber()
 	{
-		return setNumber;
+		return this.setNumber;
 	}
 
 	public void setSetNumber(int setNumber)
@@ -25,7 +24,7 @@ public class WorkoutSet
 
 	public double getWeightLifted()
 	{
-		return weightLifted;
+		return this.weightLifted;
 	}
 
 	public void setWeightLifted(double weightLifted)
@@ -35,7 +34,7 @@ public class WorkoutSet
 
 	public int getRepCount()
 	{
-		return repCount;
+		return this.repCount;
 	}
 
 	public void setRepCount(int repCount)
@@ -45,7 +44,7 @@ public class WorkoutSet
 
 	public boolean getIsNewPR()
 	{
-		return isNewPR;
+		return this.isNewPR;
 	}
 
 	public void setIsNewPR(boolean isNewPR)
@@ -55,7 +54,7 @@ public class WorkoutSet
 
 	public Exercise getExercise()
 	{
-		return exercise;
+		return this.exercise;
 	}
 
 	public void setExercise(Exercise exercise)

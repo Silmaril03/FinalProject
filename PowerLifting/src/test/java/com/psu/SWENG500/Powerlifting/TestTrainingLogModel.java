@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.psu.SWENG500.Powerlifting.models.*;
-import com.psu.SWENG500.Powerlifting.ejbs.*;
 
 public class TestTrainingLogModel
 {
@@ -23,11 +22,11 @@ public class TestTrainingLogModel
 	{
 		trainingLog = new TrainingLogModel();
 		Workout t1 = new Workout();
-		t1.addExercise(null);
+		//t1.addExercise(null);
 		Workout t2 = new Workout();
-		t2.addExercise(null);
+		//t2.addExercise(null);
 		Workout t3 = new Workout();
-		t3.addExercise(null);
+		//t3.addExercise(null);
 	}
 	
 	@Test
