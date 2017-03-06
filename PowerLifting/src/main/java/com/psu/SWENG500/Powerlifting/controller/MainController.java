@@ -45,15 +45,17 @@ public class MainController implements Initializable {
 	ObservableList<String> exerciseList = FXCollections.observableArrayList("Back Extension", 
 				"Bench Press, Barbell", "Bench Press, Close Grip", "Bench Press, Dumbbell",
 				"Biceps Curl, Barbell", "Biceps Curl, Dumbbell", "Bulgarian Split Squat", "Chin-up",
-				"Dead Bench", "Deadlift, Barbell", "Deadlift, Trap Bar", "Deficit Deadlift", 
+				"Dead Bench", "Deadlift, Barbell", "Deadlift, Deficit", "Deadlift, Romanian",  
+				"Deadlift, Stiff-legged", "Deadlift, Trap Bar",
 				"Dip, Bench", "Dip, Parallel Bar", "Dip, Ring",
 				"Face Pull, Cable", "Glute-Ham Raise", "Good Morning, Barbell",
 				"Hammer Curl", "Hip Thrust, Barbell", "Lat Pull", "Lunge", "Pin Squat",
-				"Press, Barbell", "Press, Dumbbell", "Pull-up", "Rack Pull", "Reverse Hyper", "Romanian Deadlift", 
+				"Press, Barbell", "Press, Dumbbell", "Pull-up", "Rack Pull", "Reverse Hyper", 
 				"Row, Barbell", "Row, Cable",
 				"Row, Dumbbell", "Row, T-Bar", 
-				"Skull Crusher", "Spoto Press", "Squat, Barbell", "Stiff-legged Deadlift", "Triceps Extension, Cable");
-	ObservableList<String> bodyCompositionList = FXCollections.observableArrayList("Wilks Score", "Body Mass Index (BMI)", "Body Fat Percentage", "Lean Body Mass");
+				"Skull Crusher", "Spoto Press", "Squat, Barbell", "Triceps Extension, Cable");
+	ObservableList<String> bodyCompositionList = FXCollections.observableArrayList("Wilks Score", 
+			"Body Mass Index (BMI)", "Body Fat Percentage", "Lean Body Mass", "Total Volume");
 	
 //	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
