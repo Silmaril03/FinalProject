@@ -31,6 +31,11 @@
                               <Font size="24.0" />
                            </font>
                         </Text>
+                        <TextField fx:id="usernameTextField" layoutX="326.0" layoutY="193.0" />
+                        <TextField fx:id="passwordTextField" layoutX="324.0" layoutY="251.0" />
+                        <Label layoutX="324.0" layoutY="176.0" text="Username" />
+                        <Label layoutX="324.0" layoutY="234.0" text="Password" />
+                        <Button fx:id="loginButton" layoutX="325.0" layoutY="312.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="146.0" text="Login" />
                      </children>
                   </AnchorPane>
             </content>
@@ -100,6 +105,25 @@
                         <TextField fx:id="searchTextBox" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="397.0" promptText="Search" />
                         <Button fx:id="searchButton" layoutX="435.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Search" />
                         <ComboBox fx:id="searchHistory" layoutX="574.0" layoutY="14.0" prefWidth="150.0" promptText="Search History" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Measurements">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <DatePicker fx:id="measurementsDate" layoutX="45.0" layoutY="37.0" promptText="Select Date" />
+                        <ComboBox fx:id="heightInFeetComboBox" layoutX="46.0" layoutY="109.0" prefWidth="150.0" promptText="feet" />
+                        <Label layoutX="45.0" layoutY="92.0" text="Height" />
+                        <TextField fx:id="weightTextField" layoutX="46.0" layoutY="176.0" />
+                        <TextField fx:id="neckTextField" layoutX="46.0" layoutY="239.0" />
+                        <TextField fx:id="waistTextField" layoutX="46.0" layoutY="303.0" />
+                        <Button fx:id="saveMeasurementsButton" layoutX="601.0" layoutY="475.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="153.0" text="Save Measurements" />
+                        <Label layoutX="44.0" layoutY="159.0" text="Weight in pounds" />
+                        <Label layoutX="44.0" layoutY="222.0" text="Neck circumference, inches" />
+                        <Label layoutX="44.0" layoutY="286.0" text="Waist circumference, inches" />
+                        <ComboBox fx:id="heightInInchesComboBox" layoutX="211.0" layoutY="109.0" prefWidth="150.0" promptText="inches" />
                      </children>
                   </AnchorPane>
               </content>
