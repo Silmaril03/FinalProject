@@ -1,5 +1,7 @@
 package com.psu.SWENG500.Powerlifting;
 
+import static org.junit.Assert.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 
