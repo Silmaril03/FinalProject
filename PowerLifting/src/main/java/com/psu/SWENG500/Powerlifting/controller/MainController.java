@@ -4,76 +4,70 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.scene.web.WebView;
 
 public class MainController implements Initializable {
+	@FXML private ScrollBar workoutScrollBar;
+	@FXML private TableView<String> workoutTable;
+	@FXML private TextField weightTextBox;
+	@FXML private TextField repsTextBox;
+	@FXML private ComboBox<String> addExercise;
+	@FXML private Button removeExercise;
+	@FXML private Button addSet;
+	@FXML private Button removeSet;
+	@FXML private Button logWorkout;
+	@FXML private DatePicker workoutDate;
+	@FXML LineChart<String, Number> exerciseLineChart;
+	@FXML LineChart<String, Number> bodyCompositionLineChart;
+	@FXML private ComboBox<String> exerciseComboBox;
+	@FXML private ComboBox<String> bodyCompositionComboBox;
+	@FXML private TextField searchTextBox;
+	@FXML private Button searchButton;
+	@FXML private ComboBox<String> searchHistory;
+	@FXML private WebView webView;
+	@FXML private ScrollBar articleScrollBar;
+	@FXML private Label article1;
+	@FXML private Label article2;
+	@FXML private Label article3;
 	
-	@FXML
-	public Button addExerciseButton = new Button();
+	ObservableList<String> exerciseList = FXCollections.observableArrayList("Back Extension", 
+				"Bench Press, Barbell", "Bench Press, Close Grip", "Bench Press, Dumbbell",
+				"Biceps Curl, Barbell", "Biceps Curl, Dumbbell", "Bulgarian Split Squat", "Chin-up",
+				"Dead Bench", "Deadlift, Barbell", "Deadlift, Deficit", "Deadlift, Romanian",  
+				"Deadlift, Stiff-legged", "Deadlift, Trap Bar",
+				"Dip, Bench", "Dip, Parallel Bar", "Dip, Ring",
+				"Face Pull, Cable", "Glute-Ham Raise", "Good Morning, Barbell",
+				"Hammer Curl", "Hip Thrust, Barbell", "Lat Pull", "Lunge", "Pin Squat",
+				"Press, Barbell", "Press, Dumbbell", "Pull-up", "Rack Pull", "Reverse Hyper", 
+				"Row, Barbell", "Row, Cable",
+				"Row, Dumbbell", "Row, T-Bar", 
+				"Skull Crusher", "Spoto Press", "Squat, Barbell", "Triceps Extension, Cable");
+	ObservableList<String> bodyCompositionList = FXCollections.observableArrayList("Wilks Score", 
+			"Body Mass Index (BMI)", "Body Fat Percentage", "Lean Body Mass", "Total Volume");
 	
-	@FXML
-	public Button deleteExerciseButton = new Button();
-	
-	@FXML
-	public Button logWorkoutButton = new Button();
-	
-	@FXML
-	public Button addSetButton = new Button();
-	
-	@FXML
-	public ComboBox<String> exerciseComboBox = new ComboBox<String>();
-	
-	@FXML
-	public ListView<String> listView = new ListView<String>();
-	
-	@FXML
-	public TextField repsTextField = new TextField();
-	
-	@FXML
-	public TextField weightTextField = new TextField();
-	
-	public ObservableList<String> exerciseList = FXCollections.observableArrayList("Squat", "Bench Press", "Deadlift","Press", "Barbell Row");
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		exerciseComboBox.setItems(exerciseList);
-		exerciseComboBox.setValue("Squat");
-		listView.setSelectionModel(null);
-			
-	}
-	
-	public void addExerciseButtonPressed (ActionEvent event) {
-		listView.getItems().add(exerciseComboBox.getValue());
-	}
-	
-	public void listViewClicked (ActionEvent event) {
+//	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		addExercise.getItems().addAll(exerciseList);
+		exerciseComboBox.getItems().addAll(exerciseList);
+		bodyCompositionComboBox.getItems().addAll(bodyCompositionList);
 		
 	}
 	
-	public void deleteExerciseButtonPressed (ActionEvent event) {
-		listView.getItems().removeAll(exerciseList);
-	}
-	
-	public void logWorkoutButtonPressed (ActionEvent event) {
-		System.exit(0);
-	}
-	
-	public void addSetButtonPressed (ActionEvent event) {
-		if (repsTextField.getText() != null && weightTextField.getText() != null){
-			StringBuilder line = new StringBuilder();
-			line.append(repsTextField.getText()).append(" x ").append(weightTextField.getText());
-			listView.getItems().add(line.toString());
-		}
-		}
-	}
-	
-	
-	
 
+	
+	
+	
+	
+}
