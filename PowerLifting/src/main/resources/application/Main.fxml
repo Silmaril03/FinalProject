@@ -17,6 +17,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
+<?import javafx.scene.control.cell.*?> 
+<?import javafx.collections.*?>
+<?import com.psu.SWENG500.Powerlifting.models.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.psu.SWENG500.Powerlifting.controller.MainController">
    <children>
@@ -47,14 +50,26 @@
                         <DatePicker fx:id="workoutDate" layoutX="33.0" layoutY="41.0" promptText="Select Date" />
                         <TableView fx:id="workoutTable" editable="true" layoutX="33.0" layoutY="87.0" prefHeight="461.0" prefWidth="505.0">
                           <columns>
-                            <TableColumn prefWidth="267.0" sortable="false" text="Exercise" />
-                            <TableColumn prefWidth="62.0" text="Set" />
-                              <TableColumn prefWidth="101.0" text="Weight" />
-                              <TableColumn prefWidth="74.0" text="Reps" />
+                          	<TableColumn prefWidth="62.0" text="Set" >
+                          		<cellValueFactory><PropertyValueFactory property="setNumber" />
+         						</cellValueFactory>
+         					</TableColumn>
+                            <TableColumn prefWidth="267.0" sortable="false" text="Exercise">
+                            	<cellValueFactory><PropertyValueFactory property="exercise" />
+         						</cellValueFactory>
+         					</TableColumn>
+                            <TableColumn prefWidth="101.0" text="Weight" >
+                            	<cellValueFactory><PropertyValueFactory property="weightLifted"/>
+         						</cellValueFactory>
+         					</TableColumn>
+                            <TableColumn prefWidth="74.0" text="Reps" >
+                            	<cellValueFactory><PropertyValueFactory property="repCount"/>
+         						</cellValueFactory>
+         					</TableColumn>
                           </columns>
                         </TableView>
                         <Button fx:id="removeExercise" layoutX="597.0" layoutY="141.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="Remove Exercise" />
-                        <Button fx:id="addSet" layoutX="597.0" layoutY="193.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="157.0" text="Add Set" />
+                        <Button fx:id="addSet" layoutX="597.0" layoutY="193.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="157.0" onAction="#addSetButtonAction" text="Add Set"/>
                         <Button fx:id="removeSet" layoutX="601.0" layoutY="317.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Delete Set" />
                         <Button fx:id="logWorkout" layoutX="601.0" layoutY="475.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="153.0" text="Save Workout" />
                         <ComboBox fx:id="addExercise" layoutX="597.0" layoutY="86.0" prefHeight="25.0" prefWidth="158.0" promptText="Choose Exercise" />

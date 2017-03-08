@@ -56,6 +56,11 @@ public class Workout
 		this.workoutSets.remove(set);
 	}
 	
+	public int getNumberSets()
+	{
+		return workoutSets.size();
+	}
+	
 //	public void addExercise(Exercise exercise)
 //	{
 //		this.sets.add()
