@@ -1,10 +1,18 @@
 package com.psu.SWENG500.Powerlifting.controller;
 
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Observable;
 import java.util.ResourceBundle;
+
+import com.psu.SWENG500.Powerlifting.models.Exercise;
+import com.psu.SWENG500.Powerlifting.models.Workout;
+import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
@@ -22,7 +30,7 @@ public class MainController implements Initializable {
 	@FXML private TextField passwordTextField;
 	@FXML private Button loginButton;
 	@FXML private ScrollBar workoutScrollBar;
-	@FXML private TableView<String> workoutTable;
+	@FXML private TableView<WorkoutSet> workoutTable;
 	@FXML private TextField weightTextBox;
 	@FXML private TextField repsTextBox;
 	@FXML private ComboBox<String> addExercise;
@@ -71,19 +79,33 @@ public class MainController implements Initializable {
 			"2 inches", "3 inches", "4 inches", "5 inches", "6 inches", "7 inches", "8 inches", "9 inches",
 			"10 inches", "11 inches");
 		
+	private TrainingLogController trainingLogController = new TrainingLogController();
+	private ObservableList<WorkoutSet> setList = FXCollections.observableArrayList();
 	
-	
-	@Override
+	@FXML
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		addExercise.getItems().addAll(exerciseList);
 		exerciseComboBox.getItems().addAll(exerciseList);
 		bodyCompositionComboBox.getItems().addAll(bodyCompositionList);
 		heightInFeetComboBox.getItems().addAll(heightInFeetList);
 		heightInInchesComboBox.getItems().addAll(heightInInchesList);
+		workoutTable.setItems(setList);
 		
 	}
 	
-
+	@FXML
+	public void addSetButtonAction(ActionEvent event){
+		
+		
+		WorkoutSet workoutSet = new WorkoutSet();
+		workoutSet.setExercise(addExercise.getValue());
+		workoutSet.setRepCount(Integer.parseInt(repsTextBox.getText()));
+		workoutSet.setWeightLifted(Double.parseDouble(weightTextBox.getText()));
+		int set = trainingLogController.getSet();
+		workoutSet.setSetNumber(set++);
+		trainingLogController.addWorkoutSet(workoutSet);
+		setList.add(workoutSet);
+	}
 	
 	
 	
