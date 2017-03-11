@@ -10,6 +10,7 @@ import com.psu.SWENG500.Powerlifting.application.ui.RestrictiveTextField;
 import com.psu.SWENG500.Powerlifting.models.Exercise;
 import com.psu.SWENG500.Powerlifting.models.Workout;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
+import com.psu.SWENG500.Powerlifting.models.ui.WorkoutSetUI;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +34,7 @@ public class MainController implements Initializable {
 	@FXML private PasswordField passwordTextField;
 	@FXML private Button loginButton;
 	@FXML private ScrollBar workoutScrollBar;
-	@FXML private TableView<WorkoutSet> workoutTable;
+	@FXML private TableView<WorkoutSetUI> workoutTable;
 	@FXML private RestrictiveTextField weightTextBox;
 	@FXML private RestrictiveTextField repsTextBox;
 	@FXML private ComboBox<String> addExercise;
@@ -88,7 +89,7 @@ public class MainController implements Initializable {
 			"10 inches", "11 inches");
 		
 	private TrainingLogController trainingLogController = new TrainingLogController();
-	private ObservableList<WorkoutSet> setList = FXCollections.observableArrayList();
+	private ObservableList<WorkoutSetUI> setList = FXCollections.observableArrayList();
 	
 	@FXML
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -109,14 +110,21 @@ public class MainController implements Initializable {
 	
 	@FXML
 	public void addSetButtonAction(ActionEvent event){
+		String exer = addExercise.getValue();
+		int rep = Integer.parseInt(repsTextBox.getText());
+		double weight = Double.parseDouble(weightTextBox.getText());
+		
 		WorkoutSet workoutSet = new WorkoutSet();
-		workoutSet.setExercise(addExercise.getValue());
-		workoutSet.setRepCount(Integer.parseInt(repsTextBox.getText()));
-		workoutSet.setWeightLifted(Double.parseDouble(weightTextBox.getText()));
+		Exercise exercise = new Exercise(exer);
+		workoutSet.setExercise(exercise);
+		workoutSet.setRepCount(rep);
+		workoutSet.setWeightLifted(weight);
 		int set = trainingLogController.getSet();
-		workoutSet.setSetNumber(set++);
+		workoutSet.setSetNumber(set);
 		trainingLogController.addWorkoutSet(workoutSet);
-		setList.add(workoutSet);
+		
+		WorkoutSetUI workoutUI = new WorkoutSetUI(set++, weight, rep, exer);
+		setList.add(workoutUI);
 	}
 	
 	@FXML

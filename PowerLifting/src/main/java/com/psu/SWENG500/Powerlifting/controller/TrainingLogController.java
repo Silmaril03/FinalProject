@@ -19,7 +19,7 @@ public class TrainingLogController {
 		workout = new Workout(calendar);
 	}
 	
-	public Workout getWorkout(Workout workout) {
+	public Workout getWorkout() {
 		return workout;
 	}
 	

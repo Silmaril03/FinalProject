@@ -1,18 +1,12 @@
 package com.psu.SWENG500.Powerlifting.models;
 
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.SimpleObjectProperty;
-
 public class WorkoutSet
 {
-	private SimpleStringProperty setNumber = new SimpleStringProperty("");
-	private SimpleDoubleProperty  weightLifted = new SimpleDoubleProperty();
-	private SimpleIntegerProperty  repCount = new SimpleIntegerProperty();
+	private int setNumber;
+	private double weightLifted;
+	private int repCount;
 	private boolean isNewPR;
-	private SimpleStringProperty exercise = new SimpleStringProperty("");
-//	private SimpleObjectProperty exercise = new SimpleObjectProperty();
+	private Exercise exercise;
 	
 	public WorkoutSet()
 	{
@@ -20,32 +14,32 @@ public class WorkoutSet
 
 	public int getSetNumber()
 	{
-		return Integer.parseInt(this.setNumber.getValue());
+		return this.setNumber;
 	}
 
 	public void setSetNumber(int setNumber)
 	{
-		this.setNumber.set(setNumber+"");;
+		this.setNumber = setNumber;
 	}
 
 	public double getWeightLifted()
 	{
-		return this.weightLifted.getValue();
+		return this.weightLifted;
 	}
 
 	public void setWeightLifted(double weightLifted)
 	{
-		this.weightLifted.set(weightLifted);
+		this.weightLifted = weightLifted;
 	}
 
 	public int getRepCount()
 	{
-		return this.repCount.getValue();
+		return this.repCount;
 	}
 
 	public void setRepCount(int repCount)
 	{
-		this.repCount.set(repCount);
+		this.repCount = repCount;
 	}
 
 	public boolean getIsNewPR()
@@ -58,13 +52,13 @@ public class WorkoutSet
 		this.isNewPR = isNewPR;
 	}
 
-	public String getExercise()
+	public Exercise getExercise()
 	{
-		return this.exercise.getValue();
+		return this.exercise;
 	}
 
-	public void setExercise(String exercise)
+	public void setExercise(Exercise exercise)
 	{
-		this.exercise.setValue(exercise);;
+		this.exercise = exercise;
 	}
 }

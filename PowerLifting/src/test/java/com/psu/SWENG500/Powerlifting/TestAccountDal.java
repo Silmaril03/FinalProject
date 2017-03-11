@@ -1,23 +1,18 @@
 package com.psu.SWENG500.Powerlifting;
 
-import static org.junit.Assert.*;
-
 import java.sql.SQLException;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.Assert;
-import org.junit.Before;
+import junit.framework.TestCase;
 
 import com.psu.SWENG500.Powerlifting.dal.*;
 import com.psu.SWENG500.Powerlifting.models.*;
 
-public class TestAccountDal
+public class TestAccountDal extends TestCase
 {
 	private Account testAccount;
 	private static final String TEST_DB = "TestDb";
 	
-	@Before
 	public void setUp() throws Exception
 	{
 		testAccount = new Account();
@@ -32,8 +27,7 @@ public class TestAccountDal
 		testAccount.setMfpPwd("testMfpPwd");
 	}
 	
-	@Test
-	public void TestCreateAccount()
+	public void testCreateAccount()
 	{
 		IAccountDAO dao = AccountDaoFactory.GetAccountDAO(TEST_DB);
 		Account a = null;
@@ -44,11 +38,10 @@ public class TestAccountDal
 		{
 			fail(e.getLocalizedMessage());
 		}
-		Assert.assertNotNull(a);
+		assertNotNull(a);
 	}
 	
-	@Test
-	public void TestGetAccount()
+	public void testGetAccount()
 	{
 		IAccountDAO dao = AccountDaoFactory.GetAccountDAO(TEST_DB);
 		Account a = null;
@@ -59,11 +52,10 @@ public class TestAccountDal
 		{
 			fail(e.getLocalizedMessage());
 		}
-		Assert.assertNotNull(a);
+		assertNotNull(a);
 	}
 	
-	@Test
-	public void TestGetAccountNotFound()
+	public void testGetAccountNotFound()
 	{
 		IAccountDAO dao = AccountDaoFactory.GetAccountDAO(TEST_DB);
 		Account a = null;
@@ -74,6 +66,6 @@ public class TestAccountDal
 		{
 			fail(e.getLocalizedMessage());
 		}
-		Assert.assertNull(a);
+		assertNull(a);
 	}
 }
