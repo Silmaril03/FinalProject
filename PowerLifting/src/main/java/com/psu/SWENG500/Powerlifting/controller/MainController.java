@@ -1,15 +1,20 @@
 package com.psu.SWENG500.Powerlifting.controller;
 
+import java.awt.ScrollPane;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
 import com.psu.SWENG500.Powerlifting.application.ui.RestrictiveTextField;
+import com.psu.SWENG500.Powerlifting.models.ConfigReader;
 import com.psu.SWENG500.Powerlifting.models.Exercise;
+import com.psu.SWENG500.Powerlifting.models.NewsArticleModel;
 import com.psu.SWENG500.Powerlifting.models.Workout;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
+import com.psu.SWENG500.Powerlifting.models.ui.NewsArticle;
 import com.psu.SWENG500.Powerlifting.models.ui.WorkoutSetUI;
 
 import javafx.collections.FXCollections;
@@ -27,6 +32,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 public class MainController implements Initializable {
@@ -52,9 +58,12 @@ public class MainController implements Initializable {
 	@FXML private ComboBox<String> searchHistory;
 	@FXML private WebView webView;
 	@FXML private ScrollBar articleScrollBar;
-	@FXML private Label article1;
-	@FXML private Label article2;
-	@FXML private Label article3;
+//	@FXML private Label article1;
+//	@FXML private Label article2;
+//	@FXML private Label article3;
+	@FXML private Button article1;
+	@FXML private Button article2;
+	@FXML private Button article3;
 	@FXML private DatePicker measurementsDate;
 	@FXML private ComboBox<String> heightInFeetComboBox;
 	@FXML private ComboBox<String> heightInInchesComboBox;
@@ -90,6 +99,8 @@ public class MainController implements Initializable {
 		
 	private TrainingLogController trainingLogController = new TrainingLogController();
 	private ObservableList<WorkoutSetUI> setList = FXCollections.observableArrayList();
+	private List<NewsArticle> articleList;
+	private NewsArticleController articleController = new NewsArticleController();
 	
 	@FXML
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -102,6 +113,8 @@ public class MainController implements Initializable {
 		usernameTextField.setRestrict("[0-9 | a-z]");
 		weightTextBox.setRestrict("-?((\\d*)|(\\d+\\.\\d*))");
 		repsTextBox.setRestrict("[0-9]");
+		
+		articleList = articleController.retrieveNewsArticleList();
 //		workoutTab.setDisable(true);
 //		articlesTab.setDisable(true);
 //		measurementsTab.setDisable(true);
@@ -135,5 +148,49 @@ public class MainController implements Initializable {
 		statisticsTab.setDisable(false);
 	}
 	
+	@FXML
+	public void readArticlesTabAction(ActionEvent event){
+		System.out.println("Size of article list " + articleList.size());
+		NewsArticle articleTest1 = articleList.get(0);
+		article1.setText(articleTest1.getArticleTitle() + "\n" + articleTest1.getArticleDate() + "\n" + 
+				articleTest1.getArticleShortDescription() + "\n" + articleTest1.getSiteOrigin());
+		
+		NewsArticle articleTest2 = articleList.get(1);
+		article1.setText(articleTest2.getArticleTitle() + "\n" + articleTest2.getArticleDate() + "\n" + 
+				articleTest2.getArticleShortDescription() + "\n" + articleTest2.getSiteOrigin());
+		
+		NewsArticle articleTest3 = articleList.get(2);
+		article1.setText(articleTest3.getArticleTitle() + "\n" + articleTest3.getArticleDate() + "\n" + 
+				articleTest3.getArticleShortDescription() + "\n" + articleTest3.getSiteOrigin());
+
+        final WebEngine webEngine = webView.getEngine();
+        webEngine.loadContent(articleTest1.getSiteOrigin());
+	}
 	
+	@FXML
+	public void showFirstArticle(ActionEvent event){
+		NewsArticle articleTest1 = articleList.get(0);
+		article1.setText(articleTest1.getArticleTitle() + "\n" + articleTest1.getArticleDate() + "\n" + 
+				articleTest1.getArticleShortDescription() + "\n" + articleTest1.getSiteOrigin());
+		final WebEngine webEngine = webView.getEngine();
+        webEngine.load(articleTest1.getSiteOrigin());
+	}
+	
+	@FXML
+	public void showSecondArticle(ActionEvent event){
+		NewsArticle articleTest2 = articleList.get(1);
+		article2.setText(articleTest2.getArticleTitle() + "\n" + articleTest2.getArticleDate() + "\n" + 
+				articleTest2.getArticleShortDescription() + "\n" + articleTest2.getSiteOrigin());
+		final WebEngine webEngine = webView.getEngine();
+        webEngine.load(articleTest2.getSiteOrigin());
+	}
+	
+	@FXML
+	public void showThirdArticle(ActionEvent event){
+		NewsArticle articleTest3 = articleList.get(2);
+		article3.setText(articleTest3.getArticleTitle() + "\n" + articleTest3.getArticleDate() + "\n" + 
+				articleTest3.getArticleShortDescription() + "\n" + articleTest3.getSiteOrigin());
+		final WebEngine webEngine = webView.getEngine();
+        webEngine.load(articleTest3.getSiteOrigin());
+	}
 }
