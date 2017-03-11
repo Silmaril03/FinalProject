@@ -16,6 +16,13 @@ public class Workout
 		this.workoutSets = new ArrayList<WorkoutSet>();
 	}
 	
+	
+	public Workout(Calendar calendar)
+	{	
+		this.workoutSets = new ArrayList<WorkoutSet>();
+		setDate(calendar);
+	}
+	
 	public int getWorkoutId()
 	{
 		return this.workoutId;
