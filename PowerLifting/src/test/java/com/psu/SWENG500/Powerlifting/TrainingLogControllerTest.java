@@ -15,21 +15,16 @@ public class TrainingLogControllerTest extends TestCase {
 	Workout workout;
 	Calendar calendar;
 	
-	public TrainingLogControllerTest(String testName) {
-		super(testName);
-		TrainingLogController trainingLog = new TrainingLogController();
+	public void setUp() {
+		trainingLog = new TrainingLogController();
 	}
 	
 	public void testGetWorkout() {
-		assertNotNull(trainingLog.getWorkout(workout));
-	}
-	
-	public void testSetWorkout() {
-		assertTrue(trainingLog.setWorkout(calendar));
+		assertNotNull(trainingLog.getWorkout());
 	}
 	
 	public void testSetGoal() {
-		assertTrue(trainingLog.setGoal());
+		assertFalse(trainingLog.setGoal());
 	}
 
 }

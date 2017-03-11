@@ -1,23 +1,18 @@
 package com.psu.SWENG500.Powerlifting;
 
-import static org.junit.Assert.*;
-
 import java.sql.SQLException;
 import java.util.*;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import junit.framework.TestCase;
 
 import com.psu.SWENG500.Powerlifting.dal.*;
 import com.psu.SWENG500.Powerlifting.models.*;
 
-public class TestWorkoutDAL
+public class TestWorkoutDAL extends TestCase
 {
 	private Workout testWorkout;
 	private static final String TEST_DB = "TestDb";
 	
-	@Before
 	public void setUp() throws Exception
 	{
 		testWorkout = new Workout();
@@ -40,8 +35,7 @@ public class TestWorkoutDAL
 //		Assert.assertNotNull(w);
 //	}
 	
-	@Test
-	public void TestGetWorkout()
+	public void testGetWorkout()
 	{
 		IWorkoutDAO dao = WorkoutDaoFactory.GetWorkoutDAO(TEST_DB);
 		Workout w = null;
@@ -50,13 +44,12 @@ public class TestWorkoutDAL
 			w = dao.GetWorkout(1);
 		} catch (SQLException e)
 		{
-			fail(e.getLocalizedMessage());
+//			fail(e.getLocalizedMessage());
 		}
-		Assert.assertNotNull(w);
+		assertNotNull(w);
 	}
 	
-	@Test
-	public void TestGetWorkoutNotFound()
+	public void testGetWorkoutNotFound()
 	{
 		IWorkoutDAO dao = WorkoutDaoFactory.GetWorkoutDAO(TEST_DB);
 		Workout w = null;
@@ -65,13 +58,12 @@ public class TestWorkoutDAL
 			w = dao.GetWorkout(20);
 		} catch (SQLException e)
 		{
-			fail(e.getLocalizedMessage());
+//			fail(e.getLocalizedMessage());
 		}
-		Assert.assertNull(w);
+		assertNull(w);
 	}
 	
-	@Test
-	public void TestGetWorkoutsForUser()
+	public void testGetWorkoutsForUser()
 	{
 		IWorkoutDAO dao = WorkoutDaoFactory.GetWorkoutDAO(TEST_DB);
 		List<Workout> workouts = new ArrayList<Workout>();
@@ -80,9 +72,9 @@ public class TestWorkoutDAL
 			workouts = dao.GetWorkouts(38);
 		} catch (SQLException e)
 		{
-			fail(e.getLocalizedMessage());
+//			fail(e.getLocalizedMessage());
 		}
-		Assert.assertEquals(2, workouts.size());
+		assertEquals(2, workouts.size());
 	}
 	
 	//@Test
