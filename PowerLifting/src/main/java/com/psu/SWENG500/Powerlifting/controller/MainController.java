@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
+import com.psu.SWENG500.Powerlifting.application.ui.RestrictiveTextField;
 import com.psu.SWENG500.Powerlifting.models.Exercise;
 import com.psu.SWENG500.Powerlifting.models.Workout;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
@@ -21,18 +22,20 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebView;
 
 public class MainController implements Initializable {
-	@FXML private TextField usernameTextField;
-	@FXML private TextField passwordTextField;
+	@FXML private RestrictiveTextField usernameTextField;
+	@FXML private PasswordField passwordTextField;
 	@FXML private Button loginButton;
 	@FXML private ScrollBar workoutScrollBar;
 	@FXML private TableView<WorkoutSet> workoutTable;
-	@FXML private TextField weightTextBox;
-	@FXML private TextField repsTextBox;
+	@FXML private RestrictiveTextField weightTextBox;
+	@FXML private RestrictiveTextField repsTextBox;
 	@FXML private ComboBox<String> addExercise;
 	@FXML private Button removeExercise;
 	@FXML private Button addSet;
@@ -58,6 +61,11 @@ public class MainController implements Initializable {
 	@FXML private TextField neckTextField;
 	@FXML private TextField waistTextField;
 	@FXML private Button saveMeasurementsButton;
+	
+	@FXML private Tab workoutTab;
+	@FXML private Tab articlesTab;
+	@FXML private Tab statisticsTab;
+	@FXML private Tab measurementsTab;
 	
 	ObservableList<String> exerciseList = FXCollections.observableArrayList("Back Extension", 
 				"Bench Press, Barbell", "Bench Press, Close Grip", "Bench Press, Dumbbell",
@@ -90,13 +98,17 @@ public class MainController implements Initializable {
 		heightInFeetComboBox.getItems().addAll(heightInFeetList);
 		heightInInchesComboBox.getItems().addAll(heightInInchesList);
 		workoutTable.setItems(setList);
-		
+		usernameTextField.setRestrict("[0-9 | a-z]");
+		weightTextBox.setRestrict("-?((\\d*)|(\\d+\\.\\d*))");
+		repsTextBox.setRestrict("[0-9]");
+//		workoutTab.setDisable(true);
+//		articlesTab.setDisable(true);
+//		measurementsTab.setDisable(true);
+//		statisticsTab.setDisable(true);
 	}
 	
 	@FXML
 	public void addSetButtonAction(ActionEvent event){
-		
-		
 		WorkoutSet workoutSet = new WorkoutSet();
 		workoutSet.setExercise(addExercise.getValue());
 		workoutSet.setRepCount(Integer.parseInt(repsTextBox.getText()));
@@ -107,7 +119,13 @@ public class MainController implements Initializable {
 		setList.add(workoutSet);
 	}
 	
-	
+	@FXML
+	public void loginAction(ActionEvent event){
+		workoutTab.setDisable(false);
+		articlesTab.setDisable(false);
+		measurementsTab.setDisable(false);
+		statisticsTab.setDisable(false);
+	}
 	
 	
 }

@@ -12,6 +12,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -20,6 +21,7 @@
 <?import javafx.scene.control.cell.*?> 
 <?import javafx.collections.*?>
 <?import com.psu.SWENG500.Powerlifting.models.*?>
+<?import com.psu.SWENG500.Powerlifting.application.ui.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.psu.SWENG500.Powerlifting.controller.MainController">
    <children>
@@ -34,16 +36,16 @@
                               <Font size="24.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="usernameTextField" layoutX="326.0" layoutY="193.0" />
-                        <TextField fx:id="passwordTextField" layoutX="324.0" layoutY="251.0" />
+                        <RestrictiveTextField fx:id="usernameTextField" layoutX="326.0" layoutY="193.0" />
+                        <PasswordField fx:id="passwordTextField" layoutX="324.0" layoutY="251.0" />
                         <Label layoutX="324.0" layoutY="176.0" text="Username" />
                         <Label layoutX="324.0" layoutY="234.0" text="Password" />
-                        <Button fx:id="loginButton" layoutX="325.0" layoutY="312.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="146.0" text="Login" />
+                        <Button fx:id="loginButton" layoutX="325.0" layoutY="312.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="146.0" onAction="#loginAction" text="Login" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Workout Log">
+          <Tab text="Workout Log" fx:id="workoutTab">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -74,15 +76,15 @@
                         <Button fx:id="logWorkout" layoutX="601.0" layoutY="475.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="153.0" text="Save Workout" />
                         <ComboBox fx:id="addExercise" layoutX="597.0" layoutY="86.0" prefHeight="25.0" prefWidth="158.0" promptText="Choose Exercise" />
                         <ScrollBar fx:id="workoutScrollBar" layoutX="538.0" layoutY="86.0" orientation="VERTICAL" prefHeight="462.0" prefWidth="14.0" />
-                        <TextField fx:id="weightTextBox" layoutX="689.0" layoutY="239.0" prefHeight="25.0" prefWidth="61.0" />
+                        <RestrictiveTextField fx:id="weightTextBox" layoutX="689.0" layoutY="239.0" prefHeight="25.0" prefWidth="61.0" />
                         <Label layoutX="626.0" layoutY="243.0" text="Weight" />
-                        <TextField fx:id="repsTextBox" layoutX="689.0" layoutY="273.0" prefHeight="25.0" prefWidth="61.0" />
+                        <RestrictiveTextField fx:id="repsTextBox" layoutX="689.0" layoutY="273.0" prefHeight="25.0" prefWidth="61.0" />
                         <Label layoutX="632.0" layoutY="277.0" text="Reps" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Statistics">
+            <Tab text="Statistics" fx:id="statisticsTab">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -108,7 +110,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Articles">
+            <Tab text="Articles" fx:id="articlesTab">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -124,7 +126,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Measurements">
+            <Tab text="Measurements" fx:id="measurementsTab">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
