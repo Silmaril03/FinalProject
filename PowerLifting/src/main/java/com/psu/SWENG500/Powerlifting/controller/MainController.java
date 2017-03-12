@@ -14,6 +14,7 @@ import com.psu.SWENG500.Powerlifting.models.Exercise;
 import com.psu.SWENG500.Powerlifting.models.NewsArticleModel;
 import com.psu.SWENG500.Powerlifting.models.Workout;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
+import com.psu.SWENG500.Powerlifting.models.ui.AccountUI;
 import com.psu.SWENG500.Powerlifting.models.ui.NewsArticle;
 import com.psu.SWENG500.Powerlifting.models.ui.WorkoutSetUI;
 
@@ -58,9 +59,6 @@ public class MainController implements Initializable {
 	@FXML private ComboBox<String> searchHistory;
 	@FXML private WebView webView;
 	@FXML private ScrollBar articleScrollBar;
-//	@FXML private Label article1;
-//	@FXML private Label article2;
-//	@FXML private Label article3;
 	@FXML private Button article1;
 	@FXML private Button article2;
 	@FXML private Button article3;
@@ -142,6 +140,22 @@ public class MainController implements Initializable {
 	
 	@FXML
 	public void loginAction(ActionEvent event){
+		AccountUI accountUI = new AccountUI();
+		accountUI.setUsername(usernameTextField.getText());
+		accountUI.setPassword(passwordTextField.getText());
+		
+		workoutTab.setDisable(false);
+		articlesTab.setDisable(false);
+		measurementsTab.setDisable(false);
+		statisticsTab.setDisable(false);
+	}
+	
+	@FXML
+	public void registerAction(ActionEvent event){
+		AccountUI accountUI = new AccountUI();
+		accountUI.setUsername(usernameTextField.getText());
+		accountUI.setPassword(passwordTextField.getText());
+		
 		workoutTab.setDisable(false);
 		articlesTab.setDisable(false);
 		measurementsTab.setDisable(false);
