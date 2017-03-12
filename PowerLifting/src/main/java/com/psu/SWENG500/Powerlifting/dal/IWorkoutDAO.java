@@ -2,7 +2,6 @@ package com.psu.SWENG500.Powerlifting.dal;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import com.psu.SWENG500.Powerlifting.models.*;
 
 public interface IWorkoutDAO

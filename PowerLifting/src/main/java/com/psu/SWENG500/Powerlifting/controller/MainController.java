@@ -1,12 +1,15 @@
 package com.psu.SWENG500.Powerlifting.controller;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
 import com.psu.SWENG500.Powerlifting.application.ui.RestrictiveTextField;
+import com.psu.SWENG500.Powerlifting.dal.IWorkoutDAO;
+import com.psu.SWENG500.Powerlifting.dal.WorkoutDaoFactory;
 import com.psu.SWENG500.Powerlifting.models.Exercise;
 import com.psu.SWENG500.Powerlifting.models.Workout;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
@@ -115,8 +118,7 @@ public class MainController implements Initializable {
 		double weight = Double.parseDouble(weightTextBox.getText());
 		
 		WorkoutSet workoutSet = new WorkoutSet();
-		Exercise exercise = new Exercise(exer);
-		workoutSet.setExercise(exercise);
+		workoutSet.setExercise(exer);
 		workoutSet.setRepCount(rep);
 		workoutSet.setWeightLifted(weight);
 		int set = trainingLogController.getSet();
@@ -135,5 +137,16 @@ public class MainController implements Initializable {
 		statisticsTab.setDisable(false);
 	}
 	
-	
+	@FXML
+	public void saveWorkoutButtonAction(ActionEvent event){
+		//IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("IplDb");
+		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
+		trainingLogController.getWorkout().setWorkoutDate(java.sql.Date.valueOf(workoutDate.getValue()));//workoutDate.getValue());
+		try {
+			wDao.CreateWorkout(trainingLogController.getWorkout(), 38);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

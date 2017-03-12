@@ -17,7 +17,7 @@ public class TestWorkoutDAL extends TestCase
 	{
 		testWorkout = new Workout();
 		testWorkout.setDescription("This is my first workout!");
-		testWorkout.setDate(Calendar.getInstance());
+		testWorkout.setWorkoutDate(Calendar.getInstance().getTime());
 	}
 	
 //	@Test

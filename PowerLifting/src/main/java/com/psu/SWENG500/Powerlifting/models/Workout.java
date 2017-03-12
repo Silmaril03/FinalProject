@@ -8,7 +8,7 @@ public class Workout
 	//private int totalExercises;
 	//private int totalVolume;
 	private String description;
-	private Calendar calendar;
+	private Date workoutDate;
 	private List<WorkoutSet> workoutSets;
 	
 	public Workout()
@@ -17,10 +17,10 @@ public class Workout
 	}
 	
 	
-	public Workout(Calendar calendar)
+	public Workout(Date workoutDate)
 	{	
 		this.workoutSets = new ArrayList<WorkoutSet>();
-		setDate(calendar);
+		this.setWorkoutDate(workoutDate);
 	}
 	
 	public int getWorkoutId()
@@ -43,14 +43,14 @@ public class Workout
 		this.description = description;
 	}
 	
-	public Calendar getDate()
+	public Date getWorkoutDate()
 	{
-		return this.calendar;
+		return this.workoutDate;
 	}
 	
-	public void setDate(Calendar calendar)
+	public void setWorkoutDate(Date workoutDate)
 	{
-		this.calendar = calendar;
+		this.workoutDate = workoutDate;
 	}
 	
 	public void addSet(WorkoutSet set)
@@ -99,4 +99,15 @@ public class Workout
 	//{
 	//	// set total exercises
 	//}
+	
+	public List<WorkoutSet> GetWorkoutSets()
+	{
+		return this.workoutSets;
+	}
+	
+	public void SetWorkoutSets(List<WorkoutSet> workoutSets)
+	{
+		this.workoutSets = workoutSets;
+		
+	}
 }
