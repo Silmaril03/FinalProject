@@ -40,7 +40,8 @@
                         <PasswordField fx:id="passwordTextField" layoutX="324.0" layoutY="251.0" />
                         <Label layoutX="324.0" layoutY="176.0" text="Username" />
                         <Label layoutX="324.0" layoutY="234.0" text="Password" />
-                        <Button fx:id="loginButton" layoutX="325.0" layoutY="312.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="146.0" onAction="#loginAction" text="Login" />
+                        <Button fx:id="loginButton" layoutX="305.0" layoutY="312.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" onAction="#loginAction" text="Login" />
+                        <Button fx:id="loginButton" layoutX="415.0" layoutY="312.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" onAction="#registerAction" text="Register" />
                      </children>
                   </AnchorPane>
             </content>
