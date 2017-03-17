@@ -10,6 +10,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.psu.SWENG500.Powerlifting.models.ui.NewsArticle;
+
 public class NewsArticleModel {
 	
 	public List<NewsArticle> retrieveArticlesFromSiteUrls(List<String> siteUrls) {
@@ -73,11 +75,8 @@ public class NewsArticleModel {
 				
 				Element time = content.getElementsByTag(ElementTags.TIME.value()).first();
 				String date = time.attr(ElementTags.DATETIME.value());
-				///////////////
-				NewsArticle theArticle = generateNewsArticleObject(articleUrl, title, bodyBuilder.toString().substring(0,60), bodyBuilder.toString(), date);
-				System.out.println(theArticle.toString());
-				/////////////////
-				articleList.add(generateNewsArticleObject(articleUrl, title, bodyBuilder.toString().substring(0,60), bodyBuilder.toString(), date));
+				articleList.add(generateNewsArticleObject(articleUrl, title, bodyBuilder.toString().substring(0,60), 
+						bodyBuilder.toString(), date));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -85,7 +84,8 @@ public class NewsArticleModel {
 		return articleList;
 	}
 	
-	private NewsArticle generateNewsArticleObject(String siteUrl, String title, String shortDescription, String articleBody, String articleDate) {
+	private NewsArticle generateNewsArticleObject(String siteUrl, String title, String shortDescription, 
+			String articleBody, String articleDate) {
 		return new NewsArticle(title, siteUrl, articleDate, shortDescription, articleBody);
 	}
 }

@@ -1,6 +1,6 @@
 package com.psu.SWENG500.Powerlifting;
 
-import com.psu.SWENG500.Powerlifting.models.NewsArticle;
+import com.psu.SWENG500.Powerlifting.models.ui.NewsArticle;
 
 import junit.framework.TestCase;
 

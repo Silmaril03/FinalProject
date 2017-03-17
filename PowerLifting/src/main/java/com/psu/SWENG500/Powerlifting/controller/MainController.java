@@ -1,9 +1,11 @@
 package com.psu.SWENG500.Powerlifting.controller;
 
 import java.net.URL;
+import java.awt.ScrollPane;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -13,6 +15,14 @@ import com.psu.SWENG500.Powerlifting.dal.WorkoutDaoFactory;
 import com.psu.SWENG500.Powerlifting.models.Exercise;
 import com.psu.SWENG500.Powerlifting.models.Workout;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
+import com.psu.SWENG500.Powerlifting.models.ui.WorkoutSetUI;
+import com.psu.SWENG500.Powerlifting.models.ConfigReader;
+import com.psu.SWENG500.Powerlifting.models.Exercise;
+import com.psu.SWENG500.Powerlifting.models.NewsArticleModel;
+import com.psu.SWENG500.Powerlifting.models.Workout;
+import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
+import com.psu.SWENG500.Powerlifting.models.ui.AccountUI;
+import com.psu.SWENG500.Powerlifting.models.ui.NewsArticle;
 import com.psu.SWENG500.Powerlifting.models.ui.WorkoutSetUI;
 
 import javafx.collections.FXCollections;
@@ -30,6 +40,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 public class MainController implements Initializable {
@@ -94,6 +105,9 @@ public class MainController implements Initializable {
 	private TrainingLogController trainingLogController = new TrainingLogController();
 	private ObservableList<WorkoutSetUI> setList = FXCollections.observableArrayList();
 	
+	private List<NewsArticle> articleList;
+	private NewsArticleController articleController = new NewsArticleController();
+	
 	@FXML
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		addExercise.getItems().addAll(exerciseList);
@@ -130,14 +144,6 @@ public class MainController implements Initializable {
 	}
 	
 	@FXML
-	public void loginAction(ActionEvent event){
-		workoutTab.setDisable(false);
-		articlesTab.setDisable(false);
-		measurementsTab.setDisable(false);
-		statisticsTab.setDisable(false);
-	}
-	
-	@FXML
 	public void saveWorkoutButtonAction(ActionEvent event){
 		//IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("IplDb");
 		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
@@ -148,5 +154,75 @@ public class MainController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@FXML
+	public void loginAction(ActionEvent event){
+		AccountUI accountUI = new AccountUI();
+		accountUI.setUsername(usernameTextField.getText());
+		accountUI.setPassword(passwordTextField.getText());
+		
+		workoutTab.setDisable(false);
+		articlesTab.setDisable(false);
+		measurementsTab.setDisable(false);
+		statisticsTab.setDisable(false);
+	}
+	
+	@FXML
+	public void registerAction(ActionEvent event){
+		AccountUI accountUI = new AccountUI();
+		accountUI.setUsername(usernameTextField.getText());
+		accountUI.setPassword(passwordTextField.getText());
+		
+		workoutTab.setDisable(false);
+		articlesTab.setDisable(false);
+		measurementsTab.setDisable(false);
+		statisticsTab.setDisable(false);
+	}
+	
+	@FXML
+	public void readArticlesTabAction(ActionEvent event){
+		System.out.println("Size of article list " + articleList.size());
+		NewsArticle articleTest1 = articleList.get(0);
+		article1.setText(articleTest1.getArticleTitle() + "\n" + articleTest1.getArticleDate() + "\n" + 
+				articleTest1.getArticleShortDescription() + "\n" + articleTest1.getSiteOrigin());
+		
+		NewsArticle articleTest2 = articleList.get(1);
+		article1.setText(articleTest2.getArticleTitle() + "\n" + articleTest2.getArticleDate() + "\n" + 
+				articleTest2.getArticleShortDescription() + "\n" + articleTest2.getSiteOrigin());
+		
+		NewsArticle articleTest3 = articleList.get(2);
+		article1.setText(articleTest3.getArticleTitle() + "\n" + articleTest3.getArticleDate() + "\n" + 
+				articleTest3.getArticleShortDescription() + "\n" + articleTest3.getSiteOrigin());
+
+        final WebEngine webEngine = webView.getEngine();
+        webEngine.loadContent(articleTest1.getSiteOrigin());
+	}
+	
+	@FXML
+	public void showFirstArticle(ActionEvent event){
+		NewsArticle articleTest1 = articleList.get(0);
+		article1.setText(articleTest1.getArticleTitle() + "\n" + articleTest1.getArticleDate() + "\n" + 
+				articleTest1.getArticleShortDescription() + "\n" + articleTest1.getSiteOrigin());
+		final WebEngine webEngine = webView.getEngine();
+        webEngine.load(articleTest1.getSiteOrigin());
+	}
+	
+	@FXML
+	public void showSecondArticle(ActionEvent event){
+		NewsArticle articleTest2 = articleList.get(1);
+		article2.setText(articleTest2.getArticleTitle() + "\n" + articleTest2.getArticleDate() + "\n" + 
+				articleTest2.getArticleShortDescription() + "\n" + articleTest2.getSiteOrigin());
+		final WebEngine webEngine = webView.getEngine();
+        webEngine.load(articleTest2.getSiteOrigin());
+	}
+	
+	@FXML
+	public void showThirdArticle(ActionEvent event){
+		NewsArticle articleTest3 = articleList.get(2);
+		article3.setText(articleTest3.getArticleTitle() + "\n" + articleTest3.getArticleDate() + "\n" + 
+				articleTest3.getArticleShortDescription() + "\n" + articleTest3.getSiteOrigin());
+		final WebEngine webEngine = webView.getEngine();
+        webEngine.load(articleTest3.getSiteOrigin());
 	}
 }
