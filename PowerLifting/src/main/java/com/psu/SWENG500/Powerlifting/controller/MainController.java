@@ -1,7 +1,8 @@
 package com.psu.SWENG500.Powerlifting.controller;
 
-import java.awt.ScrollPane;
 import java.net.URL;
+import java.awt.ScrollPane;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,12 @@ import java.util.Observable;
 import java.util.ResourceBundle;
 
 import com.psu.SWENG500.Powerlifting.application.ui.RestrictiveTextField;
+import com.psu.SWENG500.Powerlifting.dal.IWorkoutDAO;
+import com.psu.SWENG500.Powerlifting.dal.WorkoutDaoFactory;
+import com.psu.SWENG500.Powerlifting.models.Exercise;
+import com.psu.SWENG500.Powerlifting.models.Workout;
+import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
+import com.psu.SWENG500.Powerlifting.models.ui.WorkoutSetUI;
 import com.psu.SWENG500.Powerlifting.models.ConfigReader;
 import com.psu.SWENG500.Powerlifting.models.Exercise;
 import com.psu.SWENG500.Powerlifting.models.NewsArticleModel;
@@ -59,9 +66,9 @@ public class MainController implements Initializable {
 	@FXML private ComboBox<String> searchHistory;
 	@FXML private WebView webView;
 	@FXML private ScrollBar articleScrollBar;
-	@FXML private Button article1;
-	@FXML private Button article2;
-	@FXML private Button article3;
+	@FXML private Label article1;
+	@FXML private Label article2;
+	@FXML private Label article3;
 	@FXML private DatePicker measurementsDate;
 	@FXML private ComboBox<String> heightInFeetComboBox;
 	@FXML private ComboBox<String> heightInInchesComboBox;
@@ -97,6 +104,7 @@ public class MainController implements Initializable {
 		
 	private TrainingLogController trainingLogController = new TrainingLogController();
 	private ObservableList<WorkoutSetUI> setList = FXCollections.observableArrayList();
+	
 	private List<NewsArticle> articleList;
 	private NewsArticleController articleController = new NewsArticleController();
 	
@@ -111,8 +119,6 @@ public class MainController implements Initializable {
 		usernameTextField.setRestrict("[0-9 | a-z]");
 		weightTextBox.setRestrict("-?((\\d*)|(\\d+\\.\\d*))");
 		repsTextBox.setRestrict("[0-9]");
-		
-		articleList = articleController.retrieveNewsArticleList();
 //		workoutTab.setDisable(true);
 //		articlesTab.setDisable(true);
 //		measurementsTab.setDisable(true);
@@ -126,8 +132,7 @@ public class MainController implements Initializable {
 		double weight = Double.parseDouble(weightTextBox.getText());
 		
 		WorkoutSet workoutSet = new WorkoutSet();
-		Exercise exercise = new Exercise(exer);
-		workoutSet.setExercise(exercise);
+		workoutSet.setExercise(exer);
 		workoutSet.setRepCount(rep);
 		workoutSet.setWeightLifted(weight);
 		int set = trainingLogController.getSet();
@@ -136,6 +141,19 @@ public class MainController implements Initializable {
 		
 		WorkoutSetUI workoutUI = new WorkoutSetUI(set++, weight, rep, exer);
 		setList.add(workoutUI);
+	}
+	
+	@FXML
+	public void saveWorkoutButtonAction(ActionEvent event){
+		//IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("IplDb");
+		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
+		trainingLogController.getWorkout().setWorkoutDate(java.sql.Date.valueOf(workoutDate.getValue()));//workoutDate.getValue());
+		try {
+			wDao.CreateWorkout(trainingLogController.getWorkout(), 38);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML

@@ -15,8 +15,8 @@ public class TrainingLogController {
 		workout = new Workout();
 	}
 	
-	public TrainingLogController(Calendar calendar){
-		workout = new Workout(calendar);
+	public TrainingLogController(Date workoutDate){
+		workout = new Workout(workoutDate);
 	}
 	
 	public Workout getWorkout() {

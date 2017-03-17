@@ -2,16 +2,28 @@ package com.psu.SWENG500.Powerlifting.models;
 
 public class WorkoutSet
 {
+	private int workoutSetId;
 	private int setNumber;
 	private double weightLifted;
 	private int repCount;
 	private boolean isNewPR;
-	private Exercise exercise;
+	private String exerciseName;
+	private boolean isPartOfTotal;
 	
 	public WorkoutSet()
 	{
 	}
-
+	
+	public int getWorkoutSetId()
+	{
+		return this.getWorkoutSetId();
+	}
+	
+	public void setWorkoutSetId(int workoutSetId)
+	{
+		this.workoutSetId = workoutSetId;
+	}
+	
 	public int getSetNumber()
 	{
 		return this.setNumber;
@@ -52,13 +64,21 @@ public class WorkoutSet
 		this.isNewPR = isNewPR;
 	}
 
-	public Exercise getExercise()
+	public String getExerciseName()
 	{
-		return this.exercise;
+		return this.exerciseName;
 	}
 
-	public void setExercise(Exercise exercise)
+	public void setExercise(String exerciseName)
 	{
-		this.exercise = exercise;
+		this.exerciseName = exerciseName;
+	}
+	
+	public boolean isPartOfTotal()
+	{
+		if (this.exerciseName.startsWith("Bench Press") || this.exerciseName.startsWith("Deadlift") || this.exerciseName.startsWith("Squat"))
+			return true;
+		else
+			return false;
 	}
 }

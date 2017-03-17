@@ -40,7 +40,7 @@
                         <PasswordField fx:id="passwordTextField" layoutX="324.0" layoutY="251.0" />
                         <Label layoutX="324.0" layoutY="176.0" text="Username" />
                         <Label layoutX="324.0" layoutY="234.0" text="Password" />
-                        <Button fx:id="loginButton" layoutX="305.0" layoutY="312.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" onAction="#loginAction" text="Login" />
+                        <Button fx:id="loginButton" layoutX="325.0" layoutY="312.0" mnemonicParsing="false" prefHeight="83.0" prefWidth="146.0" onAction="#loginAction" text="Login" />
                         <Button fx:id="loginButton" layoutX="415.0" layoutY="312.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" onAction="#registerAction" text="Register" />
                      </children>
                   </AnchorPane>
@@ -74,7 +74,7 @@
                         <Button fx:id="removeExercise" layoutX="597.0" layoutY="141.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="Remove Exercise" />
                         <Button fx:id="addSet" layoutX="597.0" layoutY="193.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="157.0" onAction="#addSetButtonAction" text="Add Set"/>
                         <Button fx:id="removeSet" layoutX="601.0" layoutY="317.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Delete Set" />
-                        <Button fx:id="logWorkout" layoutX="601.0" layoutY="475.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="153.0" text="Save Workout" />
+                        <Button fx:id="logWorkout" layoutX="601.0" layoutY="475.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="153.0" onAction="#saveWorkoutButtonAction" text="Save Workout" />
                         <ComboBox fx:id="addExercise" layoutX="597.0" layoutY="86.0" prefHeight="25.0" prefWidth="158.0" promptText="Choose Exercise" />
                         <ScrollBar fx:id="workoutScrollBar" layoutX="538.0" layoutY="86.0" orientation="VERTICAL" prefHeight="462.0" prefWidth="14.0" />
                         <RestrictiveTextField fx:id="weightTextBox" layoutX="689.0" layoutY="239.0" prefHeight="25.0" prefWidth="61.0" />
@@ -116,11 +116,6 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <WebView fx:id="webView" layoutY="58.0" prefHeight="510.0" prefWidth="525.0" />
-                        <!--
-                        <Label fx:id="article1" layoutX="574.0" layoutY="55.0" prefHeight="139.0" prefWidth="199.0" text="Article 1" />
-                        <Label fx:id="article2" layoutX="574.0" layoutY="194.0" prefHeight="140.0" prefWidth="199.0" text="Article 2" />
-                        <Label fx:id="article3" layoutX="574.0" layoutY="334.0" prefHeight="139.0" prefWidth="200.0" text="Article 3" />
-                        -->
                         <Button fx:id="article1" layoutX="574.0" layoutY="55.0" mnemonicParsing="false" prefHeight="139.0" prefWidth="199.0" text="Article 1" onAction="#showFirstArticle"/>
                         <Button fx:id="article2" layoutX="574.0" layoutY="194.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="199.0" text="Article 2" onAction="#showSecondArticle"/>
                         <Button fx:id="article3" layoutX="574.0" layoutY="334.0" mnemonicParsing="false" prefHeight="139.0" prefWidth="200.0" text="Article 3" onAction="#showThirdArticle"/>
