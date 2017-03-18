@@ -66,9 +66,9 @@ public class MainController implements Initializable {
 	@FXML private ComboBox<String> searchHistory;
 	@FXML private WebView webView;
 	@FXML private ScrollBar articleScrollBar;
-	@FXML private Label article1;
-	@FXML private Label article2;
-	@FXML private Label article3;
+	@FXML private Button article1;
+	@FXML private Button article2;
+	@FXML private Button article3;
 	@FXML private DatePicker measurementsDate;
 	@FXML private ComboBox<String> heightInFeetComboBox;
 	@FXML private ComboBox<String> heightInInchesComboBox;
@@ -123,6 +123,7 @@ public class MainController implements Initializable {
 //		articlesTab.setDisable(true);
 //		measurementsTab.setDisable(true);
 //		statisticsTab.setDisable(true);
+		articleList = articleController.retrieveNewsArticleList();
 	}
 	
 	@FXML

@@ -21,14 +21,14 @@ public class ConfigReaderTest extends TestCase {
 		assertNull(nullList);
 	}
 	
-	public void testNonexistentConfigFilename() {
-		reader.readSiteListFile("fake.properties");
-		List<String> nullList = reader.getSiteList();
-		assertNull(nullList);
-	}
+//	public void testNonexistentConfigFilename() {
+//		reader.readSiteListFile(getClass().getClassLoader().getResource("scripts/prop.xml").getFile());
+//		List<String> nullList = reader.getSiteList();
+//		assertNull(nullList);
+//	}
 
 	public void testReaderFileSuccess() {
-		reader.readSiteListFile("src/main/resources/SiteList.xml");
+		reader.readSiteListFile(getClass().getClassLoader().getResource("scripts/sitelist.xml").getFile());
 		List<String> siteNameList = reader.getSiteList();
 		assertEquals(1, siteNameList.size());
 	}

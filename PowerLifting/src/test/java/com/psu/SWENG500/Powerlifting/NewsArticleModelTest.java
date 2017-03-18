@@ -14,7 +14,7 @@ public class NewsArticleModelTest extends TestCase {
 
 	public void testRetrieveArticlesFromListSuccess() {
 		ConfigReader reader = ConfigReader.getInstance();
-		reader.readSiteListFile("src/main/resources/SiteList.xml");
+		reader.readSiteListFile(getClass().getClassLoader().getResource("scripts/sitelist.xml").getFile());
 		List<String> siteUrls = reader.getSiteList();
 		List<NewsArticle> articleList = articleModel.retrieveArticlesFromSiteUrls(siteUrls);
 		assertNotNull(articleList);
