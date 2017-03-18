@@ -121,8 +121,8 @@
                         <Button fx:id="article3" layoutX="574.0" layoutY="334.0" mnemonicParsing="false" prefHeight="139.0" prefWidth="200.0" text="Article 3" onAction="#showThirdArticle"/>
                         <ScrollBar fx:id="articleScrollBar" layoutX="531.0" layoutY="55.0" orientation="VERTICAL" prefHeight="516.0" prefWidth="14.0" />
                         <TextField fx:id="searchTextBox" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="397.0" promptText="Search" />
-                        <Button fx:id="searchButton" layoutX="435.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Search" />
-                        <ComboBox fx:id="searchHistory" layoutX="574.0" layoutY="14.0" prefWidth="150.0" promptText="Search History" />
+                        <Button fx:id="searchButton" layoutX="435.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Search" onAction="#searchArticlesAction"/>
+                        <ComboBox fx:id="searchHistory" layoutX="574.0" layoutY="14.0" prefWidth="150.0" promptText="Search History" onAction="#showSearchHistory"/>
                      </children>
                   </AnchorPane>
               </content>
