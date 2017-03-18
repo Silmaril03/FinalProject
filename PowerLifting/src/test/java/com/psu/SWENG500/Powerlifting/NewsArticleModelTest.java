@@ -20,8 +20,8 @@ public class NewsArticleModelTest extends TestCase {
 		assertNotNull(articleList);
 	}
 	
-//	public void testNullSiteList(){
-//		List<NewsArticle> articleList = articleModel.retrieveArticlesFromSiteUrls(siteUrls);
-//		assertNotNull(articleList);
-//	}
+	public void testNullSiteList(){
+		List<NewsArticle> articleList = articleModel.retrieveArticlesFromSiteUrls(null);
+		assertNull(articleList);
+	}
 }

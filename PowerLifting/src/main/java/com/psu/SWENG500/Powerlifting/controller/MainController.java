@@ -3,6 +3,7 @@ package com.psu.SWENG500.Powerlifting.controller;
 import java.net.URL;
 import java.awt.ScrollPane;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -107,6 +109,7 @@ public class MainController implements Initializable {
 	
 	private List<NewsArticle> articleList;
 	private NewsArticleController articleController = new NewsArticleController();
+	private List<String> searchHistoryList = new ArrayList<String>();
 	
 	@FXML
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -123,7 +126,15 @@ public class MainController implements Initializable {
 //		articlesTab.setDisable(true);
 //		measurementsTab.setDisable(true);
 //		statisticsTab.setDisable(true);
-		articleList = articleController.retrieveNewsArticleList();
+		
+//		searchHistoryList.add("Test");
+//		searchHistory.getItems().addAll(FXCollections.observableArrayList(searchHistoryList));
+		
+		try {
+			loadArticleTabProperties();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
@@ -152,7 +163,6 @@ public class MainController implements Initializable {
 		try {
 			wDao.CreateWorkout(trainingLogController.getWorkout(), 38);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -182,48 +192,49 @@ public class MainController implements Initializable {
 	}
 	
 	@FXML
-	public void readArticlesTabAction(ActionEvent event){
-		System.out.println("Size of article list " + articleList.size());
-		NewsArticle articleTest1 = articleList.get(0);
-		article1.setText(articleTest1.getArticleTitle() + "\n" + articleTest1.getArticleDate() + "\n" + 
-				articleTest1.getArticleShortDescription() + "\n" + articleTest1.getSiteOrigin());
-		
-		NewsArticle articleTest2 = articleList.get(1);
-		article1.setText(articleTest2.getArticleTitle() + "\n" + articleTest2.getArticleDate() + "\n" + 
-				articleTest2.getArticleShortDescription() + "\n" + articleTest2.getSiteOrigin());
-		
-		NewsArticle articleTest3 = articleList.get(2);
-		article1.setText(articleTest3.getArticleTitle() + "\n" + articleTest3.getArticleDate() + "\n" + 
-				articleTest3.getArticleShortDescription() + "\n" + articleTest3.getSiteOrigin());
-
-        final WebEngine webEngine = webView.getEngine();
-        webEngine.loadContent(articleTest1.getSiteOrigin());
-	}
-	
-	@FXML
 	public void showFirstArticle(ActionEvent event){
-		NewsArticle articleTest1 = articleList.get(0);
-		article1.setText(articleTest1.getArticleTitle() + "\n" + articleTest1.getArticleDate() + "\n" + 
-				articleTest1.getArticleShortDescription() + "\n" + articleTest1.getSiteOrigin());
-		final WebEngine webEngine = webView.getEngine();
-        webEngine.load(articleTest1.getSiteOrigin());
+		webView.getEngine().load(articleList.get(0).getSiteOrigin());
 	}
 	
 	@FXML
 	public void showSecondArticle(ActionEvent event){
-		NewsArticle articleTest2 = articleList.get(1);
-		article2.setText(articleTest2.getArticleTitle() + "\n" + articleTest2.getArticleDate() + "\n" + 
-				articleTest2.getArticleShortDescription() + "\n" + articleTest2.getSiteOrigin());
-		final WebEngine webEngine = webView.getEngine();
-        webEngine.load(articleTest2.getSiteOrigin());
+		webView.getEngine().load(articleList.get(1).getSiteOrigin());
 	}
 	
 	@FXML
 	public void showThirdArticle(ActionEvent event){
-		NewsArticle articleTest3 = articleList.get(2);
-		article3.setText(articleTest3.getArticleTitle() + "\n" + articleTest3.getArticleDate() + "\n" + 
-				articleTest3.getArticleShortDescription() + "\n" + articleTest3.getSiteOrigin());
-		final WebEngine webEngine = webView.getEngine();
-        webEngine.load(articleTest3.getSiteOrigin());
+		webView.getEngine().load(articleList.get(2).getSiteOrigin());
+	}
+	
+	private void loadArticleTabProperties() throws Exception{
+		articleList = articleController.retrieveNewsArticleList();
+		if(articleList == null || articleList.isEmpty()) {
+			throw new Exception();
+		}
+		
+		article1.wrapTextProperty().setValue(true);
+		article1.setAlignment(Pos.BASELINE_CENTER);
+		article1.setText(articleList.get(0).getArticleTitle());
+		webView.getEngine().load(articleList.get(0).getSiteOrigin());
+		
+		article2.wrapTextProperty().setValue(true);
+		article2.setAlignment(Pos.BASELINE_CENTER);
+		article2.setText(articleList.get(1).getArticleTitle());
+		
+		article3.wrapTextProperty().setValue(true);
+		article3.setAlignment(Pos.BASELINE_CENTER);
+		article3.setText(articleList.get(2).getArticleTitle());
+	}
+	
+	@FXML
+	public void searchArticlesAction(ActionEvent event){
+		if(!searchTextBox.getText().equals("")){
+			searchHistoryList.add(searchTextBox.getText());
+		}
+		searchHistory.setItems(FXCollections.observableArrayList(searchHistoryList));
+	}
+	
+	@FXML
+	public void showSearchHistory(ActionEvent event){
 	}
 }
