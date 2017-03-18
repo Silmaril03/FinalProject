@@ -34,9 +34,9 @@ public class ConfigReader {
 	{
 		try {
 			siteList = null;
-			File file = new File(siteFile);
+//			File file = new File(siteFile);
 			DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-			Document document = builderFactory.newDocumentBuilder().parse(file); 
+			Document document = builderFactory.newDocumentBuilder().parse(siteFile); 
 			document.getDocumentElement().normalize();
 			NodeList nodeList = document.getElementsByTagName(SITE_TAG);
 			siteList = new ArrayList<String>();

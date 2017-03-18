@@ -55,6 +55,7 @@
 								<goal>copy-dependencies</goal>
 							</goals>
 							<configuration>
+								<descriptor>assembly.xml</descriptor>
 								<outputDirectory>${project.build.directory}/lib</outputDirectory>
 								<overWriteReleases>false</overWriteReleases>
 								<overWriteSnapshots>false</overWriteSnapshots>
@@ -66,8 +67,12 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.4</version>
+					<version>3.0.2</version>
 					<configuration>
+						<descriptor>assembly.xml</descriptor>
+						<descriptorRefs>
+							<descriptorRef>jar-with-dependencies</descriptorRef>
+						</descriptorRefs>
 						<archive>
 							<manifest>
 								<addClasspath>true</addClasspath>
@@ -75,21 +80,19 @@
 								<mainClass>com.psu.SWENG500.Powerlifting.application.Main</mainClass>
 							</manifest>
 						</archive>
-						<descriptorRefs>
-							<descriptorRef>jar-with-dependencies</descriptorRef>
-						</descriptorRefs>
 					</configuration>
 				</plugin>
+
 				<plugin>
-					<groupId>org.apache.tomcat.maven</groupId>
-					<artifactId>tomcat6-maven-plugin</artifactId>
-					<version>2.2</version>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
 				</plugin>
-				<plugin>
-					<groupId>org.apache.tomcat.maven</groupId>
-					<artifactId>tomcat7-maven-plugin</artifactId>
-					<version>2.2</version>
-				</plugin>
+
 			</plugins>
 		</pluginManagement>
 	</build>

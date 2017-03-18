@@ -12,7 +12,7 @@ public class NewsArticleController {
 	
 	public List<NewsArticle> retrieveNewsArticleList(){
 		ConfigReader reader = ConfigReader.getInstance();
-		reader.readSiteListFile("src/main/resources/SiteList.xml");
+		reader.readSiteListFile(getClass().getClassLoader().getResource("scripts/sitelist.xml").toExternalForm());
 		List<String> siteUrls = reader.getSiteList();
 		return articleModel.retrieveArticlesFromSiteUrls(siteUrls);
 	}
