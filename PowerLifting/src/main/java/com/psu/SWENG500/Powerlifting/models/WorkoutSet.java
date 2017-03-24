@@ -76,7 +76,7 @@ public class WorkoutSet
 	
 	public boolean isPartOfTotal()
 	{
-		if (this.exerciseName.startsWith("Bench Press") || this.exerciseName.startsWith("Deadlift") || this.exerciseName.startsWith("Squat"))
+		if (this.exerciseName.startsWith("Bench Press, Barbell") || this.exerciseName.startsWith("Deadlift, Barbell") || this.exerciseName.startsWith("Squat, Barbell"))
 			return true;
 		else
 			return false;
