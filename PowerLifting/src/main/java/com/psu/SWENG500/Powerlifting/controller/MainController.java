@@ -86,12 +86,25 @@ public class MainController implements Initializable {
 	@FXML private TextField neckTextField;
 	@FXML private TextField waistTextField;
 	@FXML private Button saveMeasurementsButton;
+	@FXML private Label loginErrorLabel;
+	@FXML private Label workoutLogErrorLabel;
+	@FXML private Label articleErrorLabel;
+	@FXML private Label weightErrorLabel;
+	@FXML private Label neckErrorLabel;
+	@FXML private Label waistErrorLabel;
+	@FXML private TextField firstNameTextField;
+	@FXML private TextField lastNameTextField;
+	@FXML private TextField emailTextField;
+	@FXML private TextField usernameSetTextField;
+	@FXML private TextField passwordSetTextField;
+	@FXML private ComboBox<String> genderComboBox;
 	
 	@FXML private TabPane tcPnls;
 	@FXML private Tab workoutTab;
 	@FXML private Tab articlesTab;
 	@FXML private Tab statisticsTab;
 	@FXML private Tab measurementsTab;
+	@FXML private Tab settingsTab;
 	@FXML private Label lblCurrentUser;
 	
 	private Account currentUser;
@@ -115,6 +128,7 @@ public class MainController implements Initializable {
 	ObservableList<String> heightInInchesList = FXCollections.observableArrayList("0 inches", "1 inch", 
 			"2 inches", "3 inches", "4 inches", "5 inches", "6 inches", "7 inches", "8 inches", "9 inches",
 			"10 inches", "11 inches");
+	ObservableList<String> genderList = FXCollections.observableArrayList("Male", "Female");
 		
 	private TrainingLogController trainingLogController = new TrainingLogController();
 	private ObservableList<WorkoutSetUI> setList = FXCollections.observableArrayList();
@@ -131,6 +145,7 @@ public class MainController implements Initializable {
 		heightInFeetComboBox.getItems().addAll(heightInFeetList);
 		heightInInchesComboBox.getItems().addAll(heightInInchesList);
 		workoutTable.setItems(setList);
+		genderComboBox.getItems().addAll(genderList);
 		usernameTextField.setRestrict("[0-9 | a-z]");
 		weightTextBox.setRestrict("-?((\\d*)|(\\d+\\.\\d*))");
 		repsTextBox.setRestrict("[0-9]");
@@ -191,6 +206,7 @@ public class MainController implements Initializable {
 				articlesTab.setDisable(false);
 				measurementsTab.setDisable(false);
 				statisticsTab.setDisable(false);
+				settingsTab.setDisable(false);
 				tcPnls.getSelectionModel().select(workoutTab);
 				usernameTextField.setText("");
 				passwordTextField.setText("");
