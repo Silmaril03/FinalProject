@@ -3,6 +3,7 @@ package com.psu.SWENG500.Powerlifting.controller;
 import java.net.URL;
 import java.awt.ScrollPane;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -138,7 +139,7 @@ public class MainController implements Initializable {
 		articlesTab.setDisable(true);
 		measurementsTab.setDisable(true);
 		statisticsTab.setDisable(true);
-		
+		workoutDate.setValue(LocalDate.now());
 //		searchHistoryList.add("Test");
 //		searchHistory.getItems().addAll(FXCollections.observableArrayList(searchHistoryList));
 		
@@ -270,6 +271,7 @@ public class MainController implements Initializable {
 	public void showSearchHistory(ActionEvent event){
 	}
 	
+	@FXML
 	public void saveMeasurementsButtonAction(ActionEvent event){
 		IMeasurementsDAO mDao = MeasurementsDaoFactory.GetMeasurementDAO("TestDb");
 		double feet = Double.parseDouble(heightInFeetComboBox.getValue().split("[ ]")[0]);
@@ -287,6 +289,25 @@ public class MainController implements Initializable {
 			articlesTab.setDisable(false);
 			measurementsTab.setDisable(false);
 			statisticsTab.setDisable(false);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void workoutDateChanged(ActionEvent event){
+		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
+		try
+		{
+			Workout selectedWorkout = wDao.GetWorkoutByDate(java.sql.Date.valueOf(workoutDate.getValue()));
+			trainingLogController.setWorkout(selectedWorkout);
+			setList.clear();
+			for (WorkoutSet ws : trainingLogController.getWorkout().GetWorkoutSets())
+			{
+				WorkoutSetUI workoutUI = new WorkoutSetUI(ws.getSetNumber(), ws.getWeightLifted(), ws.getRepCount(), ws.getExerciseName());
+				setList.add(workoutUI);
+			}
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
