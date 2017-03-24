@@ -40,16 +40,12 @@ public class AccountDAO implements IAccountDAO
         		tempAccount.setNickname(rs.getString("NICKNAME"));
         		tempAccount.setEmailAddress(rs.getString("EMAILADDRESS"));
         		tempAccount.setGender(rs.getString("GENDER"));
-        		tempAccount.setHeight(rs.getDouble("HEIGHT"));
-        		tempAccount.setPhoneNumber(rs.getString("PHONENUMBER"));
-        		tempAccount.setMfpUsername(rs.getString("MFPUSERNAME"));
-        		tempAccount.setMfpPwd(rs.getString("MFPPASSWORD"));
         		prep.close();
             }
             conn.commit();
         } catch (SQLException e)
         {
-            System.out.println("Exception Message " + e.getLocalizedMessage());
+        	throw e;
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -59,24 +55,59 @@ public class AccountDAO implements IAccountDAO
         }
         return tempAccount;
 	}
-
+	
+	public Account GetAccount(String emailAddress, String password) throws SQLException
+	{
+		Account tempAccount = null;
+		Connection conn = H2ConnectionFactory.GetConnection(this.dbName);
+        try
+        {
+        	conn.setAutoCommit(false);
+        	String sql = "SELECT * FROM SWENG500.USERS WHERE EMAILADDRESS=? AND PASSWORD=?";
+        	PreparedStatement prep = conn.prepareStatement(sql);
+        	prep.setString(1, emailAddress);
+        	prep.setString(2, password);
+        	ResultSet rs = prep.executeQuery();
+        	if (rs.next())
+            {
+        		tempAccount = new Account();
+        		tempAccount.setUserId(rs.getInt("ID"));
+        		tempAccount.setFirstName(rs.getString("FIRSTNAME"));
+        		tempAccount.setLastName(rs.getString("LASTNAME"));
+        		tempAccount.setNickname(rs.getString("NICKNAME"));
+        		tempAccount.setEmailAddress(rs.getString("EMAILADDRESS"));
+        		tempAccount.setGender(rs.getString("GENDER"));
+        		tempAccount.setPassword(rs.getString("PASSWORD"));
+        		prep.close();
+            }
+            conn.commit();
+        } catch (SQLException e)
+        {
+        	throw e;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            conn.close();
+        }
+        return tempAccount;
+	}
+	
 	public Account CreateAccount(Account a) throws SQLException
 	{
 		Connection conn = H2ConnectionFactory.GetConnection(this.dbName);
         try
         {
         	conn.setAutoCommit(false);
-        	String sql = "INSERT INTO SWENG500.USERS (FIRSTNAME, LASTNAME, NICKNAME, EMAILADDRESS, GENDER, HEIGHT, PHONENUMBER, MFPUSERNAME, MFPPASSWORD) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";// * FROM USERS WHERE PASSWORD=?";
+        	String sql = "INSERT INTO SWENG500.USERS (FIRSTNAME, LASTNAME, NICKNAME, EMAILADDRESS, GENDER, PASSWORD) VALUES (?, ?, ?, ?, ?, ?)";// * FROM USERS WHERE PASSWORD=?";
         	PreparedStatement prep = conn.prepareStatement(sql);
         	prep.setString(1, a.getFirstName());
         	prep.setString(2, a.getLastName());
         	prep.setString(3, a.getNickname());
         	prep.setString(4, a.getEmailAddress());
         	prep.setString(5, a.getGender());
-        	prep.setDouble(6, a.getHeight());
-        	prep.setString(7, a.getPhoneNumber());
-        	prep.setString(8, a.getMfpUsername());
-        	prep.setString(9, a.getMfpPwd());
+        	prep.setString(6,  a.getPassword());
         	prep.executeUpdate();
         	ResultSet newId = prep.getGeneratedKeys();
         	if (newId.next())
@@ -85,7 +116,7 @@ public class AccountDAO implements IAccountDAO
             conn.commit();
         } catch (SQLException e)
         {
-            System.out.println("Exception Message " + e.getLocalizedMessage());
+        	throw e;
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -96,10 +127,32 @@ public class AccountDAO implements IAccountDAO
         return a;
 	}
 
-	public Account UpdateAccount(Account a)
+	public void UpdateAccount(Account a) throws SQLException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = H2ConnectionFactory.GetConnection(this.dbName);
+        try
+        {
+        	conn.setAutoCommit(false);
+        	String sql = "UPDATE SWENG500.USERS SET FIRSTNAME=?, LASTNAME=?, NICKNAME=?, GENDER=? WHERE ID=?";
+        	PreparedStatement prep = conn.prepareStatement(sql);
+        	prep.setString(1, a.getFirstName());
+        	prep.setString(2, a.getLastName());
+        	prep.setString(3, a.getNickname());
+        	prep.setString(4, a.getGender());
+        	prep.setInt(5,  a.getUserId());
+        	prep.executeUpdate();
+        	prep.close();
+            conn.commit();
+        } catch (SQLException e)
+        {
+        	throw e;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            conn.close();
+        }
 	}
 
 	public boolean DeleteAccount(Account a)
