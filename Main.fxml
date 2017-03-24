@@ -38,6 +38,7 @@
                         <Label layoutX="324.0" layoutY="234.0" text="Password" />
                         <Button fx:id="loginButton" layoutX="325.0" layoutY="312.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="83.0" prefWidth="146.0" text="Login" />
                         <Button fx:id="loginButton" layoutX="324.0" layoutY="423.0" mnemonicParsing="false" onAction="#registerAction" prefHeight="30.0" prefWidth="146.0" text="Register" />
+                        <Label fx:id="loginErrorLabel" layoutX="324.0" layoutY="286.0" prefHeight="17.0" prefWidth="148.0" textFill="RED" />
                      </children>
                   </AnchorPane>
             </content>
@@ -75,6 +76,7 @@
                         <Label layoutX="626.0" layoutY="243.0" text="Weight" />
                         <RestrictiveTextField fx:id="repsTextBox" layoutX="689.0" layoutY="273.0" prefHeight="25.0" prefWidth="61.0" />
                         <Label layoutX="632.0" layoutY="277.0" text="Reps" />
+                        <Label fx:id="workoutLogErrorLabel" layoutX="235.0" layoutY="45.0" prefHeight="17.0" prefWidth="303.0" textFill="RED" />
                      </children>
                   </AnchorPane>
             </content>
@@ -110,13 +112,14 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <WebView fx:id="webView" layoutY="58.0" prefHeight="510.0" prefWidth="525.0" />
-                        <Button fx:id="article1" layoutX="575.0" layoutY="99.0" mnemonicParsing="false" onAction="#showFirstArticle" prefHeight="139.0" prefWidth="199.0" text="Article 1" textAlignment="CENTER" />
-                        <Button fx:id="article2" layoutX="575.0" layoutY="261.0" mnemonicParsing="false" onAction="#showSecondArticle" prefHeight="140.0" prefWidth="199.0" text="Article 2" textAlignment="CENTER" />
-                        <Button fx:id="article3" layoutX="574.0" layoutY="429.0" mnemonicParsing="false" onAction="#showThirdArticle" prefHeight="139.0" prefWidth="200.0" text="Article 3" textAlignment="CENTER" />
+                        <Button fx:id="article1" layoutX="575.0" layoutY="147.0" mnemonicParsing="false" onAction="#showFirstArticle" prefHeight="139.0" prefWidth="199.0" text="Article 1" textAlignment="CENTER" />
+                        <Button fx:id="article2" layoutX="575.0" layoutY="286.0" mnemonicParsing="false" onAction="#showSecondArticle" prefHeight="140.0" prefWidth="199.0" text="Article 2" textAlignment="CENTER" />
+                        <Button fx:id="article3" layoutX="574.0" layoutY="426.0" mnemonicParsing="false" onAction="#showThirdArticle" prefHeight="139.0" prefWidth="200.0" text="Article 3" textAlignment="CENTER" />
                         <TextField fx:id="searchTextBox" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="397.0" promptText="Search" />
                         <Button fx:id="searchButton" layoutX="435.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchArticlesAction" prefHeight="25.0" prefWidth="109.0" text="Search" />
                         <ComboBox fx:id="searchHistory" layoutX="575.0" layoutY="55.0" onAction="#showSearchHistory" prefHeight="25.0" prefWidth="198.0" promptText="Search History" />
                         <Button fx:id="refreshButton" layoutX="575.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="198.0" text="Refresh" />
+                        <Label fx:id="articleErrorLabel" layoutX="575.0" layoutY="91.0" prefHeight="43.0" prefWidth="198.0" textFill="RED" />
                      </children>
                   </AnchorPane>
               </content>
@@ -136,6 +139,28 @@
                         <Label layoutX="44.0" layoutY="222.0" text="Neck circumference, inches" />
                         <Label layoutX="44.0" layoutY="286.0" text="Waist circumference, inches" />
                         <ComboBox fx:id="heightInInchesComboBox" layoutX="211.0" layoutY="109.0" prefWidth="150.0" promptText="inches" />
+                        <Label fx:id="weightErrorLabel" layoutX="46.0" layoutY="201.0" prefHeight="17.0" prefWidth="149.0" textFill="RED" />
+                        <Label fx:id="neckErrorLabel" layoutX="44.0" layoutY="264.0" prefHeight="17.0" prefWidth="151.0" textFill="RED" />
+                        <Label fx:id="waistErrorLabel" layoutX="44.0" layoutY="328.0" prefHeight="17.0" prefWidth="150.0" textFill="RED" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="settingsTab" text="Settings">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="firstNameTextField" layoutX="45.0" layoutY="40.0" />
+                        <Label layoutX="45.0" layoutY="23.0" prefHeight="17.0" prefWidth="148.0" text="First Name" />
+                        <TextField fx:id="lastNameTextField" layoutX="45.0" layoutY="104.0" />
+                        <Label layoutX="45.0" layoutY="87.0" prefHeight="17.0" prefWidth="149.0" text="Last Name" />
+                        <TextField fx:id="emailTextField" layoutX="45.0" layoutY="164.0" />
+                        <Label layoutX="45.0" layoutY="147.0" prefHeight="17.0" prefWidth="148.0" text="Email" />
+                        <TextField fx:id="passwordSetTextField" layoutX="45.0" layoutY="286.0" />
+                        <Label layoutX="45.0" layoutY="269.0" prefHeight="17.0" prefWidth="149.0" text="Password" />
+                        <ComboBox fx:id="genderComboBox" layoutX="43.0" layoutY="330.0" prefWidth="150.0" promptText="Gender" />
+                        <TextField fx:id="usernameSetTextField" layoutX="45.0" layoutY="225.0" />
+                        <Label layoutX="45.0" layoutY="208.0" prefHeight="17.0" prefWidth="149.0" text="Username" />
                      </children>
                   </AnchorPane>
               </content>
