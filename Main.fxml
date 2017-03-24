@@ -38,7 +38,7 @@
                         <Label layoutX="324.0" layoutY="176.0" text="Username" />
                         <Label layoutX="324.0" layoutY="234.0" text="Password" />
                         <Button fx:id="loginButton" layoutX="325.0" layoutY="312.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="83.0" prefWidth="146.0" text="Login" />
-                        <Button fx:id="loginButton" layoutX="415.0" layoutY="312.0" mnemonicParsing="false" onAction="#registerAction" prefHeight="30.0" prefWidth="75.0" text="Register" />
+                        <Button fx:id="loginButton" layoutX="324.0" layoutY="423.0" mnemonicParsing="false" onAction="#registerAction" prefHeight="30.0" prefWidth="146.0" text="Register" />
                      </children>
                   </AnchorPane>
             </content>
