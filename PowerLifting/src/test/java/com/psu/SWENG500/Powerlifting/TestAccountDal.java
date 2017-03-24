@@ -21,10 +21,6 @@ public class TestAccountDal extends TestCase
 		testAccount.setNickname("Test Nickname");
 		testAccount.setEmailAddress("test@test.com");
 		testAccount.setGender("Male");
-		testAccount.setHeight(72);
-		testAccount.setPhoneNumber("1234567890");
-		testAccount.setMfpUsername("testMfpUserName");
-		testAccount.setMfpPwd("testMfpPwd");
 	}
 	
 	public void testCreateAccount()

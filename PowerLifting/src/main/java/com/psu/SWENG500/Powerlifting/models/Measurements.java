@@ -1,5 +1,7 @@
 package com.psu.SWENG500.Powerlifting.models;
 
+import java.util.Date;
+
 /**
  * @author Jason
  * 
@@ -10,14 +12,17 @@ package com.psu.SWENG500.Powerlifting.models;
  *
  */
 public abstract class Measurements {
+	private int userId;
 	private Double height;
 	private Double waist;
+	private Double neck;
 	private Double hip;
 	private Double wrist;
 	private Double forearm;
 	private Double weight;
 	protected MeasurementType measurementType;
-
+	private Date measurementDate;
+	
 	public Double getHeight() {
 		return height;
 	}
@@ -72,6 +77,30 @@ public abstract class Measurements {
 
 	public MeasurementType getMeasurementType() {
 		return measurementType;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public Date getMeasurementDate() {
+		return measurementDate;
+	}
+
+	public void setMeasurementDate(Date measurementDate) {
+		this.measurementDate = measurementDate;
+	}
+
+	public Double getNeck() {
+		return neck;
+	}
+
+	public void setNeck(Double neck) {
+		this.neck = neck;
 	}
 
 }

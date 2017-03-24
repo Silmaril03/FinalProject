@@ -28,41 +28,12 @@ public class TestAccount extends TestCase
 		assertEquals("John.Smith@aol.com", tempAccount.getEmailAddress());
 	}
 	
-	public void testPhoneNumber()
-	{
-		tempAccount = new Account();
-		tempAccount.setPhoneNumber("(123) 456-7890");
-		assertEquals("(123) 456-7890", tempAccount.getPhoneNumber());
-	}
-	
 	public void testGender()
 	{
 		tempAccount = new Account();
 		tempAccount.setGender("Male");
 		assertEquals("Male", tempAccount.getGender());
 	}
-	
-	public void testMfpUsername()
-	{
-		tempAccount = new Account();
-		tempAccount.setMfpUsername("JSmith");
-		assertEquals("JSmith", tempAccount.getMfpUsername());
-	}
-	
-	public void testMfpPwd()
-	{
-		tempAccount = new Account();
-		tempAccount.setMfpPwd("1234567890");
-		assertEquals("1234567890", tempAccount.getMfpPwd());
-	}
-	
-//	@Test
-//	public void testUsername()
-//	{
-//		tempAccount = new Account();
-//		tempAccount.setUsername("JoSmith");
-//		Assert.assertEquals("JoSmith", tempAccount.getUsername());
-//	}
 	
 //	@Test
 //	public void testPassword()
@@ -71,13 +42,6 @@ public class TestAccount extends TestCase
 //		tempAccount.setPassword("1234567890");
 //		Assert.assertEquals("1234567890", tempAccount.getPassword());
 //	}
-	
-	public void testHeight()
-	{
-		tempAccount = new Account();
-		tempAccount.setHeight(65);
-		assertEquals(65, tempAccount.getHeight(), 0);
-	}
 	
 //	@Test
 //	public void testCreateAccount()

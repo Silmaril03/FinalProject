@@ -11,12 +11,19 @@ import java.util.Observable;
 import java.util.ResourceBundle;
 
 import com.psu.SWENG500.Powerlifting.application.ui.RestrictiveTextField;
+import com.psu.SWENG500.Powerlifting.dal.AccountDaoFactory;
+import com.psu.SWENG500.Powerlifting.dal.IAccountDAO;
+import com.psu.SWENG500.Powerlifting.dal.IMeasurementsDAO;
 import com.psu.SWENG500.Powerlifting.dal.IWorkoutDAO;
+import com.psu.SWENG500.Powerlifting.dal.MeasurementsDaoFactory;
 import com.psu.SWENG500.Powerlifting.dal.WorkoutDaoFactory;
 import com.psu.SWENG500.Powerlifting.models.Exercise;
+import com.psu.SWENG500.Powerlifting.models.ImperialMeasurement;
+import com.psu.SWENG500.Powerlifting.models.Measurements;
 import com.psu.SWENG500.Powerlifting.models.Workout;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
 import com.psu.SWENG500.Powerlifting.models.ui.WorkoutSetUI;
+import com.psu.SWENG500.Powerlifting.models.Account;
 import com.psu.SWENG500.Powerlifting.models.ConfigReader;
 import com.psu.SWENG500.Powerlifting.models.Exercise;
 import com.psu.SWENG500.Powerlifting.models.NewsArticleModel;
@@ -39,6 +46,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -79,10 +87,14 @@ public class MainController implements Initializable {
 	@FXML private TextField waistTextField;
 	@FXML private Button saveMeasurementsButton;
 	
+	@FXML private TabPane tcPnls;
 	@FXML private Tab workoutTab;
 	@FXML private Tab articlesTab;
 	@FXML private Tab statisticsTab;
 	@FXML private Tab measurementsTab;
+	@FXML private Label lblCurrentUser;
+	
+	private Account currentUser;
 	
 	ObservableList<String> exerciseList = FXCollections.observableArrayList("Back Extension", 
 				"Bench Press, Barbell", "Bench Press, Close Grip", "Bench Press, Dumbbell",
@@ -122,10 +134,10 @@ public class MainController implements Initializable {
 		usernameTextField.setRestrict("[0-9 | a-z]");
 		weightTextBox.setRestrict("-?((\\d*)|(\\d+\\.\\d*))");
 		repsTextBox.setRestrict("[0-9]");
-//		workoutTab.setDisable(true);
-//		articlesTab.setDisable(true);
-//		measurementsTab.setDisable(true);
-//		statisticsTab.setDisable(true);
+		workoutTab.setDisable(true);
+		articlesTab.setDisable(true);
+		measurementsTab.setDisable(true);
+		statisticsTab.setDisable(true);
 		
 //		searchHistoryList.add("Test");
 //		searchHistory.getItems().addAll(FXCollections.observableArrayList(searchHistoryList));
@@ -161,7 +173,7 @@ public class MainController implements Initializable {
 		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
 		trainingLogController.getWorkout().setWorkoutDate(java.sql.Date.valueOf(workoutDate.getValue()));//workoutDate.getValue());
 		try {
-			wDao.CreateWorkout(trainingLogController.getWorkout(), 38);
+			wDao.CreateWorkout(trainingLogController.getWorkout(), this.currentUser.getUserId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -169,26 +181,46 @@ public class MainController implements Initializable {
 	
 	@FXML
 	public void loginAction(ActionEvent event){
-		AccountUI accountUI = new AccountUI();
-		accountUI.setUsername(usernameTextField.getText());
-		accountUI.setPassword(passwordTextField.getText());
-		
-		workoutTab.setDisable(false);
-		articlesTab.setDisable(false);
-		measurementsTab.setDisable(false);
-		statisticsTab.setDisable(false);
+		IAccountDAO aDao = AccountDaoFactory.GetAccountDAO("TestDb");
+		try
+		{
+			this.currentUser = aDao.GetAccount(usernameTextField.getText(), passwordTextField.getText());
+			if (this.currentUser != null)
+			{
+				workoutTab.setDisable(false);
+				articlesTab.setDisable(false);
+				measurementsTab.setDisable(false);
+				statisticsTab.setDisable(false);
+				tcPnls.getSelectionModel().select(workoutTab);
+				usernameTextField.setText("");
+				passwordTextField.setText("");
+				lblCurrentUser.setText("Current User: " + this.currentUser.getEmailAddress());
+			}
+			else
+				lblCurrentUser.setText("Current User: Invalid Username and/or Password");
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
 	public void registerAction(ActionEvent event){
-		AccountUI accountUI = new AccountUI();
-		accountUI.setUsername(usernameTextField.getText());
-		accountUI.setPassword(passwordTextField.getText());
-		
-		workoutTab.setDisable(false);
-		articlesTab.setDisable(false);
-		measurementsTab.setDisable(false);
-		statisticsTab.setDisable(false);
+		IAccountDAO aDao = AccountDaoFactory.GetAccountDAO("TestDb");
+		this.currentUser = new Account();
+		this.currentUser.setEmailAddress(usernameTextField.getText());
+		this.currentUser.setPassword(passwordTextField.getText());
+		try
+		{
+			this.currentUser = aDao.CreateAccount(this.currentUser);
+			workoutTab.setDisable(false);
+			articlesTab.setDisable(false);
+			measurementsTab.setDisable(false);
+			statisticsTab.setDisable(false);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
@@ -236,5 +268,28 @@ public class MainController implements Initializable {
 	
 	@FXML
 	public void showSearchHistory(ActionEvent event){
+	}
+	
+	public void saveMeasurementsButtonAction(ActionEvent event){
+		IMeasurementsDAO mDao = MeasurementsDaoFactory.GetMeasurementDAO("TestDb");
+		double feet = Double.parseDouble(heightInFeetComboBox.getValue().split("[ ]")[0]);
+		double inches = Double.parseDouble(heightInInchesComboBox.getValue().split("[ ]")[0]);
+		double totalHeight = (feet * 12) + inches;
+		
+		ImperialMeasurement m = new ImperialMeasurement(totalHeight, Double.parseDouble(weightTextField.getText()), Double.parseDouble(waistTextField.getText()),0,0,0);
+		m.setUserId(this.currentUser.getUserId());
+		m.setMeasurementDate(java.sql.Date.valueOf(measurementsDate.getValue()));
+		m.setNeck(0.0);
+		try
+		{
+			mDao.CreateMeasurement(m);
+			workoutTab.setDisable(false);
+			articlesTab.setDisable(false);
+			measurementsTab.setDisable(false);
+			statisticsTab.setDisable(false);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }
