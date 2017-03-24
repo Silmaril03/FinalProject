@@ -8,7 +8,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -68,12 +67,10 @@
          					</TableColumn>
                           </columns>
                         </TableView>
-                        <Button fx:id="removeExercise" layoutX="597.0" layoutY="141.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="Remove Exercise" />
-                        <Button fx:id="addSet" layoutX="597.0" layoutY="193.0" mnemonicParsing="false" onAction="#addSetButtonAction" prefHeight="27.0" prefWidth="157.0" text="Add Set" />
-                        <Button fx:id="removeSet" layoutX="601.0" layoutY="317.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Delete Set" />
-                        <Button fx:id="logWorkout" layoutX="601.0" layoutY="475.0" mnemonicParsing="false" onAction="#saveWorkoutButtonAction" prefHeight="59.0" prefWidth="153.0" text="Save Workout" />
+                        <Button fx:id="addSet" layoutX="599.0" layoutY="326.0" mnemonicParsing="false" onAction="#addSetButtonAction" prefHeight="54.0" prefWidth="157.0" text="Add Set" />
+                        <Button fx:id="removeSet" layoutX="598.0" layoutY="403.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="Delete Set" />
+                        <Button fx:id="logWorkout" layoutX="598.0" layoutY="475.0" mnemonicParsing="false" onAction="#saveWorkoutButtonAction" prefHeight="71.0" prefWidth="156.0" text="Save Workout" />
                         <ComboBox fx:id="addExercise" layoutX="597.0" layoutY="86.0" prefHeight="25.0" prefWidth="158.0" promptText="Choose Exercise" />
-                        <ScrollBar fx:id="workoutScrollBar" layoutX="538.0" layoutY="86.0" orientation="VERTICAL" prefHeight="462.0" prefWidth="14.0" />
                         <RestrictiveTextField fx:id="weightTextBox" layoutX="689.0" layoutY="239.0" prefHeight="25.0" prefWidth="61.0" />
                         <Label layoutX="626.0" layoutY="243.0" text="Weight" />
                         <RestrictiveTextField fx:id="repsTextBox" layoutX="689.0" layoutY="273.0" prefHeight="25.0" prefWidth="61.0" />
@@ -113,13 +110,13 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <WebView fx:id="webView" layoutY="58.0" prefHeight="510.0" prefWidth="525.0" />
-                        <Button fx:id="article1" layoutX="574.0" layoutY="55.0" mnemonicParsing="false" onAction="#showFirstArticle" prefHeight="139.0" prefWidth="199.0" text="Article 1" textAlignment="CENTER" />
-                        <Button fx:id="article2" layoutX="574.0" layoutY="194.0" mnemonicParsing="false" onAction="#showSecondArticle" prefHeight="140.0" prefWidth="199.0" text="Article 2" textAlignment="CENTER" />
-                        <Button fx:id="article3" layoutX="574.0" layoutY="334.0" mnemonicParsing="false" onAction="#showThirdArticle" prefHeight="139.0" prefWidth="200.0" text="Article 3" textAlignment="CENTER" />
-                        <ScrollBar fx:id="articleScrollBar" layoutX="531.0" layoutY="55.0" orientation="VERTICAL" prefHeight="516.0" prefWidth="14.0" />
+                        <Button fx:id="article1" layoutX="575.0" layoutY="99.0" mnemonicParsing="false" onAction="#showFirstArticle" prefHeight="139.0" prefWidth="199.0" text="Article 1" textAlignment="CENTER" />
+                        <Button fx:id="article2" layoutX="575.0" layoutY="261.0" mnemonicParsing="false" onAction="#showSecondArticle" prefHeight="140.0" prefWidth="199.0" text="Article 2" textAlignment="CENTER" />
+                        <Button fx:id="article3" layoutX="574.0" layoutY="429.0" mnemonicParsing="false" onAction="#showThirdArticle" prefHeight="139.0" prefWidth="200.0" text="Article 3" textAlignment="CENTER" />
                         <TextField fx:id="searchTextBox" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="397.0" promptText="Search" />
                         <Button fx:id="searchButton" layoutX="435.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchArticlesAction" prefHeight="25.0" prefWidth="109.0" text="Search" />
-                        <ComboBox fx:id="searchHistory" layoutX="574.0" layoutY="14.0" onAction="#showSearchHistory" prefWidth="150.0" promptText="Search History" />
+                        <ComboBox fx:id="searchHistory" layoutX="575.0" layoutY="55.0" onAction="#showSearchHistory" prefHeight="25.0" prefWidth="198.0" promptText="Search History" />
+                        <Button fx:id="refreshButton" layoutX="575.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="198.0" text="Refresh" />
                      </children>
                   </AnchorPane>
               </content>
