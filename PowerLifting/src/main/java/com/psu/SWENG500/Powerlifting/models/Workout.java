@@ -5,8 +5,6 @@ import java.util.*;
 public class Workout
 {
 	private int workoutId;
-	//private int totalExercises;
-	//private int totalVolume;
 	private String description;
 	private Date workoutDate;
 	private List<WorkoutSet> workoutSets;
@@ -15,7 +13,6 @@ public class Workout
 	{
 		this.workoutSets = new ArrayList<WorkoutSet>();
 	}
-	
 	
 	public Workout(Date workoutDate)
 	{	
@@ -68,22 +65,6 @@ public class Workout
 		return workoutSets.size();
 	}
 	
-//	public void addExercise(Exercise exercise)
-//	{
-//		this.sets.add()
-//		//this.exercises.add(exercise);
-//	}
-//	
-//	public void deleteExercise(Exercise exercise)
-//	{
-//		//this.exercises.remove(exercise);
-//	}
-//	
-//	public void addCustomExercise(String exerciseName)
-//	{
-//		// add custom exercise
-//	}
-	
 	public int getTotalExercises()
 	{
 		//return this.exercises.size();
@@ -92,13 +73,20 @@ public class Workout
 	
 	public double getTotalVolume()
 	{
-		// Calculate total volume from exercises
-		return 0;
+		return this.workoutSets.stream()
+				//.filter(ws -> ws.isPartOfTotal())
+				.mapToDouble(ws -> ws.getRepCount() * ws.getWeightLifted())
+				.sum();
 	}
-	//public void setTotalExercises()
-	//{
-	//	// set total exercises
-	//}
+	
+	public double getTotalVolumeByExercise(String exerciseName)
+	{
+		return this.workoutSets.stream()
+				//.filter(ws -> ws.isPartOfTotal() && ws.getExerciseName() == exerciseName)
+				.filter(ws -> ws.getExerciseName() == exerciseName)
+				.mapToDouble(ws -> ws.getRepCount() * ws.getWeightLifted())
+				.sum();
+	}
 	
 	public List<WorkoutSet> GetWorkoutSets()
 	{
