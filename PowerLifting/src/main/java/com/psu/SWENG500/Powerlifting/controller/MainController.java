@@ -99,6 +99,9 @@ public class MainController implements Initializable {
 	@FXML private TextField usernameSetTextField;
 	@FXML private TextField passwordSetTextField;
 	@FXML private ComboBox<String> genderComboBox;
+	@FXML private TextField wristTextField;
+	@FXML private TextField hipTextField;
+	@FXML private TextField forearmTextField;
 	
 	@FXML private TabPane tcPnls;
 	@FXML private Tab workoutTab;
@@ -156,6 +159,7 @@ public class MainController implements Initializable {
 		statisticsTab.setDisable(true);
 		settingsTab.setDisable(true);
 		workoutDate.setValue(LocalDate.now());
+		measurementsDate.setValue(LocalDate.now());
 //		searchHistoryList.add("Test");
 //		searchHistory.getItems().addAll(FXCollections.observableArrayList(searchHistoryList));
 		
@@ -204,11 +208,7 @@ public class MainController implements Initializable {
 			this.currentUser = aDao.GetAccount(usernameTextField.getText(), passwordTextField.getText());
 			if (this.currentUser != null)
 			{
-				workoutTab.setDisable(false);
-				articlesTab.setDisable(false);
-				measurementsTab.setDisable(false);
-				statisticsTab.setDisable(false);
-				settingsTab.setDisable(false);
+				enableTabs();
 				tcPnls.getSelectionModel().select(workoutTab);
 				usernameTextField.setText("");
 				passwordTextField.setText("");
@@ -231,10 +231,7 @@ public class MainController implements Initializable {
 		try
 		{
 			this.currentUser = aDao.CreateAccount(this.currentUser);
-			workoutTab.setDisable(false);
-			articlesTab.setDisable(false);
-			measurementsTab.setDisable(false);
-			statisticsTab.setDisable(false);
+			enableTabs();
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
@@ -295,17 +292,22 @@ public class MainController implements Initializable {
 		double inches = Double.parseDouble(heightInInchesComboBox.getValue().split("[ ]")[0]);
 		double totalHeight = (feet * 12) + inches;
 		
-		ImperialMeasurement m = new ImperialMeasurement(totalHeight, Double.parseDouble(weightTextField.getText()), Double.parseDouble(waistTextField.getText()),0,0,0);
+		ImperialMeasurement m = new ImperialMeasurement(totalHeight, Double.parseDouble(weightTextField.getText()), Double.parseDouble(waistTextField.getText()), Double.parseDouble(wristTextField.getText()), Double.parseDouble(hipTextField.getText()),Double.parseDouble(forearmTextField.getText()));
 		m.setUserId(this.currentUser.getUserId());
 		m.setMeasurementDate(java.sql.Date.valueOf(measurementsDate.getValue()));
-		m.setNeck(0.0);
+		m.setNeck(Double.parseDouble(neckTextField.getText()));
 		try
 		{
 			mDao.CreateMeasurement(m);
-			workoutTab.setDisable(false);
-			articlesTab.setDisable(false);
-			measurementsTab.setDisable(false);
-			statisticsTab.setDisable(false);
+			heightInFeetComboBox.getSelectionModel().clearSelection();
+			heightInInchesComboBox.getSelectionModel().clearSelection();
+			weightTextField.setText("");
+			waistTextField.setText("");
+			wristTextField.setText("");
+			hipTextField.setText("");
+			forearmTextField.setText("");
+			neckTextField.setText("");
+			//enableTabs();
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
@@ -329,5 +331,14 @@ public class MainController implements Initializable {
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	private void enableTabs()
+	{
+		workoutTab.setDisable(false);
+		articlesTab.setDisable(false);
+		measurementsTab.setDisable(false);
+		statisticsTab.setDisable(false);
+		settingsTab.setDisable(false);
 	}
 }
