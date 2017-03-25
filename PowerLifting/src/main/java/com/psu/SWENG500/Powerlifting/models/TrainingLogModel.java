@@ -37,6 +37,13 @@ public class TrainingLogModel
 		return retrieveWorkoutsBetweenDates(firstWorkoutDate, secondWorkoutDate);
 	}
 	
+	public List<Workout> GetWorkoutTotalByExercise(String exerciseName)
+	{
+		return this.workouts.stream()
+				.filter(w -> w.getTotalVolumeByExercise(exerciseName) > 0)
+				.collect(Collectors.toList());
+	}
+	
 	public void LogWorkout(Workout workoutSession, Date workoutSessionDate)
 	{
 		workouts.add(workoutSession);
