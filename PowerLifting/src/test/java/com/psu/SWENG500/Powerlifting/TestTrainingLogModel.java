@@ -27,8 +27,8 @@ public class TestTrainingLogModel extends TestCase
 	public void testGetWorkoutOnSpecificDate() throws ParseException
 	{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		List<Workout> workouts = trainingLog.GetWorkouts(sdf.parse("2/18/2017"));
-		assertNull(workouts);
+		Workout workout = trainingLog.GetWorkout(sdf.parse("2/18/2017"));
+		assertNull(workout);
 	}
 	
 	public void testGetWorkoutBetweenDates() throws ParseException
