@@ -154,6 +154,7 @@ public class MainController implements Initializable {
 		articlesTab.setDisable(true);
 		measurementsTab.setDisable(true);
 		statisticsTab.setDisable(true);
+		settingsTab.setDisable(true);
 		workoutDate.setValue(LocalDate.now());
 //		searchHistoryList.add("Test");
 //		searchHistory.getItems().addAll(FXCollections.observableArrayList(searchHistoryList));

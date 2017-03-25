@@ -18,6 +18,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
+<?import com.psu.SWENG500.Powerlifting.models.*?>
+<?import com.psu.SWENG500.Powerlifting.application.ui.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.psu.SWENG500.Powerlifting.controller.MainController">
    <children>
@@ -47,7 +49,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <DatePicker fx:id="workoutDate" layoutX="33.0" layoutY="41.0" promptText="Select Date" />
+                        <DatePicker fx:id="workoutDate" layoutX="33.0" layoutY="41.0" onAction="#workoutDateChanged" promptText="Select Date" />
                         <TableView fx:id="workoutTable" editable="true" layoutX="33.0" layoutY="87.0" prefHeight="461.0" prefWidth="505.0">
                           <columns>
                           	<TableColumn prefWidth="62.0" text="Set">
