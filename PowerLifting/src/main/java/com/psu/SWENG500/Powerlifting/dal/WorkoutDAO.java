@@ -39,6 +39,21 @@ public class WorkoutDAO implements IWorkoutDAO
 				Calendar tempCal = Calendar.getInstance();
 				tempCal.setTimeInMillis(rs.getTimestamp("WORKOUTDATE").getTime());
 				tempWorkout.setWorkoutDate(tempCal.getTime());
+				sql = "SELECT * FROM SWENG500.WORKOUTSETS WHERE WORKOUTID=?";
+				PreparedStatement prep2 = conn.prepareStatement(sql);
+				prep2.setInt(1, tempWorkout.getWorkoutId());
+				ResultSet rs2 = prep2.executeQuery();
+				while (rs2.next())
+				{
+					WorkoutSet set = new WorkoutSet();
+					set.setWorkoutSetId(rs2.getInt("ID"));
+					set.setSetNumber(rs2.getInt("SETNUMBER"));
+					set.setRepCount(rs2.getInt("REPCOUNT"));
+					set.setExercise(rs2.getString("EXERCISENAME"));
+					set.setWeightLifted(rs2.getDouble("WEIGHTLIFTED"));
+					tempWorkout.addSet(set);
+				}
+				prep2.close();
 				workouts.add(tempWorkout);
 			}
 			prep.close();
@@ -75,18 +90,18 @@ public class WorkoutDAO implements IWorkoutDAO
 				Calendar tempCal = Calendar.getInstance();
 				tempCal.setTimeInMillis(rs.getTimestamp("WORKOUTDATE").getTime());
 				tempWorkout.setWorkoutDate(tempCal.getTime());
-				sql = "SELECT * FROM SWENG500.WORKOUTS WHERE WORKOUTID=?";
+				sql = "SELECT * FROM SWENG500.WORKOUTSETS WHERE WORKOUTID=?";
 				PreparedStatement prep2 = conn.prepareStatement(sql);
 				prep2.setInt(1, tempWorkout.getWorkoutId());
 				ResultSet rs2 = prep2.executeQuery();
 				while (rs2.next())
 				{
 					WorkoutSet set = new WorkoutSet();
-					set.setWorkoutSetId(rs.getInt("ID"));
+					set.setWorkoutSetId(rs2.getInt("ID"));
 					set.setSetNumber(rs2.getInt("SETNUMBER"));
 					set.setRepCount(rs2.getInt("REPCOUNT"));
 					set.setExercise(rs2.getString("EXERCISENAME"));
-					set.setWeightLifted(rs.getDouble("WEIGHTLIFTED"));
+					set.setWeightLifted(rs2.getDouble("WEIGHTLIFTED"));
 					tempWorkout.addSet(set);
 				}
 				prep2.close();
