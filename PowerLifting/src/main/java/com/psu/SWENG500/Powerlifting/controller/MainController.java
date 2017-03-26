@@ -163,9 +163,7 @@ public class MainController implements Initializable {
 		settingsTab.setDisable(true);
 		workoutDate.setValue(LocalDate.now());
 		measurementsDate.setValue(LocalDate.now());
-//		searchHistoryList.add("Test");
-//		searchHistory.getItems().addAll(FXCollections.observableArrayList(searchHistoryList));
-		
+    
 		try {
 			loadArticleTabProperties();
 		} catch (Exception e) {
@@ -263,16 +261,25 @@ public class MainController implements Initializable {
 		if(articleList == null || articleList.isEmpty()) {
 			throw new Exception();
 		}
-		
+		setFirstArticleButton();
+		setSecondArticleButton();
+		setThirdArticleButton();
+	}
+	
+	private void setFirstArticleButton(){
 		article1.wrapTextProperty().setValue(true);
 		article1.setAlignment(Pos.BASELINE_CENTER);
 		article1.setText(articleList.get(0).getArticleTitle());
 		webView.getEngine().load(articleList.get(0).getSiteOrigin());
-		
+	}
+	
+	private void setSecondArticleButton(){
 		article2.wrapTextProperty().setValue(true);
 		article2.setAlignment(Pos.BASELINE_CENTER);
 		article2.setText(articleList.get(1).getArticleTitle());
-		
+	}
+	
+	private void setThirdArticleButton(){
 		article3.wrapTextProperty().setValue(true);
 		article3.setAlignment(Pos.BASELINE_CENTER);
 		article3.setText(articleList.get(2).getArticleTitle());
@@ -288,6 +295,10 @@ public class MainController implements Initializable {
 	
 	@FXML
 	public void showSearchHistory(ActionEvent event){
+		articleList = articleController.searchArticles(searchTextBox.getText());
+		setFirstArticleButton();
+		setSecondArticleButton();
+		setThirdArticleButton();
 	}
 	
 	@FXML

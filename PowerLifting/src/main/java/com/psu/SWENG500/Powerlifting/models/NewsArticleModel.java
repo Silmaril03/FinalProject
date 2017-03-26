@@ -27,18 +27,25 @@ public class NewsArticleModel {
 		return articleList;
 	}
 	
-	private List<NewsArticle> retrieveArticlesFromSite(String siteName) {
-		List<String> articleUrls = new ArrayList<String>();
+	public List<NewsArticle> searchArticles(List<String> siteUrls, String searchString){
 		List<NewsArticle> articleList = new ArrayList<NewsArticle>();
+		for(String siteName: siteUrls) {
+			articleList.addAll(retrieveArticlesFromSite(siteName));
+		}
+		return searchArticleList(articleList, searchString);
+	}
+	
+	private List<NewsArticle> retrieveArticlesFromSite(String siteName) {
+		List<NewsArticle> articleList = new ArrayList<NewsArticle>();
+		List<String> articleUrls = new ArrayList<String>();
 		try {
 			Document doc = (Document) Jsoup.connect(siteName).timeout(3000).get();
 			Elements content = doc.getElementsByTag(ElementTags.ARTICLE.value());
 			
-			for(int i =0; i < 5; i++) {
+			for(int i =0; i < 10; i++) {
 				Elements elementA = content.get(i).getElementsByTag(ElementTags.A.value());
 				articleUrls.add(elementA.attr(ElementTags.HREF.value()));
 			}
-			
 			articleList = extractContentFromArticleUrl(articleUrls);
 			
 		} catch (MalformedURLException e) {
@@ -48,7 +55,6 @@ public class NewsArticleModel {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return articleList;
 	}
 	
@@ -82,6 +88,18 @@ public class NewsArticleModel {
 			}
 		}
 		return articleList;
+	}
+	
+	private List<NewsArticle> searchArticleList(List<NewsArticle> articleList, String searchString){
+		List<NewsArticle> articleSearchList = new ArrayList<NewsArticle>();
+		
+		for(NewsArticle article: articleList){
+			if(article.getBodyContents().contains(searchString) || 
+					article.getArticleTitle().contains(searchString)){
+				articleSearchList.add(article);
+			}
+		}
+		return articleSearchList;
 	}
 	
 	private NewsArticle generateNewsArticleObject(String siteUrl, String title, String shortDescription, 

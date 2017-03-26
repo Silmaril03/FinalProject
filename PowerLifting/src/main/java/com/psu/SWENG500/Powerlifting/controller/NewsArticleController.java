@@ -9,11 +9,16 @@ import com.psu.SWENG500.Powerlifting.models.ui.NewsArticle;
 public class NewsArticleController {
 	
 	private NewsArticleModel articleModel = new NewsArticleModel();
+	private List<String> siteUrls;
 	
 	public List<NewsArticle> retrieveNewsArticleList(){
 		ConfigReader reader = ConfigReader.getInstance();
 		reader.readSiteListFile(getClass().getClassLoader().getResource("scripts/sitelist.xml").toExternalForm());
-		List<String> siteUrls = reader.getSiteList();
+		siteUrls = reader.getSiteList();
 		return articleModel.retrieveArticlesFromSiteUrls(siteUrls);
+	}
+	
+	public List<NewsArticle> searchArticles(String searchString){
+		return articleModel.searchArticles(siteUrls, searchString);
 	}
 }
