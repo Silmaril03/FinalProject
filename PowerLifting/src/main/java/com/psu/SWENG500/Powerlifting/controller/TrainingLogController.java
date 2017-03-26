@@ -23,6 +23,10 @@ public class TrainingLogController {
 		return workout;
 	}
 	
+	public void setWorkout(Workout workout) {
+		this.workout = workout;
+	}
+	
 	public void addWorkoutSet(WorkoutSet set){
 		workout.addSet(set);
 	}

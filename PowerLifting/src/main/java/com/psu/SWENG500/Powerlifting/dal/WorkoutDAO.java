@@ -1,6 +1,7 @@
 package com.psu.SWENG500.Powerlifting.dal;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,6 +39,21 @@ public class WorkoutDAO implements IWorkoutDAO
 				Calendar tempCal = Calendar.getInstance();
 				tempCal.setTimeInMillis(rs.getTimestamp("WORKOUTDATE").getTime());
 				tempWorkout.setWorkoutDate(tempCal.getTime());
+				sql = "SELECT * FROM SWENG500.WORKOUTSETS WHERE WORKOUTID=?";
+				PreparedStatement prep2 = conn.prepareStatement(sql);
+				prep2.setInt(1, tempWorkout.getWorkoutId());
+				ResultSet rs2 = prep2.executeQuery();
+				while (rs2.next())
+				{
+					WorkoutSet set = new WorkoutSet();
+					set.setWorkoutSetId(rs2.getInt("ID"));
+					set.setSetNumber(rs2.getInt("SETNUMBER"));
+					set.setRepCount(rs2.getInt("REPCOUNT"));
+					set.setExercise(rs2.getString("EXERCISENAME"));
+					set.setWeightLifted(rs2.getDouble("WEIGHTLIFTED"));
+					tempWorkout.addSet(set);
+				}
+				prep2.close();
 				workouts.add(tempWorkout);
 			}
 			prep.close();
@@ -74,12 +90,82 @@ public class WorkoutDAO implements IWorkoutDAO
 				Calendar tempCal = Calendar.getInstance();
 				tempCal.setTimeInMillis(rs.getTimestamp("WORKOUTDATE").getTime());
 				tempWorkout.setWorkoutDate(tempCal.getTime());
+				sql = "SELECT * FROM SWENG500.WORKOUTSETS WHERE WORKOUTID=?";
+				PreparedStatement prep2 = conn.prepareStatement(sql);
+				prep2.setInt(1, tempWorkout.getWorkoutId());
+				ResultSet rs2 = prep2.executeQuery();
+				while (rs2.next())
+				{
+					WorkoutSet set = new WorkoutSet();
+					set.setWorkoutSetId(rs2.getInt("ID"));
+					set.setSetNumber(rs2.getInt("SETNUMBER"));
+					set.setRepCount(rs2.getInt("REPCOUNT"));
+					set.setExercise(rs2.getString("EXERCISENAME"));
+					set.setWeightLifted(rs2.getDouble("WEIGHTLIFTED"));
+					tempWorkout.addSet(set);
+				}
+				prep2.close();
 			}
 			prep.close();
 			conn.commit();
 		} catch (SQLException e)
         {
-            System.out.println("Exception Message " + e.getLocalizedMessage());
+            throw e;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            conn.close();
+        }
+        return tempWorkout;
+	}
+	
+	public Workout GetWorkoutByDate(Date workoutDate) throws SQLException
+	{
+		
+		Workout tempWorkout = null;
+		Connection conn = H2ConnectionFactory.GetConnection(this.dbName);
+		try
+		{
+			conn.setAutoCommit(false);
+			String sql = "SELECT * FROM SWENG500.WORKOUTS WHERE WORKOUTDATE >= ? AND WORKOUTDATE < ?";
+			PreparedStatement prep = conn.prepareStatement(sql);
+			prep.setDate(1, workoutDate);
+			Calendar c = Calendar.getInstance(); 
+			c.setTime(workoutDate); 
+			c.add(Calendar.DATE, 1);
+			prep.setDate(2, new Date(c.getTimeInMillis()));
+			ResultSet rs = prep.executeQuery();
+			if (rs.next())
+			{	
+				tempWorkout = new Workout();
+				tempWorkout.setWorkoutId(rs.getInt("ID"));
+				tempWorkout.setDescription(rs.getString("DESCRIPTION"));
+				Calendar tempCal = Calendar.getInstance();
+				tempCal.setTimeInMillis(rs.getTimestamp("WORKOUTDATE").getTime());
+				tempWorkout.setWorkoutDate(tempCal.getTime());
+				sql = "SELECT * FROM SWENG500.WORKOUTSETS WHERE WORKOUTID=?";
+				PreparedStatement prep2 = conn.prepareStatement(sql);
+				prep2.setInt(1, tempWorkout.getWorkoutId());
+				ResultSet rs2 = prep2.executeQuery();
+				while (rs2.next())
+				{
+					WorkoutSet set = new WorkoutSet();
+					set.setWorkoutSetId(rs2.getInt("ID"));
+					set.setSetNumber(rs2.getInt("SETNUMBER"));
+					set.setRepCount(rs2.getInt("REPCOUNT"));
+					set.setExercise(rs2.getString("EXERCISENAME"));
+					set.setWeightLifted(rs2.getDouble("WEIGHTLIFTED"));
+					tempWorkout.addSet(set);
+				}
+				prep2.close();
+			}
+			prep.close();
+			conn.commit();
+		} catch (SQLException e)
+        {
+            throw e;
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -96,7 +182,6 @@ public class WorkoutDAO implements IWorkoutDAO
 		ResultSet newId;
         try
         {
-        	//Timestamp t = new Timestamp(w.getWorkoutDate().getTime());
         	conn.setAutoCommit(false);
         	String sql = "INSERT INTO SWENG500.WORKOUTS (USERID, DESCRIPTION, WORKOUTDATE) VALUES (?, ?, ?)";
         	PreparedStatement prep = conn.prepareStatement(sql);
@@ -109,10 +194,8 @@ public class WorkoutDAO implements IWorkoutDAO
         		w.setWorkoutId(newId.getInt(1));
         	prep.close();
             conn.commit();
-            //List<WorkoutSet> sets = new ArrayList<WorkoutSet>();
             for (WorkoutSet ws : w.GetWorkoutSets())
             {
-            	//IWorkoutSetDAO wsDao = WorkoutSetDaoFactory.GetWorkoutSetDAO(this.dbName);
             	try
         		{
             		sql = "INSERT INTO SWENG500.WORKOUTSETS (WORKOUTID, SETNUMBER, REPCOUNT, WEIGHTLIFTED, EXERCISENAME, PARTOFTOTAL) VALUES (?, ?, ?, ?, ?, ?)";
@@ -130,14 +213,11 @@ public class WorkoutDAO implements IWorkoutDAO
                 		ws.setWorkoutSetId(newWsId.getInt(1));
                 	prep2.close();
                 	conn.commit();
-        			//sets.add(wsDao.CreateWorkoutSet(ws, newId.getInt(1)));
         		} catch (SQLException e)
         		{
         			e.printStackTrace();
         		}
             }
-            //w.SetWorkoutSets(sets);
-            
         } catch (SQLException e)
         {
             System.out.println("Exception Message " + e.getLocalizedMessage());
@@ -160,5 +240,7 @@ public class WorkoutDAO implements IWorkoutDAO
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	
 
 }

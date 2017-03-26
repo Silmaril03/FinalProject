@@ -3,6 +3,8 @@ package com.psu.SWENG500.Powerlifting.controller;
 import java.net.URL;
 import java.awt.ScrollPane;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +29,7 @@ import com.psu.SWENG500.Powerlifting.models.Account;
 import com.psu.SWENG500.Powerlifting.models.ConfigReader;
 import com.psu.SWENG500.Powerlifting.models.Exercise;
 import com.psu.SWENG500.Powerlifting.models.NewsArticleModel;
+import com.psu.SWENG500.Powerlifting.models.TrainingLogModel;
 import com.psu.SWENG500.Powerlifting.models.Workout;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
 import com.psu.SWENG500.Powerlifting.models.ui.AccountUI;
@@ -98,6 +101,9 @@ public class MainController implements Initializable {
 	@FXML private TextField usernameSetTextField;
 	@FXML private TextField passwordSetTextField;
 	@FXML private ComboBox<String> genderComboBox;
+	@FXML private TextField wristTextField;
+	@FXML private TextField hipTextField;
+	@FXML private TextField forearmTextField;
 	
 	@FXML private TabPane tcPnls;
 	@FXML private Tab workoutTab;
@@ -131,6 +137,7 @@ public class MainController implements Initializable {
 	ObservableList<String> genderList = FXCollections.observableArrayList("Male", "Female");
 		
 	private TrainingLogController trainingLogController = new TrainingLogController();
+	private TrainingLogModel trainingLog = new TrainingLogModel();
 	private ObservableList<WorkoutSetUI> setList = FXCollections.observableArrayList();
 	
 	private List<NewsArticle> articleList;
@@ -153,7 +160,10 @@ public class MainController implements Initializable {
 		articlesTab.setDisable(true);
 		measurementsTab.setDisable(true);
 		statisticsTab.setDisable(true);
-		
+		settingsTab.setDisable(true);
+		workoutDate.setValue(LocalDate.now());
+		measurementsDate.setValue(LocalDate.now());
+    
 		try {
 			loadArticleTabProperties();
 		} catch (Exception e) {
@@ -194,19 +204,17 @@ public class MainController implements Initializable {
 	@FXML
 	public void loginAction(ActionEvent event){
 		IAccountDAO aDao = AccountDaoFactory.GetAccountDAO("TestDb");
+		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
 		try
 		{
 			this.currentUser = aDao.GetAccount(usernameTextField.getText(), passwordTextField.getText());
 			if (this.currentUser != null)
 			{
-				workoutTab.setDisable(false);
-				articlesTab.setDisable(false);
-				measurementsTab.setDisable(false);
-				statisticsTab.setDisable(false);
-				settingsTab.setDisable(false);
+				enableTabs();
 				tcPnls.getSelectionModel().select(workoutTab);
 				usernameTextField.setText("");
 				passwordTextField.setText("");
+				trainingLog = new TrainingLogModel(wDao.GetWorkouts(this.currentUser.getUserId()));
 				lblCurrentUser.setText("Current User: " + this.currentUser.getEmailAddress());
 			}
 			else
@@ -226,10 +234,7 @@ public class MainController implements Initializable {
 		try
 		{
 			this.currentUser = aDao.CreateAccount(this.currentUser);
-			workoutTab.setDisable(false);
-			articlesTab.setDisable(false);
-			measurementsTab.setDisable(false);
-			statisticsTab.setDisable(false);
+			enableTabs();
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
@@ -296,26 +301,78 @@ public class MainController implements Initializable {
 		setThirdArticleButton();
 	}
 	
+	@FXML
 	public void saveMeasurementsButtonAction(ActionEvent event){
 		IMeasurementsDAO mDao = MeasurementsDaoFactory.GetMeasurementDAO("TestDb");
 		double feet = Double.parseDouble(heightInFeetComboBox.getValue().split("[ ]")[0]);
 		double inches = Double.parseDouble(heightInInchesComboBox.getValue().split("[ ]")[0]);
 		double totalHeight = (feet * 12) + inches;
 		
-		ImperialMeasurement m = new ImperialMeasurement(totalHeight, Double.parseDouble(weightTextField.getText()), Double.parseDouble(waistTextField.getText()),0,0,0);
+		ImperialMeasurement m = new ImperialMeasurement(totalHeight, Double.parseDouble(weightTextField.getText()), Double.parseDouble(waistTextField.getText()), Double.parseDouble(wristTextField.getText()), Double.parseDouble(hipTextField.getText()),Double.parseDouble(forearmTextField.getText()));
 		m.setUserId(this.currentUser.getUserId());
 		m.setMeasurementDate(java.sql.Date.valueOf(measurementsDate.getValue()));
-		m.setNeck(0.0);
+		m.setNeck(Double.parseDouble(neckTextField.getText()));
 		try
 		{
 			mDao.CreateMeasurement(m);
-			workoutTab.setDisable(false);
-			articlesTab.setDisable(false);
-			measurementsTab.setDisable(false);
-			statisticsTab.setDisable(false);
+			heightInFeetComboBox.getSelectionModel().clearSelection();
+			heightInInchesComboBox.getSelectionModel().clearSelection();
+			weightTextField.setText("");
+			waistTextField.setText("");
+			wristTextField.setText("");
+			hipTextField.setText("");
+			forearmTextField.setText("");
+			neckTextField.setText("");
+			//enableTabs();
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	@FXML
+	public void workoutDateChanged(ActionEvent event){
+		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
+		try
+		{
+			Workout selectedWorkout = trainingLog.GetWorkout(new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(workoutDate.getValue())));
+			trainingLogController.setWorkout(selectedWorkout);
+			setList.clear();
+			if (selectedWorkout != null)
+			{
+				for (WorkoutSet ws : trainingLogController.getWorkout().GetWorkoutSets())
+				{
+					WorkoutSetUI workoutUI = new WorkoutSetUI(ws.getSetNumber(), ws.getWeightLifted(), ws.getRepCount(), ws.getExerciseName());
+					setList.add(workoutUI);
+				}
+			}
+		} catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+//		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
+//		try
+//		{
+//			Workout selectedWorkout = wDao.GetWorkoutByDate(java.sql.Date.valueOf(workoutDate.getValue()));
+//			trainingLogController.setWorkout(selectedWorkout);
+//			setList.clear();
+//			for (WorkoutSet ws : trainingLogController.getWorkout().GetWorkoutSets())
+//			{
+//				WorkoutSetUI workoutUI = new WorkoutSetUI(ws.getSetNumber(), ws.getWeightLifted(), ws.getRepCount(), ws.getExerciseName());
+//				setList.add(workoutUI);
+//			}
+//		} catch (SQLException e)
+//		{
+//			e.printStackTrace();
+//		}
+	}
+	
+	private void enableTabs()
+	{
+		workoutTab.setDisable(false);
+		articlesTab.setDisable(false);
+		measurementsTab.setDisable(false);
+		statisticsTab.setDisable(false);
+		settingsTab.setDisable(false);
 	}
 }

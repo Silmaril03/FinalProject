@@ -41,7 +41,7 @@ public class TestWorkoutDAL extends TestCase
 		Workout w = null;
 		try
 		{
-			w = dao.GetWorkout(1);
+			w = dao.GetWorkout(75);
 		} catch (SQLException e)
 		{
 //			fail(e.getLocalizedMessage());

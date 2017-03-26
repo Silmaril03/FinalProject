@@ -1,8 +1,10 @@
 package com.psu.SWENG500.Powerlifting.models;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrainingLogModel
 {
@@ -13,14 +15,33 @@ public class TrainingLogModel
 		workouts = new ArrayList<Workout>();
 	}
 	
-	public List<Workout> GetWorkouts(Date workoutDate)
+	public TrainingLogModel(List<Workout> workouts)
 	{
-		return retrieveWorkoutsBetweenDates(workoutDate, workoutDate);
+		this.workouts = workouts;
+	}
+	
+	public Workout GetWorkout(Date workoutDate)
+	{
+		Calendar c = Calendar.getInstance();
+		c.setTime(workoutDate); 
+		c.add(Calendar.DATE, 1);
+		List<Workout> temp = retrieveWorkoutsBetweenDates(workoutDate, c.getTime());
+		if (!temp.isEmpty())
+			return temp.get(0);
+		else
+			return null;
 	}
 	
 	public List<Workout> GetWorkouts(Date firstWorkoutDate, Date secondWorkoutDate)
 	{
 		return retrieveWorkoutsBetweenDates(firstWorkoutDate, secondWorkoutDate);
+	}
+	
+	public List<Workout> GetWorkoutTotalByExercise(String exerciseName)
+	{
+		return this.workouts.stream()
+				.filter(w -> w.getTotalVolumeByExercise(exerciseName) > 0)
+				.collect(Collectors.toList());
 	}
 	
 	public void LogWorkout(Workout workoutSession, Date workoutSessionDate)
@@ -31,6 +52,8 @@ public class TrainingLogModel
 	
 	private List<Workout> retrieveWorkoutsBetweenDates(Date startDate, Date endDate)
 	{
-		return null;
+		return workouts.stream()
+				.filter(w -> (w.getWorkoutDate().after(startDate) || w.getWorkoutDate().compareTo(startDate) == 0) && w.getWorkoutDate().before(endDate))
+				.collect(Collectors.toList());
 	}
 }
