@@ -83,7 +83,7 @@ public class Workout
 	{
 		return this.workoutSets.stream()
 				//.filter(ws -> ws.isPartOfTotal() && ws.getExerciseName() == exerciseName)
-				.filter(ws -> ws.getExerciseName() == exerciseName)
+				.filter(ws -> ws.getExerciseName().equals(exerciseName))
 				.mapToDouble(ws -> ws.getRepCount() * ws.getWeightLifted())
 				.sum();
 	}

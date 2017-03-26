@@ -43,6 +43,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -365,6 +368,20 @@ public class MainController implements Initializable {
 //		{
 //			e.printStackTrace();
 //		}
+	}
+	
+	@FXML
+	public void exerciseChanged(ActionEvent event){
+		XYChart.Series series = new XYChart.Series();
+		series.setName(exerciseComboBox.getValue());
+		List<Workout> tempWorkouts = this.trainingLog.GetWorkoutsByExercise(exerciseComboBox.getValue());
+		for (Workout w : tempWorkouts)
+		{
+			double weightLifted = w.getTotalVolumeByExercise(exerciseComboBox.getValue());
+			String dateString = new SimpleDateFormat("MM/dd/yyyy").format(w.getWorkoutDate());
+			series.getData().add(new XYChart.Data(dateString, weightLifted));
+		}
+		exerciseLineChart.getData().add(series);
 	}
 	
 	private void enableTabs()
