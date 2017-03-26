@@ -49,7 +49,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <DatePicker fx:id="workoutDate" layoutX="33.0" layoutY="41.0" onAction="#workoutDateChanged" promptText="Select Date" />
+                        <DatePicker fx:id="workoutDate" layoutX="33.0" layoutY="41.0" promptText="Select Date" />
                         <TableView fx:id="workoutTable" editable="true" layoutX="33.0" layoutY="87.0" prefHeight="461.0" prefWidth="505.0">
                           <columns>
                           	<TableColumn prefWidth="62.0" text="Set">
@@ -120,7 +120,7 @@
                         <TextField fx:id="searchTextBox" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="397.0" promptText="Search" />
                         <Button fx:id="searchButton" layoutX="435.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchArticlesAction" prefHeight="25.0" prefWidth="109.0" text="Search" />
                         <ComboBox fx:id="searchHistory" layoutX="575.0" layoutY="55.0" onAction="#showSearchHistory" prefHeight="25.0" prefWidth="198.0" promptText="Search History" />
-                        <Button fx:id="refreshButton" layoutX="575.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="198.0" text="Refresh" />
+                        <Button fx:id="refreshButton" layoutX="575.0" layoutY="14.0" mnemonicParsing="false" onAction="#refreshNewsArticles" prefHeight="25.0" prefWidth="198.0" text="Refresh" />
                         <Label fx:id="articleErrorLabel" layoutX="575.0" layoutY="91.0" prefHeight="43.0" prefWidth="198.0" textFill="RED" />
                      </children>
                   </AnchorPane>
