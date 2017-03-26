@@ -43,8 +43,14 @@ public class TestTrainingLogModel extends TestCase
 		set2.setRepCount(5);
 		set2.setWeightLifted(50);
 		
+		WorkoutSet set5 = new WorkoutSet();
+		set5.setExercise("Back Extension");
+		set5.setRepCount(5);
+		set5.setWeightLifted(50);
+		
 		tempWorkout1.addSet(set1);
 		tempWorkout1.addSet(set2);
+		tempWorkout1.addSet(set5);
 		
 		Workout tempWorkout2 = new Workout();
 		tempWorkout2.setDescription("This is my second workout!");
@@ -86,11 +92,18 @@ public class TestTrainingLogModel extends TestCase
 	}
 	
 	@Test
-	public void testGetWorkoutTotalByExercise() throws ParseException
+	public void testGetWorkoutTotalByExercise()
 	{
 		double total = trainingLog.GetWorkoutTotalByExercise("Exercise 1").stream()
 				.mapToDouble(ws -> ws.getTotalVolumeByExercise("Exercise 1"))
 				.sum();
 		assertEquals(450.0, total, 0);
+	}
+	
+	@Test
+	public void testGetWorkoutsByExercise()
+	{
+		List<Workout> tempWorkouts = trainingLog.GetWorkoutsByExercise("Back Extension");
+		assertEquals(1, tempWorkouts.size());
 	}
 }
