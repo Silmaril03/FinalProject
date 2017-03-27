@@ -311,29 +311,36 @@ public class MainController implements Initializable {
 		article3.setDisable(true);
 	}
 	
+	private void clearArticleErrorLabel(){
+		articleErrorLabel.setText("");
+	}
+	
 	@FXML
 	public void searchArticlesAction(ActionEvent event){
+		clearArticleErrorLabel();
 		if(!searchTextBox.getText().equals("")){
 			searchHistoryList.add(searchTextBox.getText());
 			searchHistory.setItems(FXCollections.observableArrayList(searchHistoryList));
 			boolean successfulSearch = searchArticles(searchTextBox.getText());
 			
 			if(!successfulSearch){
-				//Display 'no searches found' message. need label
+				articleErrorLabel.setText("No articles found");
 			}
 		}
 	}
 	
 	@FXML
 	public void showSearchHistory(ActionEvent event){
+		clearArticleErrorLabel();
 		boolean successfulSearch = searchArticles(searchHistory.getValue());
 		
 		if(!successfulSearch){
-			//Display 'no searches found' message. need label
+			articleErrorLabel.setText("No articles found");
 		}
 	}
 	
 	private boolean searchArticles(String searchString){
+		clearArticleErrorLabel();
 		List<NewsArticle> searchArticleList = articleController.searchArticles(searchString);
 		if(searchArticleList.size() != 0){
 			setFirstArticleButton(searchArticleList.get(0));
@@ -356,6 +363,7 @@ public class MainController implements Initializable {
 	
 	@FXML
 	public void refreshNewsArticles(ActionEvent event) throws Exception{
+		clearArticleErrorLabel();
 		loadArticleTabProperties();
 	}
 	
