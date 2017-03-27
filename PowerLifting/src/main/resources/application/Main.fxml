@@ -49,7 +49,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <DatePicker fx:id="workoutDate" layoutX="33.0" layoutY="41.0" promptText="Select Date" />
+                        <DatePicker fx:id="workoutDate" layoutX="33.0" layoutY="41.0" onAction="#workoutDateChanged" promptText="Select Date" />
                         <TableView fx:id="workoutTable" editable="true" layoutX="33.0" layoutY="87.0" prefHeight="461.0" prefWidth="505.0">
                           <columns>
                           	<TableColumn prefWidth="62.0" text="Set">
@@ -103,7 +103,7 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </LineChart>
-                        <ComboBox fx:id="exerciseComboBox" layoutX="77.0" layoutY="50.0" prefWidth="150.0" promptText="Select Exercise" />
+                        <ComboBox fx:id="exerciseComboBox" layoutX="77.0" layoutY="50.0" prefWidth="150.0" onAction="#exerciseChanged" promptText="Select Exercise" />
                         <ComboBox fx:id="bodyCompositionComboBox" layoutX="437.0" layoutY="50.0" prefWidth="150.0" promptText="Select" />
                      </children>
                   </AnchorPane>

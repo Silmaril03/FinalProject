@@ -3,6 +3,7 @@ package com.psu.SWENG500.Powerlifting.controller;
 import java.net.URL;
 import java.awt.ScrollPane;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +28,7 @@ import com.psu.SWENG500.Powerlifting.models.Account;
 import com.psu.SWENG500.Powerlifting.models.ConfigReader;
 import com.psu.SWENG500.Powerlifting.models.Exercise;
 import com.psu.SWENG500.Powerlifting.models.NewsArticleModel;
+import com.psu.SWENG500.Powerlifting.models.TrainingLogModel;
 import com.psu.SWENG500.Powerlifting.models.Workout;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
 import com.psu.SWENG500.Powerlifting.models.ui.AccountUI;
@@ -40,6 +42,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -132,6 +137,7 @@ public class MainController implements Initializable {
 	ObservableList<String> genderList = FXCollections.observableArrayList("Male", "Female");
 		
 	private TrainingLogController trainingLogController = new TrainingLogController();
+	private TrainingLogModel trainingLog = new TrainingLogModel();
 	private ObservableList<WorkoutSetUI> setList = FXCollections.observableArrayList();
 	
 	private List<NewsArticle> articleList;
@@ -374,5 +380,65 @@ public class MainController implements Initializable {
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	@FXML
+	public void workoutDateChanged(ActionEvent event){
+		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
+		try
+		{
+			Workout selectedWorkout = trainingLog.GetWorkout(new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(workoutDate.getValue())));
+			trainingLogController.setWorkout(selectedWorkout);
+			setList.clear();
+			if (selectedWorkout != null)
+			{
+				for (WorkoutSet ws : trainingLogController.getWorkout().GetWorkoutSets())
+				{
+					WorkoutSetUI workoutUI = new WorkoutSetUI(ws.getSetNumber(), ws.getWeightLifted(), ws.getRepCount(), ws.getExerciseName());
+					setList.add(workoutUI);
+				}
+			}
+		} catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+//		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
+//		try
+//		{
+//			Workout selectedWorkout = wDao.GetWorkoutByDate(java.sql.Date.valueOf(workoutDate.getValue()));
+//			trainingLogController.setWorkout(selectedWorkout);
+//			setList.clear();
+//			for (WorkoutSet ws : trainingLogController.getWorkout().GetWorkoutSets())
+//			{
+//				WorkoutSetUI workoutUI = new WorkoutSetUI(ws.getSetNumber(), ws.getWeightLifted(), ws.getRepCount(), ws.getExerciseName());
+//				setList.add(workoutUI);
+//			}
+//		} catch (SQLException e)
+//		{
+//			e.printStackTrace();
+//		}
+	}
+	
+	@FXML
+	public void exerciseChanged(ActionEvent event){
+		XYChart.Series series = new XYChart.Series();
+		series.setName(exerciseComboBox.getValue());
+		List<Workout> tempWorkouts = this.trainingLog.GetWorkoutsByExercise(exerciseComboBox.getValue());
+		for (Workout w : tempWorkouts)
+		{
+			double weightLifted = w.getTotalVolumeByExercise(exerciseComboBox.getValue());
+			String dateString = new SimpleDateFormat("MM/dd/yyyy").format(w.getWorkoutDate());
+			series.getData().add(new XYChart.Data(dateString, weightLifted));
+		}
+		exerciseLineChart.getData().add(series);
+	}
+	
+	private void enableTabs()
+	{
+		workoutTab.setDisable(false);
+		articlesTab.setDisable(false);
+		measurementsTab.setDisable(false);
+		statisticsTab.setDisable(false);
+		settingsTab.setDisable(false);
 	}
 }
