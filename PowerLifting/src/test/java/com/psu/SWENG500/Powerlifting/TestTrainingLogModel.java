@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import junit.framework.TestCase;
 
 import com.psu.SWENG500.Powerlifting.models.*;
@@ -18,7 +15,6 @@ public class TestTrainingLogModel extends TestCase
 {
 	private TrainingLogModel trainingLog;
 	
-	@Before
 	public void setUp() throws Exception
 	{
 		List<Workout> tempWorkouts = new ArrayList<Workout>();
@@ -75,7 +71,6 @@ public class TestTrainingLogModel extends TestCase
 		trainingLog = new TrainingLogModel(tempWorkouts);
 	}
 	
-	@Test
 	public void testGetWorkoutOnSpecificDate() throws ParseException
 	{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -83,7 +78,6 @@ public class TestTrainingLogModel extends TestCase
 		assertNull(workout);
 	}
 	
-	@Test
 	public void testGetWorkoutBetweenDates() throws ParseException
 	{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -91,7 +85,6 @@ public class TestTrainingLogModel extends TestCase
 		assertTrue(workouts.isEmpty());
 	}
 	
-	@Test
 	public void testGetWorkoutTotalByExercise()
 	{
 		double total = trainingLog.GetWorkoutTotalByExercise("Exercise 1").stream()
@@ -100,7 +93,6 @@ public class TestTrainingLogModel extends TestCase
 		assertEquals(450.0, total, 0);
 	}
 	
-	@Test
 	public void testGetWorkoutsByExercise()
 	{
 		List<Workout> tempWorkouts = trainingLog.GetWorkoutsByExercise("Back Extension");
