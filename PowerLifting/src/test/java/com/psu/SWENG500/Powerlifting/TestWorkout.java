@@ -1,26 +1,21 @@
 package com.psu.SWENG500.Powerlifting;
 
-import static org.junit.Assert.*;
-
 import java.util.Calendar;
 import java.util.Date;
 
-import org.junit.Before;
-import org.junit.Test;
+import junit.framework.TestCase;
 
 import com.psu.SWENG500.Powerlifting.controller.TrainingLogController;
 import com.psu.SWENG500.Powerlifting.models.Workout;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
 
-public class TestWorkout
+public class TestWorkout extends TestCase
 {
 	private Workout tempWorkout;
 	private Date tempStartDate;
 	private Date tempEndDate;
 	
-	@Before
-	public void setUp()
-	{
+	public void setUp() throws Exception {
 		tempStartDate = Calendar.getInstance().getTime();
 		Calendar c = Calendar.getInstance();
 		c.setTime(tempStartDate); 
@@ -45,13 +40,11 @@ public class TestWorkout
 		tempWorkout.addSet(set2);
 	}
 	
-	@Test
 	public void testGetTotalVolume()
 	{
 		assertEquals(500.0, tempWorkout.getTotalVolume(), 0);
 	}
 	
-	@Test
 	public void testGetTotalVolumeByExercise()
 	{
 		assertEquals(250.0, tempWorkout.getTotalVolumeByExercise("Exercise 1"), 0);
