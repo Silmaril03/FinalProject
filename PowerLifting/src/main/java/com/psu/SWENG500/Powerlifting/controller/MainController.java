@@ -372,6 +372,7 @@ public class MainController implements Initializable {
 	
 	@FXML
 	public void exerciseChanged(ActionEvent event){
+		exerciseLineChart.getData().clear();
 		XYChart.Series series = new XYChart.Series();
 		series.setName(exerciseComboBox.getValue());
 		List<Workout> tempWorkouts = this.trainingLog.GetWorkoutsByExercise(exerciseComboBox.getValue());
