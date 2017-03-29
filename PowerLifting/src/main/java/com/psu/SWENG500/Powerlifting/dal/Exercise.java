@@ -1,6 +1,4 @@
 package com.psu.SWENG500.Powerlifting.dal;
-
-import com.psu.SWENG500.Powerlifting.models.*;
 public class Exercise
 {
 	Exercise GetExercises()

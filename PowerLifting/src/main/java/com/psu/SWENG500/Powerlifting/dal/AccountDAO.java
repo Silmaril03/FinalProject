@@ -16,7 +16,6 @@ public class AccountDAO implements IAccountDAO
 	
 	public List<Account> GetAccounts()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -157,7 +156,6 @@ public class AccountDAO implements IAccountDAO
 
 	public boolean DeleteAccount(Account a)
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
