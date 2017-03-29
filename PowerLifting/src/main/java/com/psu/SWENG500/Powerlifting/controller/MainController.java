@@ -4,7 +4,6 @@ import java.net.URL;
 import java.awt.ScrollPane;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -85,6 +84,7 @@ public class MainController implements Initializable {
 	@FXML private Button article1;
 	@FXML private Button article2;
 	@FXML private Button article3;
+	@FXML private Button refreshButton;
 	@FXML private DatePicker measurementsDate;
 	@FXML private ComboBox<String> heightInFeetComboBox;
 	@FXML private ComboBox<String> heightInInchesComboBox;
@@ -104,9 +104,6 @@ public class MainController implements Initializable {
 	@FXML private TextField usernameSetTextField;
 	@FXML private TextField passwordSetTextField;
 	@FXML private ComboBox<String> genderComboBox;
-	@FXML private TextField wristTextField;
-	@FXML private TextField hipTextField;
-	@FXML private TextField forearmTextField;
 	
 	@FXML private TabPane tcPnls;
 	@FXML private Tab workoutTab;
@@ -159,14 +156,11 @@ public class MainController implements Initializable {
 		usernameTextField.setRestrict("[0-9 | a-z]");
 		weightTextBox.setRestrict("-?((\\d*)|(\\d+\\.\\d*))");
 		repsTextBox.setRestrict("[0-9]");
-		workoutTab.setDisable(true);
-		articlesTab.setDisable(true);
-		measurementsTab.setDisable(true);
-		statisticsTab.setDisable(true);
-		settingsTab.setDisable(true);
-		workoutDate.setValue(LocalDate.now());
-		measurementsDate.setValue(LocalDate.now());
-    
+//		workoutTab.setDisable(true);
+//		articlesTab.setDisable(true);
+//		measurementsTab.setDisable(true);
+//		statisticsTab.setDisable(true);
+		
 		try {
 			loadArticleTabProperties();
 		} catch (Exception e) {
@@ -207,17 +201,19 @@ public class MainController implements Initializable {
 	@FXML
 	public void loginAction(ActionEvent event){
 		IAccountDAO aDao = AccountDaoFactory.GetAccountDAO("TestDb");
-		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
 		try
 		{
 			this.currentUser = aDao.GetAccount(usernameTextField.getText(), passwordTextField.getText());
 			if (this.currentUser != null)
 			{
-				enableTabs();
+				workoutTab.setDisable(false);
+				articlesTab.setDisable(false);
+				measurementsTab.setDisable(false);
+				statisticsTab.setDisable(false);
+				settingsTab.setDisable(false);
 				tcPnls.getSelectionModel().select(workoutTab);
 				usernameTextField.setText("");
 				passwordTextField.setText("");
-				trainingLog = new TrainingLogModel(wDao.GetWorkouts(this.currentUser.getUserId()));
 				lblCurrentUser.setText("Current User: " + this.currentUser.getEmailAddress());
 			}
 			else
@@ -237,7 +233,10 @@ public class MainController implements Initializable {
 		try
 		{
 			this.currentUser = aDao.CreateAccount(this.currentUser);
-			enableTabs();
+			workoutTab.setDisable(false);
+			articlesTab.setDisable(false);
+			measurementsTab.setDisable(false);
+			statisticsTab.setDisable(false);
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
@@ -264,69 +263,119 @@ public class MainController implements Initializable {
 		if(articleList == null || articleList.isEmpty()) {
 			throw new Exception();
 		}
-		setFirstArticleButton();
-		setSecondArticleButton();
-		setThirdArticleButton();
+		setFirstArticleButton(articleList.get(0));
+		setSecondArticleButton(articleList.get(1));
+		setThirdArticleButton(articleList.get(2));
 	}
 	
-	private void setFirstArticleButton(){
+	private void setFirstArticleButton(NewsArticle newsArticle){
+		if(article1.isDisable()){
+			article1.setDisable(false);
+		}
 		article1.wrapTextProperty().setValue(true);
 		article1.setAlignment(Pos.BASELINE_CENTER);
-		article1.setText(articleList.get(0).getArticleTitle());
-		webView.getEngine().load(articleList.get(0).getSiteOrigin());
+		article1.setText(newsArticle.getArticleTitle());
+		webView.getEngine().load(newsArticle.getSiteOrigin());
 	}
 	
-	private void setSecondArticleButton(){
+	private void setSecondArticleButton(NewsArticle newsArticle){
+		if(article2.isDisable()){
+			article2.setDisable(false);
+		}
 		article2.wrapTextProperty().setValue(true);
 		article2.setAlignment(Pos.BASELINE_CENTER);
-		article2.setText(articleList.get(1).getArticleTitle());
+		article2.setText(newsArticle.getArticleTitle());
 	}
 	
-	private void setThirdArticleButton(){
+	private void setThirdArticleButton(NewsArticle newsArticle){
+		if(article3.isDisable()){
+			article3.setDisable(false);
+		}
 		article3.wrapTextProperty().setValue(true);
 		article3.setAlignment(Pos.BASELINE_CENTER);
-		article3.setText(articleList.get(2).getArticleTitle());
+		article3.setText(newsArticle.getArticleTitle());
+	}
+	
+	private void disableFirstArticleButton(){
+		article1.setText("");
+		article1.setDisable(true);
+	}
+	
+	private void disableSecondArticleButton(){
+		article2.setText("");
+		article2.setDisable(true);
+	}
+	
+	private void disableThirdArticleButton(){
+		article3.setText("");
+		article3.setDisable(true);
 	}
 	
 	@FXML
 	public void searchArticlesAction(ActionEvent event){
 		if(!searchTextBox.getText().equals("")){
 			searchHistoryList.add(searchTextBox.getText());
+			searchHistory.setItems(FXCollections.observableArrayList(searchHistoryList));
+			boolean successfulSearch = searchArticles(searchTextBox.getText());
+			
+			if(!successfulSearch){
+				//Display 'no searches found' message. need label
+			}
 		}
-		searchHistory.setItems(FXCollections.observableArrayList(searchHistoryList));
 	}
 	
 	@FXML
 	public void showSearchHistory(ActionEvent event){
-		articleList = articleController.searchArticles(searchTextBox.getText());
-		setFirstArticleButton();
-		setSecondArticleButton();
-		setThirdArticleButton();
+		boolean successfulSearch = searchArticles(searchHistory.getValue());
+		
+		if(!successfulSearch){
+			//Display 'no searches found' message. need label
+		}
+	}
+	
+	private boolean searchArticles(String searchString){
+		List<NewsArticle> searchArticleList = articleController.searchArticles(searchString);
+		if(searchArticleList.size() != 0){
+			setFirstArticleButton(searchArticleList.get(0));
+			if(searchArticleList.size() >= 2){
+				setSecondArticleButton(searchArticleList.get(1));
+				if(searchArticleList.size() >= 3){
+					setThirdArticleButton(searchArticleList.get(2));
+				} else{
+					disableThirdArticleButton();
+				}
+			} else {
+				disableSecondArticleButton();
+				disableThirdArticleButton();
+			}
+		} else {
+			return false;
+		}
+		return true;
 	}
 	
 	@FXML
+	public void refreshNewsArticles(ActionEvent event) throws Exception{
+		loadArticleTabProperties();
+	}
+	
 	public void saveMeasurementsButtonAction(ActionEvent event){
 		IMeasurementsDAO mDao = MeasurementsDaoFactory.GetMeasurementDAO("TestDb");
 		double feet = Double.parseDouble(heightInFeetComboBox.getValue().split("[ ]")[0]);
 		double inches = Double.parseDouble(heightInInchesComboBox.getValue().split("[ ]")[0]);
 		double totalHeight = (feet * 12) + inches;
 		
-		ImperialMeasurement m = new ImperialMeasurement(totalHeight, Double.parseDouble(weightTextField.getText()), Double.parseDouble(waistTextField.getText()), Double.parseDouble(wristTextField.getText()), Double.parseDouble(hipTextField.getText()),Double.parseDouble(forearmTextField.getText()));
+		ImperialMeasurement m = new ImperialMeasurement(totalHeight, Double.parseDouble(weightTextField.getText()), Double.parseDouble(waistTextField.getText()),0,0,0);
 		m.setUserId(this.currentUser.getUserId());
 		m.setMeasurementDate(java.sql.Date.valueOf(measurementsDate.getValue()));
-		m.setNeck(Double.parseDouble(neckTextField.getText()));
+		m.setNeck(0.0);
 		try
 		{
 			mDao.CreateMeasurement(m);
-			heightInFeetComboBox.getSelectionModel().clearSelection();
-			heightInInchesComboBox.getSelectionModel().clearSelection();
-			weightTextField.setText("");
-			waistTextField.setText("");
-			wristTextField.setText("");
-			hipTextField.setText("");
-			forearmTextField.setText("");
-			neckTextField.setText("");
-			//enableTabs();
+			workoutTab.setDisable(false);
+			articlesTab.setDisable(false);
+			measurementsTab.setDisable(false);
+			statisticsTab.setDisable(false);
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
