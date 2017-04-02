@@ -20,13 +20,11 @@ private String dbName;
 	
 	public List<Measurements> GetMeasurements()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public Measurements GetMeasurement(int id) throws SQLException
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -65,13 +63,11 @@ private String dbName;
 
 	public void UpdateMeasurement(Measurements m) throws SQLException
 	{
-		// TODO Auto-generated method stub
 		
 	}
 
 	public boolean DeleteMeasurement(Measurements m)
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

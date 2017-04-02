@@ -231,16 +231,13 @@ public class WorkoutDAO implements IWorkoutDAO
         return w;
 	}
 
-	public Workout UpdateWorkout(Workout w) {
-		// TODO Auto-generated method stub
+	public Workout UpdateWorkout(Workout w)
+	{
 		return null;
 	}
 
-	public boolean DeleteWorkout(Workout w) {
-		// TODO Auto-generated method stub
+	public boolean DeleteWorkout(Workout w)
+	{
 		return false;
 	}
-
-	
-
 }
