@@ -133,8 +133,8 @@
 			</LineChart>
 			<ComboBox fx:id="exerciseComboBox" layoutX="77.0" layoutY="50.0"
 				onAction="#exerciseChanged" prefWidth="150.0" promptText="Select Exercise" />
-			<ComboBox fx:id="bodyCompositionComboBox" layoutX="437.0"
-				layoutY="50.0" prefWidth="150.0" promptText="Select" />
+			<ComboBox fx:id="bodyCompositionComboBox" layoutX="437.0" layoutY="50.0"
+				onAction="#bodyCompositionChanged" prefWidth="150.0" promptText="Select" />
 		</children>
 	</Pane>
 
