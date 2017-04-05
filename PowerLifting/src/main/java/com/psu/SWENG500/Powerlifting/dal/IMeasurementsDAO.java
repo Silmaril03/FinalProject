@@ -7,8 +7,7 @@ import com.psu.SWENG500.Powerlifting.models.Measurements;
 
 public interface IMeasurementsDAO
 {
-	List<Measurements> GetMeasurements();
-	Measurements GetMeasurement(int id) throws SQLException;
+	List<Measurements> GetMeasurements(int userId) throws SQLException;
 	void CreateMeasurement(Measurements m) throws SQLException;
 	void UpdateMeasurement(Measurements m) throws SQLException;
 	boolean DeleteMeasurement(Measurements m);

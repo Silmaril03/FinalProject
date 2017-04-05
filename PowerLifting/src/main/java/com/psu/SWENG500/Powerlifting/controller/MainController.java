@@ -222,6 +222,7 @@ public class MainController implements Initializable {
 
 	private TrainingLogController trainingLogController = new TrainingLogController();
 	private TrainingLogModel trainingLog = new TrainingLogModel();
+	private List<Measurements> userMeasurements = new ArrayList<Measurements>();
 	private ObservableList<WorkoutSetUI> setList = FXCollections
 			.observableArrayList();
 
@@ -301,6 +302,8 @@ public class MainController implements Initializable {
 	@FXML
 	public void loginAction(ActionEvent event) {
 		IAccountDAO aDao = AccountDaoFactory.GetAccountDAO("TestDb");
+		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
+		IMeasurementsDAO mDao = MeasurementsDaoFactory.GetMeasurementDAO("TestDb");
 		try {
 			this.currentUser = aDao.GetAccount(usernameTextField.getText(),
 					passwordTextField.getText());
@@ -309,7 +312,8 @@ public class MainController implements Initializable {
 				passwordTextField.setText("");
 				lblCurrentUser.setText("Current User: "
 						+ this.currentUser.getNickname());
-
+				trainingLog = new TrainingLogModel(wDao.GetWorkouts(this.currentUser.getUserId()));
+				this.userMeasurements = mDao.GetMeasurements(this.currentUser.getUserId());
 				loggedIn = true;
 
 				navWheelPane.loadGraphics(currentUser, usernameSetLabel,
@@ -572,15 +576,58 @@ public class MainController implements Initializable {
 		List<Workout> tempWorkouts = this.trainingLog
 				.GetWorkoutsByExercise(exerciseComboBox.getValue());
 		for (Workout w : tempWorkouts) {
-			double weightLifted = w.getTotalVolumeByExercise(exerciseComboBox
-					.getValue());
-			String dateString = new SimpleDateFormat("MM/dd/yyyy").format(w
-					.getWorkoutDate());
+			double weightLifted = w.getMaxVolumeByExercise(exerciseComboBox.getValue());
+			String dateString = new SimpleDateFormat("MM/dd/yyyy").format(w.getWorkoutDate());
 			series.getData().add(new XYChart.Data(dateString, weightLifted));
 		}
 		exerciseLineChart.getData().add(series);
 	}
-
+	
+	@FXML
+	public void bodyCompositionChanged(ActionEvent event) {
+		CalculatorController cc = new CalculatorController();
+		bodyCompositionLineChart.getData().clear();
+		XYChart.Series series = new XYChart.Series();
+		int selectedStatistic = bodyCompositionComboBox.getSelectionModel().getSelectedIndex();
+		switch (selectedStatistic) {
+			case 0:
+				break;
+			case 1:
+				for (Measurements m : this.userMeasurements) {
+					double bmi = cc.calculateBodyMassIndex(m);
+					String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m.getMeasurementDate());
+					series.getData().add(new XYChart.Data(dateString, bmi));
+				}
+				break;
+			case 2:
+				for (Measurements m : this.userMeasurements) {
+					boolean tempIsMale = this.currentUser.getGender() == "Male" ? true : false;
+					double bfp = cc.calculateBodyFatPercentage(m, tempIsMale);
+					String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m.getMeasurementDate());
+					series.getData().add(new XYChart.Data(dateString, bfp));
+				}
+				break;
+			case 3:
+				for (Measurements m : this.userMeasurements) {
+					boolean tempIsMale = this.currentUser.getGender() == "Male" ? true : false;
+					double lbm = cc.calculateLeanBodyMass(m, tempIsMale);
+					String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m.getMeasurementDate());
+					series.getData().add(new XYChart.Data(dateString, lbm));
+				}
+				break;
+			case 4:
+				List<Workout> tempWorkouts = this.trainingLog.GetWorkouts();
+				for (Workout w : tempWorkouts) {
+					double weightLifted = w.getTotalVolume();
+					String dateString = new SimpleDateFormat("MM/dd/yyyy").format(w.getWorkoutDate());
+					series.getData().add(new XYChart.Data(dateString, weightLifted));
+				}
+				break;
+		}
+		series.setName(bodyCompositionComboBox.getValue());
+		bodyCompositionLineChart.getData().add(series);
+	}
+	
 	@FXML
 	public void rightClick(MouseEvent event) {
 		if (!loggedIn) {
