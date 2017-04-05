@@ -5,9 +5,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.psu.SWENG500.Powerlifting.models.Measurements;
+import com.psu.SWENG500.Powerlifting.models.MetricMeasurement;
+import com.psu.SWENG500.Powerlifting.models.Workout;
+import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
 
 public class MeasurementsDAO implements IMeasurementsDAO
 {
@@ -18,16 +23,46 @@ private String dbName;
 		this.dbName = dbName;
 	}
 	
-	public List<Measurements> GetMeasurements()
+	public List<Measurements> GetMeasurements(int userId) throws SQLException
 	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Measurements GetMeasurement(int id) throws SQLException
-	{
-		// TODO Auto-generated method stub
-		return null;
+		List<Measurements> userMeasurements = null;
+		Connection conn = H2ConnectionFactory.GetConnection(this.dbName);
+		try
+		{
+			conn.setAutoCommit(false);
+			String sql = "SELECT * FROM SWENG500.USERMEASUREMENTS WHERE USERID=? ORDER BY MEASUREMENTDATE ASC";
+			PreparedStatement prep = conn.prepareStatement(sql);
+			prep.setInt(1, userId);
+			ResultSet rs = prep.executeQuery();
+			userMeasurements = new ArrayList<Measurements>();
+			while (rs.next())
+			{
+				Measurements tempMeasurement = new MetricMeasurement();
+				Calendar tempCal = Calendar.getInstance();
+				tempCal.setTimeInMillis(rs.getTimestamp("MEASUREMENTDATE").getTime());
+				tempMeasurement.setMeasurementDate(tempCal.getTime());
+				tempMeasurement.setHeight(rs.getDouble("HEIGHT"));
+				tempMeasurement.setWeight(rs.getDouble("WEIGHT"));
+				tempMeasurement.setWaist(rs.getDouble("WAIST"));
+				tempMeasurement.setNeck(rs.getDouble("NECK"));
+				tempMeasurement.setHip(rs.getDouble("HIP"));
+				tempMeasurement.setWrist(rs.getDouble("WRIST"));
+				tempMeasurement.setForearm(rs.getDouble("FOREARM"));
+				userMeasurements.add(tempMeasurement);
+			}
+			prep.close();
+			conn.commit();
+		} catch (SQLException e)
+        {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            conn.close();
+        }
+        return userMeasurements;
 	}
 
 	public void CreateMeasurement(Measurements m) throws SQLException
@@ -65,13 +100,11 @@ private String dbName;
 
 	public void UpdateMeasurement(Measurements m) throws SQLException
 	{
-		// TODO Auto-generated method stub
 		
 	}
 
 	public boolean DeleteMeasurement(Measurements m)
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
