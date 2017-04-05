@@ -74,7 +74,6 @@ public class Workout
 	public double getTotalVolume()
 	{
 		return this.workoutSets.stream()
-				//.filter(ws -> ws.isPartOfTotal())
 				.mapToDouble(ws -> ws.getRepCount() * ws.getWeightLifted())
 				.sum();
 	}
@@ -82,10 +81,17 @@ public class Workout
 	public double getTotalVolumeByExercise(String exerciseName)
 	{
 		return this.workoutSets.stream()
-				//.filter(ws -> ws.isPartOfTotal() && ws.getExerciseName() == exerciseName)
 				.filter(ws -> ws.getExerciseName().equals(exerciseName))
 				.mapToDouble(ws -> ws.getRepCount() * ws.getWeightLifted())
 				.sum();
+	}
+	
+	public double getMaxVolumeByExercise(String exerciseName)
+	{
+		return this.workoutSets.stream()
+				.filter(ws -> ws.getExerciseName().equals(exerciseName))
+				.mapToDouble(ws -> ws.getWeightLifted())
+				.max().getAsDouble();
 	}
 	
 	public List<WorkoutSet> GetWorkoutSets()

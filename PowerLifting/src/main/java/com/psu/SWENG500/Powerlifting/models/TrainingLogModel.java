@@ -32,6 +32,11 @@ public class TrainingLogModel
 			return null;
 	}
 	
+	public List<Workout> GetWorkouts()
+	{
+		return this.workouts;
+	}
+	
 	public List<Workout> GetWorkouts(Date firstWorkoutDate, Date secondWorkoutDate)
 	{
 		return retrieveWorkoutsBetweenDates(firstWorkoutDate, secondWorkoutDate);
