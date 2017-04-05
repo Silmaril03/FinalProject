@@ -319,7 +319,7 @@ public class MainController implements Initializable {
 	public void searchArticlesAction(ActionEvent event){
 		clearArticleErrorLabel();
 		if(!searchTextBox.getText().equals("")){
-			searchHistoryList.add(searchTextBox.getText());
+			searchHistoryList.add(0, searchTextBox.getText());
 			searchHistory.setItems(FXCollections.observableArrayList(searchHistoryList));
 			boolean successfulSearch = searchArticles(searchTextBox.getText());
 			

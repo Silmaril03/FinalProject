@@ -94,8 +94,10 @@ public class NewsArticleModel {
 		List<NewsArticle> articleSearchList = new ArrayList<NewsArticle>();
 		
 		for(NewsArticle article: articleList){
-			if(article.getBodyContents().contains(searchString) || 
-					article.getArticleTitle().contains(searchString)){
+			if(article != null && (article.getBodyContents() != null && 
+					article.getBodyContents().contains(searchString)) || 
+					(article.getArticleTitle() != null && 
+					article.getArticleTitle().contains(searchString))){
 				articleSearchList.add(article);
 			}
 		}
