@@ -435,6 +435,7 @@ public class MainController implements Initializable {
 	}
 
 	private boolean searchArticles(String searchString) {
+		clearArticleErrorLabel();
 		List<NewsArticle> searchArticleList = articleController
 				.searchArticles(searchString);
 		if (searchArticleList.size() != 0) {
@@ -583,7 +584,7 @@ public class MainController implements Initializable {
 		List<Workout> tempWorkouts = this.trainingLog
 				.GetWorkoutsByExercise(exerciseComboBox.getValue());
 		for (Workout w : tempWorkouts) {
-			double weightLifted = w.getTotalVolumeByExercise(exerciseComboBox.getValue());
+			double weightLifted = w.getMaxVolumeByExercise(exerciseComboBox.getValue());
 			String dateString = new SimpleDateFormat("MM/dd/yyyy").format(w.getWorkoutDate());
 			series.getData().add(new XYChart.Data(dateString, weightLifted));
 		}
