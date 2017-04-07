@@ -6,13 +6,13 @@
     <formats>
         <format>jar</format>
     </formats>
-    <includeBaseDirectory>false</includeBaseDirectory>
+    <includeBaseDirectory>true</includeBaseDirectory>
     <dependencySets>
         <dependencySet>
             <outputDirectory>/</outputDirectory>
             <useProjectArtifact>true</useProjectArtifact>
             <unpack>true</unpack>
-            <scope>runtime</scope>
+            <scope>system</scope>
         </dependencySet>
     </dependencySets>
 </assembly>
