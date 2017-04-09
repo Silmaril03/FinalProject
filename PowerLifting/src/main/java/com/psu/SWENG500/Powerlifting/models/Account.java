@@ -14,10 +14,10 @@ public class Account
 	{
 	}
 	
-	public Account CreateAccount(String emailAddress, String pwd)
+	public Account CreateAccount(String email, String pwd)
 	{
 		Account tempAccount = new Account();
-		tempAccount.setEmailAddress(emailAddress);
+		tempAccount.setEmailAddress(email);
 		tempAccount.setPassword(pwd);
 		return tempAccount;
 	}
