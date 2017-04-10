@@ -31,27 +31,66 @@
 		<Pane fx:id="mainPane" prefHeight="600.0" prefWidth="800.0"
 			onMouseClicked="#rightClick">
 			<children>
-				<Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE"
+				<Text layoutX="85.0" layoutY="75.0" strokeType="OUTSIDE"
 					strokeWidth="0.0" text="Interactive Powerlifting Journal"
-					wrappingWidth="384.13671875">
+					wrappingWidth="684.13671875">
 					<font>
-						<Font size="24.0" />
+						<Font name="Arial Black" size="36.0" />
+					</font>
+				</Text>
+				<Text layoutX="325.0" layoutY="400.0" strokeType="OUTSIDE"
+					strokeWidth="0.0" text="Welcome to Interactive Powerlifting Journal! Here, you can log various workouts based on exercises and repetitions, observe your progress with graphs, track body measurements, and keep up with the latest gym research and advice."
+					wrappingWidth="425">
+					<font>
+						<Font size="14.0" />
 					</font>
 				</Text>
 				<RestrictiveTextField fx:id="usernameTextField"
-					layoutX="326.0" layoutY="193.0" />
-				<PasswordField fx:id="passwordTextField" layoutX="324.0"
-					layoutY="251.0" />
-				<Label layoutX="324.0" layoutY="176.0" text="Username" />
-				<Label layoutX="324.0" layoutY="234.0" text="Password" />
-				<Button fx:id="loginButton" layoutX="325.0" layoutY="312.0"
-					mnemonicParsing="false" onAction="#loginAction" prefHeight="83.0"
-					prefWidth="146.0" text="Login" />
-				<Button fx:id="loginButton" layoutX="324.0" layoutY="423.0"
-					mnemonicParsing="false" onAction="#registerAction" prefHeight="30.0"
-					prefWidth="146.0" text="Register" />
-				<Label fx:id="loginErrorLabel" layoutX="324.0" layoutY="286.0"
-					prefHeight="17.0" prefWidth="148.0" textFill="RED" />
+					layoutX="80.0" layoutY="200.0">
+					<font>
+						<Font size="14.0" />
+					</font>
+				</RestrictiveTextField>
+				<PasswordField fx:id="passwordTextField" layoutX="80.0"
+					layoutY="269.0">
+					<font>
+						<Font size="14.0" />
+					</font>
+				</PasswordField>
+				<Label layoutX="80.0" layoutY="176.0" text="Username">
+					<font>
+						<Font size="14.0" />
+					</font>
+				</Label>
+				<Label layoutX="80.0" layoutY="245.0" text="Password">
+					<font>
+						<Font size="14.0" />
+					</font>
+				</Label>
+				<Button fx:id="loginButton" layoutX="80.0" layoutY="350.0"
+					mnemonicParsing="false" onAction="#loginAction" prefHeight="38.0"
+					prefWidth="174.0" text="Login">
+					<font>
+						<Font size="14.0" />
+					</font>
+				</Button>
+				<Button fx:id="loginButton" layoutX="80.0" layoutY="423.0"
+					mnemonicParsing="false" onAction="#registerAction" prefHeight="38.0"
+					prefWidth="174.0" text="Register">
+					<font>
+						<Font size="14.0" />
+					</font>
+				</Button>
+				<Label fx:id="loginErrorLabel" layoutX="80.0" layoutY="307.0"
+					prefHeight="17.0" prefWidth="148.0" textFill="RED">
+					<font>
+						<Font size="14.0" />
+					</font>
+				</Label>
+				<ImageView blendMode="DARKEN" fitHeight="200.0" fitWidth="200.0" 
+					layoutX="420.0" layoutY="150.0">
+					<Image url="@images/HomeIcon.jpg"/>
+				</ImageView>
 			</children>
 	</Pane>
 	<WheelNav fx:id="navWheelPane" prefHeight="600.0" prefWidth="800.0">

@@ -1,5 +1,7 @@
 package com.psu.SWENG500.Powerlifting.application.ui;
 
+import java.awt.event.MouseEvent;
+
 import com.psu.SWENG500.Powerlifting.models.Account;
 
 import javafx.event.ActionEvent;
@@ -37,9 +39,10 @@ public class WheelNav extends Pane{
 		setting.setGraphic(image);
 		setting.setMinSize(width, height);
 		setting.setMaxSize(width, height);
-		setting.setLayoutX(300);
-		setting.setLayoutY(100);
+		setting.setLayoutX(450);
+		setting.setLayoutY(400);
 		setting.setText("Account Setting");
+		setting.setStyle("-fx-font: 16 arial; -fx-base: #FFDAB9;");
 		setting.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
             	usernameSetLabel.setText(currentUser.getNickname());
@@ -63,8 +66,9 @@ public class WheelNav extends Pane{
 		articles.setMinSize(width, height);
 		articles.setMaxSize(width, height);
 		articles.setLayoutX(150);
-		articles.setLayoutY(250);
+		articles.setLayoutY(400);
 		articles.setText("Articles");
+		articles.setStyle("-fx-font: 16 arial; -fx-base: #F5F5F5;");
 		articles.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 articlesPane.setVisible(true);
@@ -81,9 +85,10 @@ public class WheelNav extends Pane{
 		workout.setGraphic(image);
 		workout.setMinSize(width, height);
 		workout.setMaxSize(width, height);
-		workout.setLayoutX(450);
-		workout.setLayoutY(250);
+		workout.setLayoutX(300);
+		workout.setLayoutY(100);
 		workout.setText("Workout Log");
+		workout.setStyle("-fx-font: 16 arial; -fx-base: #E0FFFF;");
 		workout.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 workoutPane.setVisible(true);
@@ -100,9 +105,10 @@ public class WheelNav extends Pane{
 		stats.setGraphic(image);
 		stats.setMinSize(width, height);
 		stats.setMaxSize(width, height);
-		stats.setLayoutX(150);
-		stats.setLayoutY(400);
+		stats.setLayoutX(450);
+		stats.setLayoutY(250);
 		stats.setText("Statistics");
+		stats.setStyle("-fx-font: 16 arial; -fx-base: #98FB98;");
 		stats.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 statisticsPane.setVisible(true);
@@ -119,9 +125,10 @@ public class WheelNav extends Pane{
 		measurement.setGraphic(image);
 		measurement.setMinSize(width, height);
 		measurement.setMaxSize(width, height);
-		measurement.setLayoutX(450);
-		measurement.setLayoutY(400);
+		measurement.setLayoutX(150);
+		measurement.setLayoutY(250);
 		measurement.setText("Measurement");
+		measurement.setStyle("-fx-font: 16 arial; -fx-base: #FFB6C1;");
 		measurement.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 measurementPane.setVisible(true);
