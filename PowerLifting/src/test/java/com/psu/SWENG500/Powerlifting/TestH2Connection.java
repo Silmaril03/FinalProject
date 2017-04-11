@@ -16,7 +16,7 @@ public class TestH2Connection extends TestCase
 	
 	public void testGetConnectionWithParam()
 	{
-		Connection conn = H2ConnectionFactory.GetConnection("TestDb");
+		Connection conn = H2ConnectionFactory.GetConnection("C:\\temp");
 		assertNotNull(conn);
 	}
 }

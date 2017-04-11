@@ -62,7 +62,8 @@ public class AccountDAO implements IAccountDAO
         try
         {
         	conn.setAutoCommit(false);
-        	String sql = "SELECT * FROM SWENG500.USERS WHERE EMAILADDRESS=? AND PASSWORD=?";
+        	//String sql = "SELECT * FROM SWENG500.USERS WHERE EMAILADDRESS=? AND PASSWORD=?";
+        	String sql = "SELECT * FROM SWENG500.USERS WHERE NICKNAME=? AND PASSWORD=?";
         	PreparedStatement prep = conn.prepareStatement(sql);
         	prep.setString(1, emailAddress);
         	prep.setString(2, password);
