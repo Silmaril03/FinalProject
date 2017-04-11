@@ -157,7 +157,6 @@ public class MainController implements Initializable {
 	private TextField passwordSetTextField;
 	@FXML
 	private Label genderLabel;
-
 	@FXML
 	private TextField rFirstNameTextField;
 	@FXML
@@ -170,7 +169,6 @@ public class MainController implements Initializable {
 	private TextField rPasswordSetTextField;
 	@FXML
 	private ComboBox<String> rGenderComboBox;
-
 	@FXML
 	private Label lblCurrentUser;
 	@FXML
@@ -194,6 +192,7 @@ public class MainController implements Initializable {
 
 	private boolean loggedIn = false;
 
+	@FXML
 	ObservableList<String> exerciseList = FXCollections.observableArrayList(
 			"Back Extension", "Bench Press, Barbell",
 			"Bench Press, Close Grip", "Bench Press, Dumbbell",
@@ -209,22 +208,27 @@ public class MainController implements Initializable {
 			"Row, Barbell", "Row, Cable", "Row, Dumbbell", "Row, T-Bar",
 			"Skull Crusher", "Spoto Press", "Squat, Barbell",
 			"Triceps Extension, Cable");
+	@FXML
 	ObservableList<String> bodyCompositionList = FXCollections
 			.observableArrayList("Wilks Score", "Body Mass Index (BMI)",
 					"Body Fat Percentage", "Lean Body Mass", "Total Volume");
+	@FXML
 	ObservableList<String> heightInFeetList = FXCollections
 			.observableArrayList("3 feet", "4 feet", "5 feet", "6 feet",
 					"7 feet");
+	@FXML
 	ObservableList<String> heightInInchesList = FXCollections
 			.observableArrayList("0 inches", "1 inch", "2 inches", "3 inches",
 					"4 inches", "5 inches", "6 inches", "7 inches", "8 inches",
 					"9 inches", "10 inches", "11 inches");
+	@FXML
 	ObservableList<String> genderList = FXCollections.observableArrayList(
 			"Male", "Female");
 
 	private TrainingLogController trainingLogController = new TrainingLogController();
 	private TrainingLogModel trainingLog = new TrainingLogModel();
 	private List<Measurements> userMeasurements = new ArrayList<Measurements>();
+	@FXML
 	private ObservableList<WorkoutSetUI> setList = FXCollections
 			.observableArrayList();
 
@@ -276,12 +280,18 @@ public class MainController implements Initializable {
 		try {
 			Integer rep = Integer.parseInt(repsTextBox.getText());
 			Double weight = Double.parseDouble(weightTextBox.getText());
-			if (exer != null || !exer.isEmpty() || rep != null
-					|| weight != null) {
+			if (exer != null && !exer.isEmpty() && rep != null
+					&& weight != null) {
 				WorkoutSet workoutSet = new WorkoutSet();
 				workoutSet.setExercise(exer);
 				workoutSet.setRepCount(rep);
 				workoutSet.setWeightLifted(weight);
+				try{
+					trainingLogController.getSet();
+				}
+				catch(NullPointerException e){
+					System.out.println("training Controller null" + e);
+				}
 				int set = trainingLogController.getSet();
 				workoutSet.setSetNumber(set);
 				trainingLogController.addWorkoutSet(workoutSet);
@@ -321,7 +331,7 @@ public class MainController implements Initializable {
 		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO(DATABASE_LOCATION);
 		IMeasurementsDAO mDao = MeasurementsDaoFactory.GetMeasurementDAO(DATABASE_LOCATION);
 		try {
-			this.currentUser = aDao.GetAccount(usernameTextField.getText(),
+			this.currentUser = aDao.GetAccount(usernameTextField.getRestrict(),
 					passwordTextField.getText());
 			if (this.currentUser != null) {
 				usernameTextField.setText("");
@@ -421,30 +431,37 @@ public class MainController implements Initializable {
 		article3.setDisable(true);
 	}
 
+	private void clearArticleErrorLabel(){
+		articleErrorLabel.setText("");
+	}
+	
 	@FXML
-	public void searchArticlesAction(ActionEvent event) {
+	public void searchArticlesAction(ActionEvent event){
+		clearArticleErrorLabel();
 		if (!searchTextBox.getText().equals("")) {
-			searchHistoryList.add(searchTextBox.getText());
+			searchHistoryList.add(0, searchTextBox.getText());
 			searchHistory.setItems(FXCollections
 					.observableArrayList(searchHistoryList));
 			boolean successfulSearch = searchArticles(searchTextBox.getText());
 
 			if (!successfulSearch) {
-				// Display 'no searches found' message. need label
+				articleErrorLabel.setText("No articles found");
 			}
 		}
 	}
 
 	@FXML
 	public void showSearchHistory(ActionEvent event) {
+		clearArticleErrorLabel();
 		boolean successfulSearch = searchArticles(searchHistory.getValue());
-
+		
 		if (!successfulSearch) {
-			// Display 'no searches found' message. need label
+			articleErrorLabel.setText("No articles found");
 		}
 	}
 
 	private boolean searchArticles(String searchString) {
+		clearArticleErrorLabel();
 		List<NewsArticle> searchArticleList = articleController
 				.searchArticles(searchString);
 		if (searchArticleList.size() != 0) {
@@ -468,6 +485,7 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void refreshNewsArticles(ActionEvent event) throws Exception {
+		clearArticleErrorLabel();
 		loadArticleTabProperties();
 	}
 

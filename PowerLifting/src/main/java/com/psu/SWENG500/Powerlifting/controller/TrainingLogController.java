@@ -1,18 +1,15 @@
 package com.psu.SWENG500.Powerlifting.controller;
 
-import java.util.Calendar;
 import java.util.Date;
 
-import com.psu.SWENG500.Powerlifting.dal.WorkoutDaoFactory;
 import com.psu.SWENG500.Powerlifting.models.Workout;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
 
 public class TrainingLogController {
 	
-	private Workout workout;
+	private Workout workout = new Workout();
 	
 	public TrainingLogController(){
-		workout = new Workout();
 	}
 	
 	public TrainingLogController(Date workoutDate){
@@ -32,6 +29,7 @@ public class TrainingLogController {
 	}
 	
 	public int getSet(){
+		System.out.println(workout + " workoutCalled");
 		return workout.getNumberSets();
 	}
 	

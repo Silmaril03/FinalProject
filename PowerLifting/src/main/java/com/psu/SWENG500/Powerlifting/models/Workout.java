@@ -62,6 +62,10 @@ public class Workout
 	
 	public int getNumberSets()
 	{
+		if (workoutSets.isEmpty() || workoutSets == null){
+			System.out.println("null");
+			return 0;
+		}
 		return workoutSets.size();
 	}
 	
