@@ -1,9 +1,13 @@
 package com.psu.SWENG500.Powerlifting.dal;
 
+import java.net.URI;
 import java.nio.file.Paths;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import org.h2.tools.RunScript;
 
 public class H2ConnectionFactory
 {
@@ -14,12 +18,39 @@ public class H2ConnectionFactory
     
     public static Connection GetConnection()
     {
-    	return H2ConnectionFactory.GetConnection("IplDb");
+    	return H2ConnectionFactory.GetConnection("C:\\temp");
     }
     
-    public static Connection GetConnection(String dbName)
+    public static void InitializeDatabase()
     {
-    	DB_CONNECTION = "jdbc:h2:file:" + Paths.get("src/main/resources/h2/" + dbName).toAbsolutePath() + ".mv;AUTO_SERVER=TRUE"; //SCHEMA=SWENG_500";
+    	Connection dbConn = GetConnection("C:\\temp");
+    	String filename = H2ConnectionFactory.class.getClassLoader().getResource("scripts/SWENG_500_DB.sql").getPath();
+    	CallableStatement initCall;
+		try
+		{
+			initCall = dbConn.prepareCall("RUNSCRIPT FROM '" + filename.substring(1, filename.length()) + "'");
+			initCall.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	//try {
+		//	RunScript.execute("jdbc:h2:file:C:\\temp\\IplDb.mv", "sa", "", filename, null, false);
+		//} catch (SQLException e) {
+		//	// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//}
+    }
+    
+    public static Connection GetConnection(String dbPath)
+    {
+    	//Class currentClass = new Object() { }.getClass().getEnclosingClass();
+    	//String temp = "jdbc:h2:file:" + H2ConnectionFactory.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "h2/" + dbName + ".mv;AUTO_SERVER=TRUE";
+    	//String temp = currentClass.getClassLoader().getResource("src/main/resources/h2/" + dbName + ".mv").toString();
+    	//String temp = "jdbc:h2:file:" + H2ConnectionFactory.class.getClassLoader().getResource("src/main/resources/h2/" + dbName + ".mv").toString() + ";AUTO_SERVER=TRUE";
+    	//DB_CONNECTION = "jdbc:h2:file:" + Paths.get("src/main/resources/h2/" + dbName).toAbsolutePath() + ".mv;AUTO_SERVER=TRUE"; //SCHEMA=SWENG_500";
+    	DB_CONNECTION = "jdbc:h2:file:" + dbPath + "/IplDb";
     	Connection h2Connection = null;
         try
         {

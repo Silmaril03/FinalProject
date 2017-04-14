@@ -43,7 +43,7 @@ private String dbName;
 				tempMeasurement.setMeasurementDate(tempCal.getTime());
 				tempMeasurement.setHeight(rs.getDouble("HEIGHT"));
 				tempMeasurement.setWeight(rs.getDouble("WEIGHT"));
-				tempMeasurement.setWaist(rs.getDouble("WAIST"));
+				tempMeasurement.setWaist(rs.getDouble("WASIT"));
 				tempMeasurement.setNeck(rs.getDouble("NECK"));
 				tempMeasurement.setHip(rs.getDouble("HIP"));
 				tempMeasurement.setWrist(rs.getDouble("WRIST"));
@@ -71,7 +71,7 @@ private String dbName;
         try
         {
         	conn.setAutoCommit(false);
-        	String sql = "INSERT INTO SWENG500.USERMEASUREMENTS (USERID, MEASUREMENTDATE, HEIGHT, WEIGHT, WAIST, NECK, HIP, WRIST, FOREARM) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        	String sql = "INSERT INTO SWENG500.USERMEASUREMENTS (USERID, MEASUREMENTDATE, HEIGHT, WEIGHT, WASIT, NECK, HIP, WRIST, FOREARM) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         	PreparedStatement prep = conn.prepareStatement(sql);
         	prep.setInt(1, m.getUserId());
         	prep.setDate(2, (Date) m.getMeasurementDate());
