@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
+import javax.swing.border.Border;
+
 import com.psu.SWENG500.Powerlifting.application.ui.RestrictiveTextField;
 import com.psu.SWENG500.Powerlifting.application.ui.WheelNav;
 import com.psu.SWENG500.Powerlifting.dal.AccountDaoFactory;
@@ -322,6 +324,14 @@ public class MainController implements Initializable {
 		IAccountDAO aDao = AccountDaoFactory.GetAccountDAO(DATABASE_LOCATION);
 		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO(DATABASE_LOCATION);
 		IMeasurementsDAO mDao = MeasurementsDaoFactory.GetMeasurementDAO(DATABASE_LOCATION);
+		if (usernameTextField.getText().equals("")) {
+			loginErrorLabel.setText("Enter your username");
+			return;
+		}
+		if (passwordTextField.getText().equals("") ){
+			loginErrorLabel.setText("Enter your password");
+			return;
+		}
 		try {
 			this.currentUser = aDao.GetAccount(usernameTextField.getText(),
 					passwordTextField.getText());
@@ -344,8 +354,8 @@ public class MainController implements Initializable {
 				
 				this.refreshData = false;
 			} else
-				lblCurrentUser
-						.setText("Current User: Invalid Username and/or Password");
+				loginErrorLabel.setText(usernameTextField.getText() + " has not registered");
+				lblCurrentUser.setText("Current User: Invalid Username and/or Password");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -359,20 +369,24 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void showFirstArticle(ActionEvent event) {
+		searchTextBox.setText("");
 		webView.getEngine().load(articleList.get(0).getSiteOrigin());
 	}
 
 	@FXML
 	public void showSecondArticle(ActionEvent event) {
+		searchTextBox.setText("");
 		webView.getEngine().load(articleList.get(1).getSiteOrigin());
 	}
 
 	@FXML
 	public void showThirdArticle(ActionEvent event) {
+		searchTextBox.setText("");
 		webView.getEngine().load(articleList.get(2).getSiteOrigin());
 	}
 
 	private void loadArticleTabProperties() throws Exception {
+		searchTextBox.setText("");
 		articleList = articleController.retrieveNewsArticleList();
 		if (articleList == null || articleList.isEmpty()) {
 			throw new Exception();
@@ -437,7 +451,7 @@ public class MainController implements Initializable {
 			searchHistory.setItems(FXCollections
 					.observableArrayList(searchHistoryList));
 			boolean successfulSearch = searchArticles(searchTextBox.getText());
-
+			searchTextBox.setText("");
 			if (!successfulSearch) {
 				articleErrorLabel.setText("No articles found");
 			}
@@ -448,7 +462,7 @@ public class MainController implements Initializable {
 	public void showSearchHistory(ActionEvent event) {
 		clearArticleErrorLabel();
 		boolean successfulSearch = searchArticles(searchHistory.getValue());
-		
+		searchTextBox.setText("");
 		if (!successfulSearch) {
 			articleErrorLabel.setText("No articles found");
 		}
@@ -479,6 +493,7 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void refreshNewsArticles(ActionEvent event) throws Exception {
+		searchTextBox.setText("");
 		clearArticleErrorLabel();
 		loadArticleTabProperties();
 	}
