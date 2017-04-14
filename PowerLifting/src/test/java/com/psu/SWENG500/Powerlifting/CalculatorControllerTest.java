@@ -23,9 +23,9 @@ public class CalculatorControllerTest extends TestCase {
 		ImperialMeasurement person = new ImperialMeasurement();
 		person.setWeight(new Double(150));
 
-		ImperialMeasurement lifting = new ImperialMeasurement();
-		lifting.setWeight(new Double(400));
-		double total = calc.calculateWilks(person, lifting, true);
+		//ImperialMeasurement lifting = new ImperialMeasurement();
+		//lifting.setWeight(new Double(400));
+		double total = calc.calculateWilks(person, 400, true);
 
 		total = Math.round(total);
 

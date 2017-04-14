@@ -19,10 +19,10 @@ public class CalculatorController extends CalculatorView {
 	FemaleCoefficient fCo = new FemaleCoefficient();
 
 	@Override
-	public Double calculateWilks(Measurements person, Measurements lifting,
+	public Double calculateWilks(Measurements person, double liftWeight,
 			boolean male) {
 		double bodyWeight = person.getWeight();
-		double liftWeight = lifting.getWeight();
+		//double liftWeight = lifting.getWeight();
 
 		if (person.getMeasurementType() == MeasurementType.IMPERIAL) {
 			bodyWeight = MeasurementConverter

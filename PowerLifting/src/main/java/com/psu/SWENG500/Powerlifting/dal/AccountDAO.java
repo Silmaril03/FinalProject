@@ -133,12 +133,12 @@ public class AccountDAO implements IAccountDAO
         try
         {
         	conn.setAutoCommit(false);
-        	String sql = "UPDATE SWENG500.USERS SET FIRSTNAME=?, LASTNAME=?, NICKNAME=?, GENDER=? WHERE ID=?";
+        	String sql = "UPDATE SWENG500.USERS SET FIRSTNAME=?, LASTNAME=?, EMAILADDRESS=?, PASSWORD=? WHERE ID=?";
         	PreparedStatement prep = conn.prepareStatement(sql);
         	prep.setString(1, a.getFirstName());
         	prep.setString(2, a.getLastName());
-        	prep.setString(3, a.getNickname());
-        	prep.setString(4, a.getGender());
+        	prep.setString(3, a.getEmailAddress());
+        	prep.setString(4, a.getPassword());
         	prep.setInt(5,  a.getUserId());
         	prep.executeUpdate();
         	prep.close();

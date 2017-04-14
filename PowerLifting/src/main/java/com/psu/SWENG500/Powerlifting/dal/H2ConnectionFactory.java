@@ -18,7 +18,7 @@ public class H2ConnectionFactory
     
     public static Connection GetConnection()
     {
-    	return H2ConnectionFactory.GetConnection("IplDb");
+    	return H2ConnectionFactory.GetConnection("C:\\temp");
     }
     
     public static void InitializeDatabase()

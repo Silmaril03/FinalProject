@@ -23,6 +23,7 @@ import com.psu.SWENG500.Powerlifting.dal.MeasurementsDaoFactory;
 import com.psu.SWENG500.Powerlifting.dal.WorkoutDaoFactory;
 import com.psu.SWENG500.Powerlifting.models.Exercise;
 import com.psu.SWENG500.Powerlifting.models.ImperialMeasurement;
+import com.psu.SWENG500.Powerlifting.models.MeasurementType;
 import com.psu.SWENG500.Powerlifting.models.Measurements;
 import com.psu.SWENG500.Powerlifting.models.Workout;
 import com.psu.SWENG500.Powerlifting.models.WorkoutSet;
@@ -228,6 +229,7 @@ public class MainController implements Initializable {
 	private TrainingLogController trainingLogController = new TrainingLogController();
 	private TrainingLogModel trainingLog = new TrainingLogModel();
 	private List<Measurements> userMeasurements = new ArrayList<Measurements>();
+	private boolean refreshData = false;
 	@FXML
 	private ObservableList<WorkoutSetUI> setList = FXCollections
 			.observableArrayList();
@@ -240,14 +242,8 @@ public class MainController implements Initializable {
 	@FXML
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		File f = new File(DATABASE_LOCATION + "\\IplDb.mv.db");
-		if (!f.exists()) //new File("C:\\temp\\IplDb.mv.h2").exists())
+		if (!f.exists())
 			H2ConnectionFactory.InitializeDatabase();
-		//{
-		//	lblCurrentUser.setText(f.getAbsolutePath());
-		//	//lblCurrentUser.setText(applicationDir);
-		//}
-		//else
-		//	H2ConnectionFactory.InitializeDatabase();
 		addExercise.getItems().addAll(exerciseList);
 		exerciseComboBox.getItems().addAll(exerciseList);
 		bodyCompositionComboBox.getItems().addAll(bodyCompositionList);
@@ -309,14 +305,13 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void saveWorkoutButtonAction(ActionEvent event) {
-		//IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("IplDb");
-		//IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
 		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO(DATABASE_LOCATION);
 		trainingLogController.getWorkout().setWorkoutDate(
-				java.sql.Date.valueOf(workoutDate.getValue()));// workoutDate.getValue());
+				java.sql.Date.valueOf(workoutDate.getValue()));
 		try {
 			wDao.CreateWorkout(trainingLogController.getWorkout(),
 					this.currentUser.getUserId());
+			this.refreshData = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -324,14 +319,11 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void loginAction(ActionEvent event) {
-		//IAccountDAO aDao = AccountDaoFactory.GetAccountDAO("TestDb");
-		//IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
-		//IMeasurementsDAO mDao = MeasurementsDaoFactory.GetMeasurementDAO("TestDb");
 		IAccountDAO aDao = AccountDaoFactory.GetAccountDAO(DATABASE_LOCATION);
 		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO(DATABASE_LOCATION);
 		IMeasurementsDAO mDao = MeasurementsDaoFactory.GetMeasurementDAO(DATABASE_LOCATION);
 		try {
-			this.currentUser = aDao.GetAccount(usernameTextField.getRestrict(),
+			this.currentUser = aDao.GetAccount(usernameTextField.getText(),
 					passwordTextField.getText());
 			if (this.currentUser != null) {
 				usernameTextField.setText("");
@@ -349,6 +341,8 @@ public class MainController implements Initializable {
 						workoutPane);
 				navWheelPane.setVisible(true);
 				mainPane.setVisible(false);
+				
+				this.refreshData = false;
 			} else
 				lblCurrentUser
 						.setText("Current User: Invalid Username and/or Password");
@@ -491,8 +485,6 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void saveMeasurementsButtonAction(ActionEvent event) {
-		//IMeasurementsDAO mDao = MeasurementsDaoFactory
-		//		.GetMeasurementDAO("TestDb");
 		IMeasurementsDAO mDao = MeasurementsDaoFactory
 				.GetMeasurementDAO(DATABASE_LOCATION);
 		double feet = Double.parseDouble(heightInFeetComboBox.getValue().split(
@@ -509,6 +501,7 @@ public class MainController implements Initializable {
 		m.setNeck(0.0);
 		try {
 			mDao.CreateMeasurement(m);
+			this.refreshData = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -523,7 +516,6 @@ public class MainController implements Initializable {
 				&& validateString(rEmailTextField.getText())
 				&& validateGender(rGenderComboBox.getValue())) {
 			
-			//IAccountDAO aDao = AccountDaoFactory.GetAccountDAO("TestDb");
 			IAccountDAO aDao = AccountDaoFactory.GetAccountDAO(DATABASE_LOCATION);
 			this.currentUser = new Account();
 			this.currentUser.setNickname(rUsernameSetTextField.getText());
@@ -560,14 +552,21 @@ public class MainController implements Initializable {
 		this.currentUser.setLastName(lastNameTextField.getText());
 		this.currentUser.setEmailAddress(emailTextField.getText());
 		
+		IAccountDAO aDao = AccountDaoFactory.GetAccountDAO(DATABASE_LOCATION);
+		try {
+			aDao.UpdateAccount(this.currentUser);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		settingsPane.setVisible(false);
 		navWheelPane.setVisible(true);
 	}
 
 	@FXML
 	public void workoutDateChanged(ActionEvent event) {
-		//IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
-		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO(DATABASE_LOCATION);
+		checkDataCache();
+		
 		try {
 			Workout selectedWorkout = trainingLog
 					.GetWorkout(new SimpleDateFormat("yyyy-MM-dd").parse(String
@@ -592,28 +591,11 @@ public class MainController implements Initializable {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		// IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO("TestDb");
-		// try
-		// {
-		// Workout selectedWorkout =
-		// wDao.GetWorkoutByDate(java.sql.Date.valueOf(workoutDate.getValue()));
-		// trainingLogController.setWorkout(selectedWorkout);
-		// setList.clear();
-		// for (WorkoutSet ws :
-		// trainingLogController.getWorkout().GetWorkoutSets())
-		// {
-		// WorkoutSetUI workoutUI = new WorkoutSetUI(ws.getSetNumber(),
-		// ws.getWeightLifted(), ws.getRepCount(), ws.getExerciseName());
-		// setList.add(workoutUI);
-		// }
-		// } catch (SQLException e)
-		// {
-		// e.printStackTrace();
-		// }
 	}
 
 	@FXML
 	public void exerciseChanged(ActionEvent event) {
+		checkDataCache();
 		exerciseLineChart.getData().clear();
 		XYChart.Series series = new XYChart.Series();
 		series.setName(exerciseComboBox.getValue());
@@ -629,12 +611,22 @@ public class MainController implements Initializable {
 	
 	@FXML
 	public void bodyCompositionChanged(ActionEvent event) {
+		checkDataCache();
 		CalculatorController cc = new CalculatorController();
 		bodyCompositionLineChart.getData().clear();
 		XYChart.Series series = new XYChart.Series();
 		int selectedStatistic = bodyCompositionComboBox.getSelectionModel().getSelectedIndex();
 		switch (selectedStatistic) {
 			case 0:
+				for (Measurements m : this.userMeasurements) {
+					Workout tempWorkout = this.trainingLog.GetWorkout(m.getMeasurementDate());
+					if (tempWorkout != null)
+					{
+						double wilks = cc.calculateWilks(m, tempWorkout.getTotalVolume(), this.currentUser.getGender().equals("Male") ? true : false);
+						String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m.getMeasurementDate());
+						series.getData().add(new XYChart.Data(dateString, wilks));
+					}
+				}
 				break;
 			case 1:
 				for (Measurements m : this.userMeasurements) {
@@ -705,5 +697,23 @@ public class MainController implements Initializable {
 			}
 		}
 		return false;
+	}
+	
+	private void checkDataCache()
+	{
+		if (this.refreshData)
+		{
+			try
+			{
+				IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO(DATABASE_LOCATION);
+				IMeasurementsDAO mDao = MeasurementsDaoFactory.GetMeasurementDAO(DATABASE_LOCATION);
+				this.trainingLog = new TrainingLogModel(wDao.GetWorkouts(this.currentUser.getUserId()));
+				this.userMeasurements = mDao.GetMeasurements(this.currentUser.getUserId());
+				this.refreshData = false;
+			} catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 }
