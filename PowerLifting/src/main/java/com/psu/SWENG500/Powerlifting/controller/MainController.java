@@ -363,6 +363,14 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void registerAction(ActionEvent event) {
+		if (usernameTextField.getText().equals("")) {
+			loginErrorLabel.setText("Enter a username");
+			return;
+		}
+		if (passwordTextField.getText().equals("") ){
+			loginErrorLabel.setText("Enter a password");
+			return;
+		}
 		mainPane.setVisible(false);
 		registerPane.setVisible(true);
 	}
