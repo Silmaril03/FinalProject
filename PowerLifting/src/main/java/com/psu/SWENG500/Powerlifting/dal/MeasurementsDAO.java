@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.psu.SWENG500.Powerlifting.models.ImperialMeasurement;
 import com.psu.SWENG500.Powerlifting.models.Measurements;
 import com.psu.SWENG500.Powerlifting.models.MetricMeasurement;
 import com.psu.SWENG500.Powerlifting.models.Workout;
@@ -37,7 +38,7 @@ private String dbName;
 			userMeasurements = new ArrayList<Measurements>();
 			while (rs.next())
 			{
-				Measurements tempMeasurement = new MetricMeasurement();
+				Measurements tempMeasurement = new ImperialMeasurement();
 				Calendar tempCal = Calendar.getInstance();
 				tempCal.setTimeInMillis(rs.getTimestamp("MEASUREMENTDATE").getTime());
 				tempMeasurement.setMeasurementDate(tempCal.getTime());

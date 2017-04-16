@@ -55,7 +55,7 @@ public class AccountDAO implements IAccountDAO
         return tempAccount;
 	}
 	
-	public Account GetAccount(String emailAddress, String password) throws SQLException
+	public Account GetAccount(String userName, String password) throws SQLException
 	{
 		Account tempAccount = null;
 		Connection conn = H2ConnectionFactory.GetConnection(this.dbName);
@@ -65,7 +65,7 @@ public class AccountDAO implements IAccountDAO
         	//String sql = "SELECT * FROM SWENG500.USERS WHERE EMAILADDRESS=? AND PASSWORD=?";
         	String sql = "SELECT * FROM SWENG500.USERS WHERE NICKNAME=? AND PASSWORD=?";
         	PreparedStatement prep = conn.prepareStatement(sql);
-        	prep.setString(1, emailAddress);
+        	prep.setString(1, userName);
         	prep.setString(2, password);
         	ResultSet rs = prep.executeQuery();
         	if (rs.next())
