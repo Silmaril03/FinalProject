@@ -196,6 +196,15 @@ public class MainController implements Initializable {
 	private boolean loggedIn = false;
 
 	@FXML
+	private TextField hipTextField;
+
+	@FXML
+	private TextField wristTextField;
+
+	@FXML
+	private TextField forearmTextField;
+
+	@FXML
 	ObservableList<String> exerciseList = FXCollections.observableArrayList(
 			"Back Extension", "Bench Press, Barbell",
 			"Bench Press, Close Grip", "Bench Press, Dumbbell",
@@ -284,10 +293,9 @@ public class MainController implements Initializable {
 				workoutSet.setExercise(exer);
 				workoutSet.setRepCount(rep);
 				workoutSet.setWeightLifted(weight);
-				try{
+				try {
 					trainingLogController.getSet();
-				}
-				catch(NullPointerException e){
+				} catch (NullPointerException e) {
 					System.out.println("training Controller null" + e);
 				}
 				int set = trainingLogController.getSet();
@@ -323,12 +331,13 @@ public class MainController implements Initializable {
 	public void loginAction(ActionEvent event) {
 		IAccountDAO aDao = AccountDaoFactory.GetAccountDAO(DATABASE_LOCATION);
 		IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO(DATABASE_LOCATION);
-		IMeasurementsDAO mDao = MeasurementsDaoFactory.GetMeasurementDAO(DATABASE_LOCATION);
+		IMeasurementsDAO mDao = MeasurementsDaoFactory
+				.GetMeasurementDAO(DATABASE_LOCATION);
 		if (usernameTextField.getText().equals("")) {
 			loginErrorLabel.setText("Enter your username");
 			return;
 		}
-		if (passwordTextField.getText().equals("") ){
+		if (passwordTextField.getText().equals("")) {
 			loginErrorLabel.setText("Enter your password");
 			return;
 		}
@@ -340,8 +349,10 @@ public class MainController implements Initializable {
 				passwordTextField.setText("");
 				lblCurrentUser.setText("Current User: "
 						+ this.currentUser.getNickname());
-				trainingLog = new TrainingLogModel(wDao.GetWorkouts(this.currentUser.getUserId()));
-				this.userMeasurements = mDao.GetMeasurements(this.currentUser.getUserId());
+				trainingLog = new TrainingLogModel(
+						wDao.GetWorkouts(this.currentUser.getUserId()));
+				this.userMeasurements = mDao.GetMeasurements(this.currentUser
+						.getUserId());
 				loggedIn = true;
 
 				navWheelPane.loadGraphics(currentUser, usernameSetLabel,
@@ -351,11 +362,13 @@ public class MainController implements Initializable {
 						workoutPane);
 				navWheelPane.setVisible(true);
 				mainPane.setVisible(false);
-				
+
 				this.refreshData = false;
 			} else
-				loginErrorLabel.setText(usernameTextField.getText() + " has not registered");
-				lblCurrentUser.setText("Current User: Invalid Username and/or Password");
+				loginErrorLabel.setText(usernameTextField.getText()
+						+ " has not registered");
+			lblCurrentUser
+					.setText("Current User: Invalid Username and/or Password");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -447,12 +460,12 @@ public class MainController implements Initializable {
 		article3.setDisable(true);
 	}
 
-	private void clearArticleErrorLabel(){
+	private void clearArticleErrorLabel() {
 		articleErrorLabel.setText("");
 	}
-	
+
 	@FXML
-	public void searchArticlesAction(ActionEvent event){
+	public void searchArticlesAction(ActionEvent event) {
 		clearArticleErrorLabel();
 		if (!searchTextBox.getText().equals("")) {
 			searchHistoryList.add(0, searchTextBox.getText());
@@ -516,12 +529,23 @@ public class MainController implements Initializable {
 				.split("[ ]")[0]);
 		double totalHeight = (feet * 12) + inches;
 
-		ImperialMeasurement m = new ImperialMeasurement(totalHeight,
-				Double.parseDouble(weightTextField.getText()),
-				Double.parseDouble(waistTextField.getText()), 0, 0, 0);
+		double weight = Double.parseDouble(weightTextField.getText());
+
+		double waist = Double.parseDouble(waistTextField.getText());
+
+		double neckSize = Double.parseDouble(neckTextField.getText());
+
+		double hipSize = Double.parseDouble(hipTextField.getText());
+
+		double wristSize = Double.parseDouble(wristTextField.getText());
+
+		double forearmSize = Double.parseDouble(forearmTextField.getText());
+
+		ImperialMeasurement m = new ImperialMeasurement(totalHeight, weight,
+				waist, wristSize, hipSize, forearmSize);
 		m.setUserId(this.currentUser.getUserId());
 		m.setMeasurementDate(java.sql.Date.valueOf(measurementsDate.getValue()));
-		m.setNeck(0.0);
+		m.setNeck(neckSize);
 		try {
 			mDao.CreateMeasurement(m);
 			this.refreshData = true;
@@ -538,8 +562,9 @@ public class MainController implements Initializable {
 				&& validateString(rLastNameTextField.getText())
 				&& validateString(rEmailTextField.getText())
 				&& validateGender(rGenderComboBox.getValue())) {
-			
-			IAccountDAO aDao = AccountDaoFactory.GetAccountDAO(DATABASE_LOCATION);
+
+			IAccountDAO aDao = AccountDaoFactory
+					.GetAccountDAO(DATABASE_LOCATION);
 			this.currentUser = new Account();
 			this.currentUser.setNickname(rUsernameSetTextField.getText());
 			this.currentUser.setPassword(rPasswordSetTextField.getText());
@@ -558,7 +583,7 @@ public class MainController implements Initializable {
 					navWheelPane, statisticsPane, workoutPane);
 			registerPane.setVisible(false);
 			navWheelPane.setVisible(true);
-			
+
 			lblCurrentUser.setText("Current User: "
 					+ this.currentUser.getNickname());
 
@@ -574,14 +599,14 @@ public class MainController implements Initializable {
 		this.currentUser.setFirstName(firstNameTextField.getText());
 		this.currentUser.setLastName(lastNameTextField.getText());
 		this.currentUser.setEmailAddress(emailTextField.getText());
-		
+
 		IAccountDAO aDao = AccountDaoFactory.GetAccountDAO(DATABASE_LOCATION);
 		try {
 			aDao.UpdateAccount(this.currentUser);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		settingsPane.setVisible(false);
 		navWheelPane.setVisible(true);
 	}
@@ -589,7 +614,7 @@ public class MainController implements Initializable {
 	@FXML
 	public void workoutDateChanged(ActionEvent event) {
 		checkDataCache();
-		
+
 		try {
 			Workout selectedWorkout = trainingLog
 					.GetWorkout(new SimpleDateFormat("yyyy-MM-dd").parse(String
@@ -604,11 +629,10 @@ public class MainController implements Initializable {
 							ws.getRepCount(), ws.getExerciseName());
 					setList.add(workoutUI);
 				}
-			}
-			else
-			{
+			} else {
 				Workout w = new Workout();
-				w.setWorkoutDate(new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(workoutDate.getValue())));
+				w.setWorkoutDate(new SimpleDateFormat("yyyy-MM-dd")
+						.parse(String.valueOf(workoutDate.getValue())));
 				trainingLogController.setWorkout(w);
 			}
 		} catch (Exception ex) {
@@ -625,68 +649,81 @@ public class MainController implements Initializable {
 		List<Workout> tempWorkouts = this.trainingLog
 				.GetWorkoutsByExercise(exerciseComboBox.getValue());
 		for (Workout w : tempWorkouts) {
-			double weightLifted = w.getMaxVolumeByExercise(exerciseComboBox.getValue());
-			String dateString = new SimpleDateFormat("MM/dd/yyyy").format(w.getWorkoutDate());
+			double weightLifted = w.getMaxVolumeByExercise(exerciseComboBox
+					.getValue());
+			String dateString = new SimpleDateFormat("MM/dd/yyyy").format(w
+					.getWorkoutDate());
 			series.getData().add(new XYChart.Data(dateString, weightLifted));
 		}
 		exerciseLineChart.getData().add(series);
 	}
-	
+
 	@FXML
 	public void bodyCompositionChanged(ActionEvent event) {
 		checkDataCache();
 		CalculatorController cc = new CalculatorController();
 		bodyCompositionLineChart.getData().clear();
 		XYChart.Series series = new XYChart.Series();
-		int selectedStatistic = bodyCompositionComboBox.getSelectionModel().getSelectedIndex();
+		int selectedStatistic = bodyCompositionComboBox.getSelectionModel()
+				.getSelectedIndex();
 		switch (selectedStatistic) {
-			case 0:
-				for (Measurements m : this.userMeasurements) {
-					Workout tempWorkout = this.trainingLog.GetWorkout(m.getMeasurementDate());
-					if (tempWorkout != null)
-					{
-						double wilks = cc.calculateWilks(m, tempWorkout.getTotalVolume(), this.currentUser.getGender().equals("Male") ? true : false);
-						String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m.getMeasurementDate());
-						series.getData().add(new XYChart.Data(dateString, wilks));
-					}
+		case 0:
+			for (Measurements m : this.userMeasurements) {
+				Workout tempWorkout = this.trainingLog.GetWorkout(m
+						.getMeasurementDate());
+				if (tempWorkout != null) {
+					double wilks = cc.calculateWilks(m, tempWorkout
+							.getTotalVolume(), this.currentUser.getGender()
+							.equals("Male") ? true : false);
+					String dateString = new SimpleDateFormat("MM/dd/yyyy")
+							.format(m.getMeasurementDate());
+					series.getData().add(new XYChart.Data(dateString, wilks));
 				}
-				break;
-			case 1:
-				for (Measurements m : this.userMeasurements) {
-					double bmi = cc.calculateBodyMassIndex(m);
-					String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m.getMeasurementDate());
-					series.getData().add(new XYChart.Data(dateString, bmi));
-				}
-				break;
-			case 2:
-				for (Measurements m : this.userMeasurements) {
-					boolean tempIsMale = this.currentUser.getGender() == "Male" ? true : false;
-					double bfp = cc.calculateBodyFatPercentage(m, tempIsMale);
-					String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m.getMeasurementDate());
-					series.getData().add(new XYChart.Data(dateString, bfp));
-				}
-				break;
-			case 3:
-				for (Measurements m : this.userMeasurements) {
-					boolean tempIsMale = this.currentUser.getGender() == "Male" ? true : false;
-					double lbm = cc.calculateLeanBodyMass(m, tempIsMale);
-					String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m.getMeasurementDate());
-					series.getData().add(new XYChart.Data(dateString, lbm));
-				}
-				break;
-			case 4:
-				List<Workout> tempWorkouts = this.trainingLog.GetWorkouts();
-				for (Workout w : tempWorkouts) {
-					double weightLifted = w.getTotalVolume();
-					String dateString = new SimpleDateFormat("MM/dd/yyyy").format(w.getWorkoutDate());
-					series.getData().add(new XYChart.Data(dateString, weightLifted));
-				}
-				break;
+			}
+			break;
+		case 1:
+			for (Measurements m : this.userMeasurements) {
+				double bmi = cc.calculateBodyMassIndex(m);
+				String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m
+						.getMeasurementDate());
+				series.getData().add(new XYChart.Data(dateString, bmi));
+			}
+			break;
+		case 2:
+			for (Measurements m : this.userMeasurements) {
+				boolean tempIsMale = this.currentUser.getGender() == "Male" ? true
+						: false;
+				double bfp = cc.calculateBodyFatPercentage(m, tempIsMale);
+				String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m
+						.getMeasurementDate());
+				series.getData().add(new XYChart.Data(dateString, bfp));
+			}
+			break;
+		case 3:
+			for (Measurements m : this.userMeasurements) {
+				boolean tempIsMale = this.currentUser.getGender() == "Male" ? true
+						: false;
+				double lbm = cc.calculateLeanBodyMass(m, tempIsMale);
+				String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m
+						.getMeasurementDate());
+				series.getData().add(new XYChart.Data(dateString, lbm));
+			}
+			break;
+		case 4:
+			List<Workout> tempWorkouts = this.trainingLog.GetWorkouts();
+			for (Workout w : tempWorkouts) {
+				double weightLifted = w.getTotalVolume();
+				String dateString = new SimpleDateFormat("MM/dd/yyyy").format(w
+						.getWorkoutDate());
+				series.getData()
+						.add(new XYChart.Data(dateString, weightLifted));
+			}
+			break;
 		}
 		series.setName(bodyCompositionComboBox.getValue());
 		bodyCompositionLineChart.getData().add(series);
 	}
-	
+
 	@FXML
 	public void rightClick(MouseEvent event) {
 		if (!loggedIn) {
@@ -721,20 +758,20 @@ public class MainController implements Initializable {
 		}
 		return false;
 	}
-	
-	private void checkDataCache()
-	{
-		if (this.refreshData)
-		{
-			try
-			{
-				IWorkoutDAO wDao = WorkoutDaoFactory.GetWorkoutDAO(DATABASE_LOCATION);
-				IMeasurementsDAO mDao = MeasurementsDaoFactory.GetMeasurementDAO(DATABASE_LOCATION);
-				this.trainingLog = new TrainingLogModel(wDao.GetWorkouts(this.currentUser.getUserId()));
-				this.userMeasurements = mDao.GetMeasurements(this.currentUser.getUserId());
+
+	private void checkDataCache() {
+		if (this.refreshData) {
+			try {
+				IWorkoutDAO wDao = WorkoutDaoFactory
+						.GetWorkoutDAO(DATABASE_LOCATION);
+				IMeasurementsDAO mDao = MeasurementsDaoFactory
+						.GetMeasurementDAO(DATABASE_LOCATION);
+				this.trainingLog = new TrainingLogModel(
+						wDao.GetWorkouts(this.currentUser.getUserId()));
+				this.userMeasurements = mDao.GetMeasurements(this.currentUser
+						.getUserId());
 				this.refreshData = false;
-			} catch (SQLException e)
-			{
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
