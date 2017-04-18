@@ -82,6 +82,14 @@ public class Workout
 				.sum();
 	}
 	
+	public double getWilksVolume()
+	{
+		return this.workoutSets.stream()
+				.filter(ws -> ws.isPartOfTotal())
+				.mapToDouble(ws -> ws.getRepCount() * ws.getWeightLifted())
+				.sum();
+	}
+	
 	public double getTotalVolumeByExercise(String exerciseName)
 	{
 		return this.workoutSets.stream()
