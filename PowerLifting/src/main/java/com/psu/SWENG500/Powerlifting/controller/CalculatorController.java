@@ -46,12 +46,12 @@ public class CalculatorController extends CalculatorView {
 
 		if (checkValid("Body Weight", bodyWeight)) {
 			if (checkValid("Body Height", bodyHeight)) {
-				if (person.getMeasurementType() == MeasurementType.IMPERIAL) {
+				//if (person.getMeasurementType() == MeasurementType.IMPERIAL) {
 					bodyWeight = MeasurementConverter
 							.getKilogramsFromPounds(bodyWeight);
 					bodyHeight = MeasurementConverter
 							.getCentFromInch(bodyHeight);
-				}
+				//}
 				// change to meters
 				bodyHeight = bodyHeight / 100;
 
@@ -90,20 +90,20 @@ public class CalculatorController extends CalculatorView {
 		Double waist = person.getWaist();
 		Double weight = person.getWeight();
 		
-		if (checkValid("Body Weight", weight)){
-			if (checkValid("Body Width", waist)){
-				if (person.getMeasurementType() == MeasurementType.METRIC){
-					waist = MeasurementConverter.getInchFromCent(waist);
-					weight = MeasurementConverter.getPoundFromKilograms(weight);
-				}
-			}
-			else {
-				//LOGGER
-			}
-		}
-		else {
-			//LOGGER
-		}
+//		if (checkValid("Body Weight", weight)){
+//			if (checkValid("Body Width", waist)){
+//				if (person.getMeasurementType() == MeasurementType.METRIC){
+//					waist = MeasurementConverter.getInchFromCent(waist);
+//					weight = MeasurementConverter.getPoundFromKilograms(weight);
+//				}
+//			}
+//			else {
+//				//LOGGER
+//			}
+//		}
+//		else {
+//			//LOGGER
+//		}
 		
 		Double fatPercentage;
 		
@@ -117,26 +117,26 @@ public class CalculatorController extends CalculatorView {
 			Double hip = person.getHip();
 			Double forearm = person.getForearm();
 			
-			if (checkValid("Wrist Width", wrist)){
-				if (checkValid("Hip Width", hip)){
-					if (checkValid("Forearm Width", forearm)){
-						if (person.getMeasurementType() == MeasurementType.METRIC){
-							wrist = MeasurementConverter.getInchFromCent(wrist);
-							forearm = MeasurementConverter.getInchFromCent(forearm);
-							hip = MeasurementConverter.getInchFromCent(hip);
-						}
-					}
-					else{
-						//LOGGER
-					}
-				}
-				else {
-					//LOGGER
-				}
-			}
-			else {
-				//LOGGER
-			}
+//			if (checkValid("Wrist Width", wrist)){
+//				if (checkValid("Hip Width", hip)){
+//					if (checkValid("Forearm Width", forearm)){
+//						if (person.getMeasurementType() == MeasurementType.METRIC){
+//							wrist = MeasurementConverter.getInchFromCent(wrist);
+//							forearm = MeasurementConverter.getInchFromCent(forearm);
+//							hip = MeasurementConverter.getInchFromCent(hip);
+//						}
+//					}
+//					else{
+//						//LOGGER
+//					}
+//				}
+//				else {
+//					//LOGGER
+//				}
+//			}
+//			else {
+//				//LOGGER
+//			}
 			
 			Double result1 = weight * .732;
 			Double result2 = result1 + 8.987;
@@ -162,14 +162,14 @@ public class CalculatorController extends CalculatorView {
 		
 		Double weight = person.getWeight();
 		
-		if (checkValid("Body Weight", weight)){
-				if (person.getMeasurementType() == MeasurementType.METRIC){
-					weight = MeasurementConverter.getPoundFromKilograms(weight);
-			}
-		}
-		else {
-			//LOGGER
-		}
+//		if (checkValid("Body Weight", weight)){
+//				if (person.getMeasurementType() == MeasurementType.METRIC){
+//					weight = MeasurementConverter.getPoundFromKilograms(weight);
+//			}
+//		}
+//		else {
+//			//LOGGER
+//		}
 //		System.out.println(fatPercentage);
 		fatPercentage *= 100;
 		fatPercentage = fatPercentage / weight; 

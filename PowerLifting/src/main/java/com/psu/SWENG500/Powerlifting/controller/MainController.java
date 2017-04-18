@@ -273,6 +273,9 @@ public class MainController implements Initializable {
 		measurementPane.setVisible(false);
 		workoutPane.setVisible(false);
 		registerPane.setVisible(false);
+		
+		bodyCompositionLineChart.setAnimated(false);
+		exerciseLineChart.setAnimated(false);
 
 		try {
 			loadArticleTabProperties();
@@ -365,10 +368,12 @@ public class MainController implements Initializable {
 
 				this.refreshData = false;
 			} else
+			{
 				loginErrorLabel.setText(usernameTextField.getText()
 						+ " has not registered");
-			lblCurrentUser
+				lblCurrentUser
 					.setText("Current User: Invalid Username and/or Password");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -376,14 +381,6 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void registerAction(ActionEvent event) {
-		if (usernameTextField.getText().equals("")) {
-			loginErrorLabel.setText("Enter a username");
-			return;
-		}
-		if (passwordTextField.getText().equals("") ){
-			loginErrorLabel.setText("Enter a password");
-			return;
-		}
 		mainPane.setVisible(false);
 		registerPane.setVisible(true);
 	}
@@ -664,6 +661,7 @@ public class MainController implements Initializable {
 		CalculatorController cc = new CalculatorController();
 		bodyCompositionLineChart.getData().clear();
 		XYChart.Series series = new XYChart.Series();
+		
 		int selectedStatistic = bodyCompositionComboBox.getSelectionModel()
 				.getSelectedIndex();
 		switch (selectedStatistic) {
@@ -673,7 +671,7 @@ public class MainController implements Initializable {
 						.getMeasurementDate());
 				if (tempWorkout != null) {
 					double wilks = cc.calculateWilks(m, tempWorkout
-							.getTotalVolume(), this.currentUser.getGender()
+							.getWilksVolume(), this.currentUser.getGender()
 							.equals("Male") ? true : false);
 					String dateString = new SimpleDateFormat("MM/dd/yyyy")
 							.format(m.getMeasurementDate());
@@ -691,7 +689,7 @@ public class MainController implements Initializable {
 			break;
 		case 2:
 			for (Measurements m : this.userMeasurements) {
-				boolean tempIsMale = this.currentUser.getGender() == "Male" ? true
+				boolean tempIsMale = this.currentUser.getGender().equals("Male") ? true
 						: false;
 				double bfp = cc.calculateBodyFatPercentage(m, tempIsMale);
 				String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m
@@ -701,7 +699,7 @@ public class MainController implements Initializable {
 			break;
 		case 3:
 			for (Measurements m : this.userMeasurements) {
-				boolean tempIsMale = this.currentUser.getGender() == "Male" ? true
+				boolean tempIsMale = this.currentUser.getGender().equals("Male") ? true
 						: false;
 				double lbm = cc.calculateLeanBodyMass(m, tempIsMale);
 				String dateString = new SimpleDateFormat("MM/dd/yyyy").format(m
