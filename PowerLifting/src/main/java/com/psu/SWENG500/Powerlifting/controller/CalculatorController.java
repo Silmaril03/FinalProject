@@ -110,7 +110,8 @@ public class CalculatorController extends CalculatorView {
 		if (male){
 			Double result1 = weight * 1.082 + 94.42;
 			Double result2 = result1 - (waist * 4.15);
-			fatPercentage = (weight - result2);
+			//fatPercentage = (weight - result2);
+			fatPercentage = result2;
 		}
 		else{
 			Double wrist = person.getWrist();
@@ -147,7 +148,8 @@ public class CalculatorController extends CalculatorView {
 			Double result7 = result2 + result3;
 			Double result8 = result7 - result4;
 			Double result9 = result8 - result5;
-			fatPercentage = weight - (result9 + result6);
+			//fatPercentage = weight - (result9 + result6);
+			fatPercentage = result9 + result6;
 		}
 		
 		return fatPercentage;
@@ -171,8 +173,10 @@ public class CalculatorController extends CalculatorView {
 //			//LOGGER
 //		}
 //		System.out.println(fatPercentage);
-		fatPercentage *= 100;
-		fatPercentage = fatPercentage / weight; 
+//		fatPercentage *= 100;
+//		
+//		fatPercentage = fatPercentage / weight;
+		fatPercentage = ((weight - fatPercentage) * 100) / weight; 
 		return fatPercentage;
 	}
 }
