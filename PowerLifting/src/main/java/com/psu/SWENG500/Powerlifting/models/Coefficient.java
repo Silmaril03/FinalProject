@@ -10,9 +10,9 @@ public abstract class Coefficient {
 
 	public Double getCoefficient(Measurements measurements) {
 		double weight = measurements.getWeight();
-		if(measurements.getMeasurementType() == MeasurementType.IMPERIAL){
+		//if(measurements.getMeasurementType() == MeasurementType.IMPERIAL){
 			weight = MeasurementConverter.getKilogramsFromPounds(weight);
-		}
+		//}
 		
 		Double total = new Double(0);
 

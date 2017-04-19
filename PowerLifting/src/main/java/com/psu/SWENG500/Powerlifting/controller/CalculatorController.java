@@ -24,16 +24,16 @@ public class CalculatorController extends CalculatorView {
 		double bodyWeight = person.getWeight();
 		//double liftWeight = lifting.getWeight();
 
-		if (person.getMeasurementType() == MeasurementType.IMPERIAL) {
-			bodyWeight = MeasurementConverter
-					.getKilogramsFromPounds(bodyWeight);
-			liftWeight = MeasurementConverter
-					.getKilogramsFromPounds(liftWeight);
-		}
+		//if (person.getMeasurementType() == MeasurementType.IMPERIAL) {
+		//	bodyWeight = MeasurementConverter
+		//			.getKilogramsFromPounds(bodyWeight);
+		//	liftWeight = MeasurementConverter
+		//			.getKilogramsFromPounds(liftWeight);
+		//}
 
 		double coefficient = getCoefficient(male, person);
 
-		double wilkScore = coefficient * liftWeight;
+		double wilkScore = coefficient * MeasurementConverter.getKilogramsFromPounds(liftWeight);
 		// store to DB
 		return wilkScore;
 	}
