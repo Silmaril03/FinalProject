@@ -378,6 +378,34 @@ public class MainController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+	
+	@FXML
+	public void logoutAction(ActionEvent event)
+	{
+		lblCurrentUser.setText("Current User: [Nobody logged in]");
+		bodyCompositionLineChart.getData().clear();
+		exerciseLineChart.getData().clear();
+		
+		setList.clear();
+		
+		usernameSetLabel.setText("");
+		firstNameTextField.setText("");
+		lastNameTextField.setText("");
+		emailTextField.setText("");
+		genderLabel.setText("");
+		
+		this.currentUser = null;
+		this.trainingLog = null;
+		this.userMeasurements = null;
+		settingsPane.setVisible(false);
+		navWheelPane.setVisible(false);
+		articlesPane.setVisible(false);
+		statisticsPane.setVisible(false);
+		measurementPane.setVisible(false);
+		workoutPane.setVisible(false);
+		registerPane.setVisible(false);
+		mainPane.setVisible(true);
+	}
 
 	@FXML
 	public void registerAction(ActionEvent event) {
