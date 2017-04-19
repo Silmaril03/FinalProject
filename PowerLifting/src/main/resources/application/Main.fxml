@@ -132,8 +132,6 @@
 			<Button fx:id="addSet" layoutX="599.0" layoutY="326.0"
 				mnemonicParsing="false" onAction="#addSetButtonAction" prefHeight="54.0"
 				prefWidth="157.0" text="Add Set" />
-			<Button fx:id="removeSet" layoutX="598.0" layoutY="403.0"
-				mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="Delete Set" />
 			<Button fx:id="logWorkout" layoutX="598.0" layoutY="475.0"
 				mnemonicParsing="false" onAction="#saveWorkoutButtonAction"
 				prefHeight="71.0" prefWidth="156.0" text="Save Workout" />
