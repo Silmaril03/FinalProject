@@ -306,5 +306,12 @@
 	</Pane>
 	<Label fx:id="lblCurrentUser" layoutX="10.0" layoutY="625.0"
 		text="Current User: [Nobody logged in]" />
+	<Button fx:id="logoutButton" layoutX="625.0" layoutY="610.0"
+		mnemonicParsing="false" onAction="#logoutAction" prefHeight="38.0"
+		prefWidth="174.0" text="Logout">
+		<font>
+			<Font size="14.0" />
+		</font>
+	</Button>
 </children>
 </AnchorPane>
