@@ -383,6 +383,7 @@ public class MainController implements Initializable {
 	public void logoutAction(ActionEvent event)
 	{
 		lblCurrentUser.setText("Current User: [Nobody logged in]");
+		loginErrorLabel.setText("");
 		bodyCompositionLineChart.getData().clear();
 		exerciseLineChart.getData().clear();
 		
